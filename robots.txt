@@ -4,4 +4,4 @@ Allow: /
 
 # IMPORTANTE: troque a URL abaixo pela URL real do site assim que o
 # GitHub Pages estiver publicado (veja o README.md).
-Sitemap: https://SEU-USUARIO.github.io/SEU-REPOSITORIO/sitemap.xml
+Sitemap: https://DavidGarcia15.github.io/marcosdavidalvesgarcia.github.io./sitemap.xml
