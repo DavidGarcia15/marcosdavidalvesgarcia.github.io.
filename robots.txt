@@ -1,0 +1,7 @@
+# Permite que todos os robôs rastreiem o site por completo.
+User-agent: *
+Allow: /
+
+# IMPORTANTE: troque a URL abaixo pela URL real do site assim que o
+# GitHub Pages estiver publicado (veja o README.md).
+Sitemap: https://SEU-USUARIO.github.io/SEU-REPOSITORIO/sitemap.xml
