@@ -1,7 +1,0 @@
-# Permite que todos os robôs rastreiem o site por completo.
-User-agent: *
-Allow: /
-
-# IMPORTANTE: troque a URL abaixo pela URL real do site assim que o
-# GitHub Pages estiver publicado (veja o README.md).
-Sitemap: https://DavidGarcia15.github.io/marcosdavidalvesgarcia.github.io./sitemap.xml
