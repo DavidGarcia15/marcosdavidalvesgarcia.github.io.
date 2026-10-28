@@ -2,6 +2,5 @@
 User-agent: *
 Allow: /
 
-# IMPORTANTE: troque a URL abaixo pela URL real do site assim que o
-# GitHub Pages estiver publicado (veja o README.md).
-Sitemap: https://davidgarcia15.github.io/marcosdavidalvesgarcia.github.io/sitemap.xml
+# Sitemap do portfólio acadêmico
+Sitemap: https://davidgarcia15.github.io/marcosdavidalvesgarcia.github.io./sitemap.xml
