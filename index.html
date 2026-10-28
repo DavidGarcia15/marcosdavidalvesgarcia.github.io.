@@ -103,6 +103,133 @@
     </div>
   </section>
 
+  <!--
+    "Um céu de conquistas": A Noite Estrelada (Vincent van Gogh, 1889) em
+    suas proporções originais, com as medalhas reais posicionadas sobre a
+    pintura. Imagem em domínio público — ver crédito abaixo do quadro.
+  -->
+  <section class="sky-gallery" id="um-ceu-de-conquistas" aria-labelledby="sky-gallery-title">
+    <div class="wrap">
+      <p class="section-label">Um céu de conquistas</p>
+      <h2 id="sky-gallery-title" class="sky-gallery-title">Cada conquista é uma estrela na minha trajetória</h2>
+      <p class="section-intro">Toque ou selecione cada ponto de luz sobre a pintura para ver os detalhes de cada medalha.</p>
+    </div>
+
+    <div class="sky-frame-wrap wrap">
+      <div class="sky-frame">
+        <div class="sky-twinkles" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <button type="button" class="medal-star" style="--x:50%;--y:12%;--i:0" data-template="medal-tnbio-2026">
+          <span class="medal-star-dot medal-star-ouro"></span>
+          <span class="sr-only">Medalha de ouro — Torneio Nacional de Biologia, 2026</span>
+        </button>
+        <button type="button" class="medal-star" style="--x:18%;--y:20%;--i:1" data-template="medal-obgp-2026">
+          <span class="medal-star-dot medal-star-prata"></span>
+          <span class="sr-only">Medalha de prata — Olimpíada Brasileira de Geopolítica, 2026</span>
+        </button>
+        <button type="button" class="medal-star" style="--x:80%;--y:18%;--i:2" data-template="medal-obge-2025">
+          <span class="medal-star-dot medal-star-prata"></span>
+          <span class="sr-only">Medalha de prata — Olimpíada Brasileira de Geoinformação, 2025</span>
+        </button>
+        <button type="button" class="medal-star" style="--x:34%;--y:34%;--i:3" data-template="medal-obmep-2025">
+          <span class="medal-star-dot medal-star-honra"></span>
+          <span class="sr-only">Menção Honrosa Nacional — OBMEP, 2025</span>
+        </button>
+        <button type="button" class="medal-star" style="--x:66%;--y:36%;--i:4" data-template="medal-obmf-2025">
+          <span class="medal-star-dot medal-star-prata"></span>
+          <span class="sr-only">Medalha de prata — Olimpíada Brasileira de Matemática Financeira, 2025</span>
+        </button>
+        <button type="button" class="medal-star" style="--x:12%;--y:48%;--i:5" data-template="medal-obgp-2025">
+          <span class="medal-star-dot medal-star-bronze"></span>
+          <span class="sr-only">Medalha de bronze — Olimpíada Brasileira de Geopolítica, 2025</span>
+        </button>
+        <button type="button" class="medal-star" style="--x:88%;--y:50%;--i:6" data-template="medal-obgp-2024">
+          <span class="medal-star-dot medal-star-bronze"></span>
+          <span class="sr-only">Medalha de bronze — Olimpíada Brasileira de Geopolítica, 2024</span>
+        </button>
+        <button type="button" class="medal-star" style="--x:50%;--y:58%;--i:7" data-template="medal-mandacaru-2023">
+          <span class="medal-star-dot medal-star-bronze"></span>
+          <span class="sr-only">3º lugar, bronze — Olimpíada Mandacaru de Matemática, 2023</span>
+        </button>
+      </div>
+
+      <p class="sky-frame-credit">
+        <a href="https://commons.wikimedia.org/wiki/File:Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg" target="_blank" rel="noopener">A Noite Estrelada</a>,
+        Vincent van Gogh, 1889 · Museum of Modern Art · reprodução em domínio público (Google Art Project, via Wikimedia Commons)
+      </p>
+    </div>
+  </section>
+
+  <dialog class="medal-dialog" id="medal-dialog" aria-label="Detalhes da conquista">
+    <form method="dialog" class="medal-dialog-inner">
+      <button type="submit" class="medal-dialog-close" aria-label="Fechar">×</button>
+      <div class="medal-dialog-content"></div>
+    </form>
+  </dialog>
+
+  <div hidden>
+    <template id="medal-tnbio-2026">
+      <span class="medal-tag medal-ouro">Medalha de ouro</span>
+      <h3>Torneio Nacional de Biologia (TNBio)</h3>
+      <p class="achievement-meta">2026 · Organização: Seleta Educação · Área: Biologia e ciências da vida</p>
+      <p>O TNBio avalia conhecimentos de Biologia que vão da célula aos ecossistemas, passando por biodiversidade, fisiologia humana, genética básica e conservação ambiental. Esta foi minha primeira participação na competição, com resultado em ouro.</p>
+      <p class="achievement-link"><a href="https://www.seletaeducacao.com.br/tnbio" target="_blank" rel="noopener">Página oficial do TNBio</a></p>
+    </template>
+    <template id="medal-obgp-2026">
+      <span class="medal-tag medal-prata">Medalha de prata</span>
+      <h3>Olimpíada Brasileira de Geopolítica (OBGP)</h3>
+      <p class="achievement-meta">2026 · Organização: Seleta Educação · Área: Geopolítica</p>
+      <p>A OBGP desafia estudantes a compreender as relações entre países — fatores geográficos, políticos, econômicos e culturais por trás de conflitos, alianças e disputas globais. Minha terceira participação consecutiva na prova, com evolução do bronze (2024) para a prata em 2026.</p>
+      <p class="achievement-link"><a href="https://www.seletaeducacao.com.br/obgp" target="_blank" rel="noopener">Página oficial da OBGP</a></p>
+    </template>
+    <template id="medal-obge-2025">
+      <span class="medal-tag medal-prata">Medalha de prata</span>
+      <h3>Olimpíada Brasileira de Geoinformação (OBGE)</h3>
+      <p class="achievement-meta">2025 · Área: Geoinformação</p>
+      <p>Medalha de prata na Olimpíada Brasileira de Geoinformação (OBGE), competição acadêmica relacionada à Geografia e à geoinformação.</p>
+      <p class="achievement-link"><a href="https://olimpiadadegeoinformacao.com.br/" target="_blank" rel="noopener">Site oficial da OBGE</a></p>
+    </template>
+    <template id="medal-obmep-2025">
+      <span class="medal-tag medal-honra">Menção Honrosa Nacional</span>
+      <h3>20ª Olimpíada Brasileira de Matemática das Escolas Públicas (OBMEP)</h3>
+      <p class="achievement-meta">Edição 2025 · Organização: IMPA, com apoio do MEC e do MCTI · Área: Matemática</p>
+      <p>A OBMEP, organizada pelo Instituto Nacional de Matemática Pura e Aplicada (IMPA) com apoio do Ministério da Educação e do Ministério da Ciência, Tecnologia e Inovação, é a maior olimpíada de matemática do Brasil. Na 20ª edição (2025), recebi o Certificado de Menção Honrosa Nacional — uma distinção concedida a estudantes com bom desempenho na prova, distinta das medalhas de ouro, prata e bronze.</p>
+      <p class="achievement-link"><a href="https://www.obmep.org.br/" target="_blank" rel="noopener">Página oficial da OBMEP</a></p>
+    </template>
+    <template id="medal-obmf-2025">
+      <span class="medal-tag medal-prata">Medalha de prata</span>
+      <h3>Olimpíada Brasileira de Matemática Financeira (OBMF)</h3>
+      <p class="achievement-meta">2025 · Organização: Seleta Educação · Área: Matemática Financeira</p>
+      <p>A OBMF une matemática e educação financeira: orçamento, juros, crédito e investimentos aplicados a situações do cotidiano. A prova me rendeu a medalha de prata em 2025.</p>
+      <p class="achievement-link"><a href="https://www.seletaeducacao.com.br/obmf" target="_blank" rel="noopener">Página oficial da OBMF</a></p>
+    </template>
+    <template id="medal-obgp-2025">
+      <span class="medal-tag medal-bronze">Medalha de bronze</span>
+      <h3>Olimpíada Brasileira de Geopolítica (OBGP)</h3>
+      <p class="achievement-meta">2025 · Organização: Seleta Educação · Área: Geopolítica</p>
+      <p>Segunda edição da OBGP da qual participei, com resultado em bronze — um passo na evolução que levaria à medalha de prata no ano seguinte.</p>
+      <p class="achievement-link"><a href="https://www.seletaeducacao.com.br/obgp" target="_blank" rel="noopener">Página oficial da OBGP</a></p>
+    </template>
+    <template id="medal-obgp-2024">
+      <span class="medal-tag medal-bronze">Medalha de bronze</span>
+      <h3>Olimpíada Brasileira de Geopolítica (OBGP)</h3>
+      <p class="achievement-meta">2024 · Organização: Seleta Educação · Área: Geopolítica</p>
+      <p>Minha primeira participação na OBGP, com resultado em bronze — o ponto de partida de uma sequência de três edições consecutivas na prova, com evolução de resultado a cada ano.</p>
+      <p class="achievement-link"><a href="https://www.seletaeducacao.com.br/obgp" target="_blank" rel="noopener">Página oficial da OBGP</a></p>
+    </template>
+    <template id="medal-mandacaru-2023">
+      <span class="medal-tag medal-bronze">3º lugar · Bronze</span>
+      <h3>Olimpíada Mandacaru de Matemática</h3>
+      <p class="achievement-meta">2023 · Área: Matemática</p>
+      <p>Competição de matemática com forte identidade regional nordestina — seus níveis levam nomes como Cajuína, Luiz Gonzaga, Zumbi dos Palmares e Lampião, em referência à cultura do Sertão. Resultado: terceiro lugar, com reconhecimento em bronze, conforme certificado do estudante.</p>
+      <p class="achievement-link"><a href="https://olimpiadamandacaru.com.br/" target="_blank" rel="noopener">Página oficial da Olimpíada Mandacaru</a></p>
+    </template>
+  </div>
+
   <section class="highlights">
     <div class="wrap">
       <p class="section-label">Conquistas recentes</p>

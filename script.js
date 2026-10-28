@@ -64,4 +64,51 @@
       });
     });
   }
+
+  // ---------- Galeria "Um céu de conquistas" ----------
+  // Painel de detalhes: cada medalha tem um <template> com o conteúdo real
+  // (já publicado em /conquistas/); o diálogo nativo <dialog> cuida de foco,
+  // Esc para fechar e leitura por teclado sem bibliotecas externas.
+  var skyGallery = document.querySelector(".sky-gallery");
+  var medalButtons = document.querySelectorAll(".medal-star");
+  var medalDialog = document.getElementById("medal-dialog");
+  var medalDialogContent = medalDialog ? medalDialog.querySelector(".medal-dialog-content") : null;
+
+  if (medalButtons.length && medalDialog && medalDialogContent) {
+    medalButtons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var tpl = document.getElementById(btn.getAttribute("data-template"));
+        if (!tpl) {
+          return;
+        }
+        medalDialogContent.innerHTML = "";
+        medalDialogContent.appendChild(tpl.content.cloneNode(true));
+        if (typeof medalDialog.showModal === "function") {
+          medalDialog.showModal();
+        } else {
+          medalDialog.setAttribute("open", "");
+        }
+      });
+    });
+  }
+
+  // Entrada suave das medalhas quando a seção aparece na tela (uma única vez)
+  if (skyGallery) {
+    if ("IntersectionObserver" in window) {
+      var skyObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              skyGallery.classList.add("is-visible");
+              skyObserver.disconnect();
+            }
+          });
+        },
+        { threshold: 0.2 }
+      );
+      skyObserver.observe(skyGallery);
+    } else {
+      skyGallery.classList.add("is-visible");
+    }
+  }
 })();
