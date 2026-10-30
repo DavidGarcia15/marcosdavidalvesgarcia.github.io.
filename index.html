@@ -75,6 +75,7 @@
       <ul>
         <li><a href="./" aria-current="page">Início</a></li>
         <li><a href="conquistas/">Conquistas</a></li>
+        <li><a href="#minha-trajetoria">Minha Trajetória</a></li>
         <li><a href="sobre/">Sobre</a></li>
       </ul>
     </nav>
@@ -228,6 +229,51 @@
       <p>Competição de matemática com forte identidade regional nordestina — seus níveis levam nomes como Cajuína, Luiz Gonzaga, Zumbi dos Palmares e Lampião, em referência à cultura do Sertão. Resultado: terceiro lugar, com reconhecimento em bronze, conforme certificado do estudante.</p>
       <p class="achievement-link"><a href="https://olimpiadamandacaru.com.br/" target="_blank" rel="noopener">Página oficial da Olimpíada Mandacaru</a></p>
     </template>
+
+    <!-- Conteúdo dos marcos de "Minha Trajetória" (mesmo <dialog> acima) -->
+    <template id="trajetoria-2015">
+      <span class="medal-tag medal-pendente">Informação a confirmar</span>
+      <h3>ExpressArte — Petrolina, PE</h3>
+      <p class="achievement-meta">2015 · Petrolina, Pernambuco</p>
+      <p>Participação registrada no ExpressArte, evento realizado em Petrolina em 2015. A categoria, a modalidade e a natureza exata do reconhecimento ainda estão sendo confirmadas junto ao certificado original — por isso nenhuma colocação é afirmada aqui.</p>
+    </template>
+    <template id="trajetoria-2023">
+      <span class="medal-tag medal-bronze">3º lugar · Bronze</span>
+      <h3>Olimpíada Mandacaru de Matemática</h3>
+      <p class="achievement-meta">2023 · Área: Matemática</p>
+      <p>Competição de matemática com forte identidade regional nordestina — seus níveis levam nomes como Cajuína, Luiz Gonzaga, Zumbi dos Palmares e Lampião, em referência à cultura do Sertão. Resultado: terceiro lugar, com reconhecimento em bronze — minha primeira medalha.</p>
+      <p class="achievement-link"><a href="https://olimpiadamandacaru.com.br/" target="_blank" rel="noopener">Página oficial da Olimpíada Mandacaru</a></p>
+    </template>
+    <template id="trajetoria-2024">
+      <span class="medal-tag medal-bronze">Medalha de bronze</span>
+      <h3>Olimpíada Brasileira de Geopolítica (OBGP)</h3>
+      <p class="achievement-meta">2024 · Organização: Seleta Educação · Área: Geopolítica</p>
+      <p>Minha primeira participação na OBGP — o ponto de partida de uma sequência de três edições consecutivas, com evolução de resultado a cada ano (bronze em 2024, bronze em 2025, prata em 2026).</p>
+      <p class="achievement-link"><a href="https://www.seletaeducacao.com.br/obgp" target="_blank" rel="noopener">Página oficial da OBGP</a></p>
+    </template>
+    <template id="trajetoria-2025">
+      <span class="medal-tag medal-honra">Reconhecimento nacional</span>
+      <h3>Um ano com quatro resultados</h3>
+      <p class="achievement-meta">2025 · Geopolítica · Matemática Financeira · Geoinformação · Matemática</p>
+      <p>Menção Honrosa Nacional na 20ª OBMEP (IMPA, com apoio do MEC e do MCTI); prata na Olimpíada Brasileira de Matemática Financeira (OBMF); prata na Olimpíada Brasileira de Geoinformação (OBGE); e bronze na segunda participação na OBGP.</p>
+      <p class="achievement-link">
+        <a href="https://www.obmep.org.br/" target="_blank" rel="noopener">OBMEP</a> ·
+        <a href="https://www.seletaeducacao.com.br/obmf" target="_blank" rel="noopener">OBMF</a> ·
+        <a href="https://olimpiadadegeoinformacao.com.br/" target="_blank" rel="noopener">OBGE</a> ·
+        <a href="https://www.seletaeducacao.com.br/obgp" target="_blank" rel="noopener">OBGP</a>
+      </p>
+      <p class="achievement-link"><a href="conquistas/">Ver todos os detalhes na página de Conquistas</a></p>
+    </template>
+    <template id="trajetoria-2026">
+      <span class="medal-tag medal-ouro">Novos patamares</span>
+      <h3>Ouro no TNBio e evolução na OBGP</h3>
+      <p class="achievement-meta">2026 · Biologia · Geopolítica</p>
+      <p>Medalha de ouro na primeira participação no Torneio Nacional de Biologia (TNBio). Na OBGP, terceira participação consecutiva, com evolução do bronze (2024) para a prata.</p>
+      <p class="achievement-link">
+        <a href="https://www.seletaeducacao.com.br/tnbio" target="_blank" rel="noopener">TNBio</a> ·
+        <a href="https://www.seletaeducacao.com.br/obgp" target="_blank" rel="noopener">OBGP</a>
+      </p>
+    </template>
   </div>
 
   <section class="highlights">
@@ -260,6 +306,85 @@
       </div>
 
       <p style="margin-top:2.2rem;"><a class="btn btn-ghost-light" href="conquistas/">Ver a trajetória completa, de 2015 a 2026</a></p>
+    </div>
+  </section>
+
+  <!--
+    "Minha Trajetória": a caneta desenha um traço dourado horizontal uma
+    única vez, da esquerda para a direita, revelando cinco marcos da
+    caminhada acadêmica. Cada marco abre o mesmo <dialog> nativo já usado
+    em "Um céu de conquistas" (ver <template>s logo abaixo, dentro do
+    <div hidden> que já existe). Conteúdo sempre visível no HTML, mesmo
+    sem JavaScript ou com animações reduzidas.
+  -->
+  <section class="trajectory" id="minha-trajetoria" aria-labelledby="trajectory-title">
+    <div class="wrap">
+      <p class="section-label">Minha Trajetória</p>
+      <h2 id="trajectory-title">Cada conquista deixa um traço</h2>
+      <p class="section-intro">Cada ano escreve uma nova parte da minha história. Selecione um marco na linha para ver os detalhes.</p>
+    </div>
+
+    <div class="wrap trajectory-rail-scroll">
+      <div class="trajectory-rail">
+        <svg class="trajectory-line" viewBox="0 0 1500 220" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <path class="trajectory-path-bg" d="M0.0,110.0 C25.0,110.0 100.0,117.7 150.0,110.0 C200.0,102.3 250.0,64.0 300.0,64.0 C350.0,64.0 400.0,94.7 450.0,110.0 C500.0,125.3 550.0,156.0 600.0,156.0 C650.0,156.0 700.0,125.3 750.0,110.0 C800.0,94.7 850.0,64.0 900.0,64.0 C950.0,64.0 1000.0,94.7 1050.0,110.0 C1100.0,125.3 1150.0,156.0 1200.0,156.0 C1250.0,156.0 1300.0,117.7 1350.0,110.0 C1400.0,102.3 1475.0,110.0 1500.0,110.0" />
+          <path class="trajectory-path-ink" d="M0.0,110.0 C25.0,110.0 100.0,117.7 150.0,110.0 C200.0,102.3 250.0,64.0 300.0,64.0 C350.0,64.0 400.0,94.7 450.0,110.0 C500.0,125.3 550.0,156.0 600.0,156.0 C650.0,156.0 700.0,125.3 750.0,110.0 C800.0,94.7 850.0,64.0 900.0,64.0 C950.0,64.0 1000.0,94.7 1050.0,110.0 C1100.0,125.3 1150.0,156.0 1200.0,156.0 C1250.0,156.0 1300.0,117.7 1350.0,110.0 C1400.0,102.3 1475.0,110.0 1500.0,110.0" />
+          <g class="trajectory-pen" aria-hidden="true">
+            <g transform="rotate(-50)">
+              <path class="trajectory-pen-body" d="M-6,-18 L-8,-30 L-8,-66 Q-8,-76 0,-78 Q8,-76 8,-66 L8,-30 Z" />
+              <line class="trajectory-pen-highlight" x1="-5" y1="-33" x2="-5" y2="-71" />
+              <rect class="trajectory-pen-band" x="-8.5" y="-37" width="17" height="6" rx="1" />
+              <path class="trajectory-pen-nib" d="M0,0 L-6,-18 Q0,-24 6,-18 Z" />
+              <line class="trajectory-pen-slit" x1="0" y1="-4" x2="0" y2="-19" />
+              <circle class="trajectory-spark trajectory-spark-1" cx="10" cy="-6" r="1.8" />
+              <circle class="trajectory-spark trajectory-spark-2" cx="-9" cy="3" r="1.2" />
+            </g>
+          </g>
+        </svg>
+
+        <ol class="trajectory-list">
+          <li class="trajectory-marker" data-ano="2015">
+            <span class="trajectory-dot" aria-hidden="true"></span>
+            <button type="button" class="trajectory-card" data-template="trajetoria-2015">
+              <span class="trajectory-year">2015</span>
+              <span class="trajectory-card-title">Primeiros passos</span>
+              <span class="sr-only">Ver detalhes do marco de 2015</span>
+            </button>
+          </li>
+          <li class="trajectory-marker" data-ano="2023">
+            <span class="trajectory-dot" aria-hidden="true"></span>
+            <button type="button" class="trajectory-card" data-template="trajetoria-2023">
+              <span class="trajectory-year">2023</span>
+              <span class="trajectory-card-title">Primeira medalha</span>
+              <span class="sr-only">Ver detalhes do marco de 2023</span>
+            </button>
+          </li>
+          <li class="trajectory-marker" data-ano="2024">
+            <span class="trajectory-dot" aria-hidden="true"></span>
+            <button type="button" class="trajectory-card" data-template="trajetoria-2024">
+              <span class="trajectory-year">2024</span>
+              <span class="trajectory-card-title">Entrada na OBGP</span>
+              <span class="sr-only">Ver detalhes do marco de 2024</span>
+            </button>
+          </li>
+          <li class="trajectory-marker" data-ano="2025">
+            <span class="trajectory-dot" aria-hidden="true"></span>
+            <button type="button" class="trajectory-card" data-template="trajetoria-2025">
+              <span class="trajectory-year">2025</span>
+              <span class="trajectory-card-title">Reconhecimento nacional</span>
+              <span class="sr-only">Ver detalhes do marco de 2025</span>
+            </button>
+          </li>
+          <li class="trajectory-marker" data-ano="2026">
+            <span class="trajectory-dot" aria-hidden="true"></span>
+            <button type="button" class="trajectory-card" data-template="trajetoria-2026">
+              <span class="trajectory-year">2026</span>
+              <span class="trajectory-card-title">Novos patamares</span>
+              <span class="sr-only">Ver detalhes do marco de 2026</span>
+            </button>
+          </li>
+        </ol>
+      </div>
     </div>
   </section>
 
