@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>Galeria Marcos David | Museu Virtual 3D</title>
+<meta name="description" content="Museu virtual 3D do portfólio acadêmico de Marcos David Alves Garcia — explore em primeira pessoa um salão clássico inspirado em 'A Noite Estrelada', de Van Gogh, e descubra sua trajetória em olimpíadas acadêmicas.">
+<link rel="canonical" href="https://davidgarcia15.github.io/marcosdavidalvesgarcia.github.io./galeria/">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='31' fill='%230e2038'/%3E%3Ccircle cx='32' cy='32' r='31' fill='none' stroke='%23b8914a' stroke-width='2'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' fill='%23dcbb79' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="estilo.css">
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+  }
+}
+</script>
+</head>
+<body>
+
+<noscript>
+  <div class="aviso-noscript">
+    <h1>Galeria Marcos David — Museu Virtual 3D</h1>
+    <p>Esta página é uma experiência 3D interativa e precisa de JavaScript para funcionar. Enquanto isso, o portfólio completo continua disponível nas páginas abaixo.</p>
+    <p><a href="../">Início</a> · <a href="../conquistas/">Conquistas</a> · <a href="../sobre/">Sobre</a></p>
+  </div>
+</noscript>
+
+<a class="link-voltar" href="../">← Portfólio</a>
+
+<canvas id="canvas-galeria"></canvas>
+
+<div id="tela-carregamento" class="tela-carregamento">
+  <p>Preparando o salão principal…</p>
+</div>
+
+<div id="fallback-sem-webgl" class="fallback" hidden>
+  <div class="fallback-conteudo">
+    <h1>Galeria Marcos David</h1>
+    <p>Este navegador ou dispositivo não suporta a experiência 3D do museu virtual. Você ainda pode explorar todo o conteúdo do portfólio nas páginas abaixo.</p>
+    <p class="fallback-links">
+      <a class="btn-painel" href="../">Início</a>
+      <a class="btn-painel" href="../conquistas/">Conquistas</a>
+      <a class="btn-painel" href="../sobre/">Sobre</a>
+    </p>
+  </div>
+</div>
+
+<div id="introducao" class="introducao">
+  <div class="introducao-cartao">
+    <p class="eyebrow">Galeria Marcos David</p>
+    <h1>Bem-vindo ao salão principal</h1>
+    <p>Caminhe pelo museu em primeira pessoa e descubra a primeira exposição: "A Noite Estrelada".</p>
+    <ul class="lista-controles">
+      <li><strong>Computador</strong> — WASD ou setas para andar, mouse para olhar ao redor, clique para interagir</li>
+      <li><strong>Celular</strong> — joystick para andar, arraste a tela para olhar, toque no botão para interagir</li>
+    </ul>
+    <button id="botao-entrar" type="button" class="btn-painel">Entrar na galeria</button>
+  </div>
+</div>
+
+<div id="vinheta" class="vinheta" aria-hidden="true"></div>
+<div id="mira" class="mira" aria-hidden="true"></div>
+<p id="dica-interacao" class="dica-interacao" aria-live="polite"></p>
+<p id="aviso-temp" class="aviso-temp" role="status"></p>
+
+<div id="painel-pintura" class="painel-pintura" tabindex="-1" aria-live="polite">
+  <div class="painel-caixa">
+    <button id="fechar-painel" type="button" class="painel-fechar" aria-label="Fechar">×</button>
+    <div class="painel-conteudo"></div>
+  </div>
+</div>
+
+<!-- Controles de toque — exibidos apenas em dispositivos com suporte a
+     toque (ver body.modo-toque em estilo.css, ativado por controles.js) -->
+<div id="joystick-base" class="joystick-base" aria-hidden="true">
+  <div id="joystick-nub" class="joystick-nub"></div>
+</div>
+<div id="camada-olhar" class="camada-olhar" aria-hidden="true"></div>
+<button id="botao-interagir" type="button" class="botao-interagir">Interagir</button>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
