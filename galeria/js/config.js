@@ -63,15 +63,15 @@ export const PINTURAS = [
     tema: "Natureza, observação e tempo",
     implementada: true,
     imagem:
-      "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Claude_monet%2C_ninfee%2C_1916.JPG/1280px-Claude_monet%2C_ninfee%2C_1916.JPG",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Claude_Monet_-_Water_Lilies_-_Google_Art_Project_%28462013%29.jpg/1280px-Claude_Monet_-_Water_Lilies_-_Google_Art_Project_%28462013%29.jpg",
     largura: 2.22,
     altura: 2.2,
     corLuz: 0xc6dcff,
     intensidadeLuz: 22,
     creditoImagem:
-      "Reprodução fotográfica: Sailko / Wikimedia Commons — licença CC BY-SA 3.0.",
+      "Reprodução do Google Art Project / Wikimedia Commons. Obra em domínio público (PD-Art).",
     fonteImagem:
-      "https://commons.wikimedia.org/wiki/File:Claude_monet,_ninfee,_1916.JPG",
+      "https://commons.wikimedia.org/wiki/File:Claude_Monet_-_Water_Lilies_-_Google_Art_Project_(462013).jpg",
     linkSaibaMais: "https://collection.nmwa.go.jp/en/P.1959-0151.html",
     linkSaibaMaisTexto: "Consultar ficha do Museu Nacional de Arte Ocidental",
     textoIntro:
@@ -98,7 +98,7 @@ export const PINTURAS = [
     tema: "Conhecimento, ciência e investigação",
     implementada: true,
     imagem:
-      "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e4/Johannes_Vermeer_-_The_Astronomer_-_1668.jpg/1920px-Johannes_Vermeer_-_The_Astronomer_-_1668.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Johannes_Vermeer_-_The_Astronomer_-_1668.jpg/1920px-Johannes_Vermeer_-_The_Astronomer_-_1668.jpg",
     largura: 1.92,
     altura: 2.18,
     corLuz: 0xffd39a,
@@ -134,7 +134,7 @@ export const PINTURAS = [
     tema: "Trajetória, escolhas e futuro",
     implementada: true,
     imagem:
-      "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/af/Caspar_David_Friedrich_-_Wanderer_above_the_Sea_of_Fog.jpeg/1920px-Caspar_David_Friedrich_-_Wanderer_above_the_Sea_of_Fog.jpeg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Caspar_David_Friedrich_-_Wanderer_above_the_Sea_of_Fog.jpeg/1920px-Caspar_David_Friedrich_-_Wanderer_above_the_Sea_of_Fog.jpeg",
     largura: 1.72,
     altura: 2.2,
     corLuz: 0xc9d9f4,
