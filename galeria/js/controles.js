@@ -206,14 +206,30 @@ export function criarControles(THREE, { camera, domElement, colunas, aoInteragir
 
   function bloquear(sim) {
     bloqueado = sim;
-    if (!sim) {
-      // evita salto de câmera: realinha yaw/pitch com a posição em que a
-      // câmera ficou ao final da animação cinematográfica.
-      const euler = new THREE.Euler().setFromQuaternion(camera.quaternion, "YXZ");
-      yaw = euler.y;
-      pitch = euler.x;
+
+    if (sim) {
+      // Solta o mouse antes de abrir o painel: assim o visitante consegue
+      // clicar nos links e no botão de fechar enquanto lê a exposição.
+      teclas.w = false;
+      teclas.a = false;
+      teclas.s = false;
+      teclas.d = false;
+      joyAtivo = false;
+      joyInput = { x: 0, y: 0 };
       vel.set(0, 0);
+
+      if (document.pointerLockElement === domElement && document.exitPointerLock) {
+        document.exitPointerLock();
+      }
+      return;
     }
+
+    // Evita salto de câmera e retoma a exploração com o cursor liberado.
+    // Um clique na cena volta a ativar o Pointer Lock, por gesto do visitante.
+    const euler = new THREE.Euler().setFromQuaternion(camera.quaternion, "YXZ");
+    yaw = euler.y;
+    pitch = euler.x;
+    vel.set(0, 0);
   }
 
   return { atualizar, bloquear, solicitarPointerLock, ehToque };
