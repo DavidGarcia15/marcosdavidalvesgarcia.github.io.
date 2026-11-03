@@ -1,14 +1,12 @@
 /*
  * Galeria Marcos David — pinturas-portal
  * ------------------------------------------
- * Posiciona as quatro molduras nas paredes, detecta pela mira central
- * (raycaster) qual pintura o visitante está observando e conduz a
- * aproximação cinematográfica + painel de detalhes de "A Noite
- * Estrelada" — a única com interação completa nesta primeira versão
- * (ver config.js). As demais apenas recebem um aviso de "em preparação".
+ * Posiciona as quatro molduras, identifica a obra observada pela mira
+ * central (raycaster) e conduz a aproximação cinematográfica até o
+ * painel curatorial específico de cada pintura.
  */
 
-import { SALA, PINTURAS, CONQUISTAS_DESTAQUE } from "./config.js";
+import { SALA, PINTURAS } from "./config.js";
 import { texturaEmPreparacao } from "./texturas.js";
 
 const DURACAO_APROXIMAR = 2.2;
@@ -22,20 +20,63 @@ function easeInOutCubic(t) {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 
-function montarPainelHTML(p) {
-  const lista = CONQUISTAS_DESTAQUE.map(
-    (c) => `<li><span class="tag-medalha">${c.medalha}</span><strong>${c.titulo}</strong><span class="meta-conquista">${c.meta}</span></li>`
-  ).join("");
+function escaparHTML(valor) {
+  return String(valor ?? "").replace(/[&<>"']/g, (caractere) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  })[caractere]);
+}
 
-  return `
-    <p class="painel-tema">${p.tema}</p>
-    <h2>${p.titulo}</h2>
-    <p class="painel-artista">${p.artista} · ${p.ano}</p>
-    <p class="painel-intro">${p.textoIntro}</p>
-    <ul class="painel-lista-conquistas">${lista}</ul>
-    <p class="painel-credito">${p.creditoImagem}</p>
-    <a class="btn-painel" href="${p.linkSaibaMais}">${p.linkSaibaMaisTexto}</a>
-  `;
+function montarPainelHTML(p) {
+  const observacoes = (p.observar || [])
+    .map((item) => "<li>" + escaparHTML(item) + "</li>")
+    .join("");
+
+  const contexto = p.contextoHistorico
+    ? '<section class="painel-secao"><h3>Contexto histórico</h3><p>' +
+      escaparHTML(p.contextoHistorico) + "</p></section>"
+    : "";
+
+  const blocoObservacao = observacoes
+    ? '<section class="painel-secao"><h3>O que observar</h3><ul class="painel-lista-observacao">' +
+      observacoes + "</ul></section>"
+    : "";
+
+  const conexao = p.conexaoGaleria
+    ? '<aside class="painel-destaque"><span>Por que esta obra está na galeria?</span><p>' +
+      escaparHTML(p.conexaoGaleria) + "</p></aside>"
+    : "";
+
+  const notaCuratorial = p.creditoCuratorial
+    ? '<p class="painel-nota">' + escaparHTML(p.creditoCuratorial) + "</p>"
+    : "";
+
+  const linkMuseu = p.linkSaibaMais
+    ? '<a class="btn-painel" href="' + escaparHTML(p.linkSaibaMais) +
+      '" target="_blank" rel="noopener noreferrer">' +
+      escaparHTML(p.linkSaibaMaisTexto || "Consultar fonte do museu") + "</a>"
+    : "";
+
+  const linkImagem = p.fonteImagem
+    ? '<a class="painel-link-fonte" href="' + escaparHTML(p.fonteImagem) +
+      '" target="_blank" rel="noopener noreferrer">Crédito e licença da reprodução</a>'
+    : "";
+
+  return [
+    '<p class="painel-tema">', escaparHTML(p.tema), "</p>",
+    "<h2>", escaparHTML(p.titulo), "</h2>",
+    '<p class="painel-artista">', escaparHTML(p.artista), " · ", escaparHTML(p.ano), "</p>",
+    '<p class="painel-intro">', escaparHTML(p.textoIntro), "</p>",
+    contexto,
+    blocoObservacao,
+    conexao,
+    notaCuratorial,
+    '<p class="painel-credito">', escaparHTML(p.creditoImagem || ""), "</p>",
+    '<div class="painel-links">', linkMuseu, linkImagem, "</div>",
+  ].join("");
 }
 
 export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio }) {
@@ -53,14 +94,16 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
   PINTURAS.forEach((p, indice) => {
     const ehOeste = p.parede === "oeste";
     const x = ehOeste ? -SALA.meiaLargura + 0.07 : SALA.meiaLargura - 0.07;
-    const normal = ehOeste ? 1 : -1; // direção para dentro da sala
+    const normal = ehOeste ? 1 : -1;
+    const larguraTela = p.largura || LARGURA_TELA;
+    const alturaTela = p.altura || ALTURA_TELA;
 
     const grupo = new THREE.Group();
     grupo.position.set(x, Y_CENTRO, p.z);
     grupo.rotation.y = ehOeste ? Math.PI / 2 : -Math.PI / 2;
 
     const moldura = new THREE.Mesh(
-      new THREE.BoxGeometry(LARGURA_TELA + 0.2, ALTURA_TELA + 0.2, 0.1),
+      new THREE.BoxGeometry(larguraTela + 0.2, alturaTela + 0.2, 0.1),
       matDourado
     );
     moldura.position.z = -0.05 * normal;
@@ -69,34 +112,51 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
     let matTela;
     if (p.implementada) {
       matTela = new THREE.MeshStandardMaterial({ color: 0x0c1830, roughness: 0.6 });
-      loader.load(p.imagem, (tex) => {
-        tex.colorSpace = THREE.SRGBColorSpace;
-        matTela.map = tex;
-        matTela.color.set(0xffffff);
-        matTela.needsUpdate = true;
-      });
+      loader.load(
+        p.imagem,
+        (tex) => {
+          tex.colorSpace = THREE.SRGBColorSpace;
+          matTela.map = tex;
+          matTela.color.set(0xffffff);
+          matTela.needsUpdate = true;
+        },
+        undefined,
+        (erro) => {
+          console.warn("Não foi possível carregar a reprodução de " + p.titulo, erro);
+          matTela.color.set(0x24324a);
+          matTela.needsUpdate = true;
+        }
+      );
     } else {
       matTela = new THREE.MeshStandardMaterial({
         map: texturaEmPreparacao(THREE, p),
         roughness: 0.7,
       });
     }
-    const tela = new THREE.Mesh(new THREE.PlaneGeometry(LARGURA_TELA, ALTURA_TELA), matTela);
+
+    const tela = new THREE.Mesh(new THREE.PlaneGeometry(larguraTela, alturaTela), matTela);
     tela.position.z = 0.01 * normal;
     grupo.add(tela);
 
     scene.add(grupo);
 
-    // holofote dourado dedicado a esta pintura
-    const spot = new THREE.SpotLight(0xffe3b0, p.implementada ? 26 : 14, 9, Math.PI / 7, 0.45, 1.6);
+    // Cada obra recebe um foco de luz próprio, com temperatura ajustada à paleta.
+    const spot = new THREE.SpotLight(
+      p.corLuz ?? 0xffe3b0,
+      p.intensidadeLuz ?? (p.implementada ? 26 : 14),
+      9,
+      Math.PI / 7,
+      0.45,
+      1.6
+    );
     spot.position.set(x + normal * 1.1, Y_CENTRO + 2.1, p.z + 0.4);
     spot.target = grupo;
     scene.add(spot);
     scene.add(spot.target);
 
-    // plano invisível um pouco maior, para facilitar a mira
+    // Plano invisível um pouco maior que a moldura para facilitar a mira.
     const alvo = new THREE.Mesh(
-      new THREE.PlaneGeometry(LARGURA_TELA + 0.5, ALTURA_TELA + 0.5),
+      new THREE.PlaneGeometry(larguraTela + 0.5, alturaTela + 0.5),
       new THREE.MeshBasicMaterial({ visible: false })
     );
     alvo.position.copy(grupo.position);
@@ -141,7 +201,7 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
     const registro = registros[alvoAtual.userData.indicePintura];
 
     if (!registro.config.implementada) {
-      mostrarAviso(`"${registro.config.titulo}" — exposição em preparação. Volte em breve.`);
+      mostrarAviso('"' + registro.config.titulo + '" — exposição em preparação. Volte em breve.');
       return;
     }
 
@@ -178,8 +238,8 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
         const registro = registros[alvoAtual.userData.indicePintura];
         if (dica) {
           dica.textContent = registro.config.implementada
-            ? `${registro.config.titulo} — toque ou clique para se aproximar`
-            : `${registro.config.titulo} — em preparação`;
+            ? registro.config.titulo + " — toque ou clique para se aproximar"
+            : registro.config.titulo + " — em preparação";
           dica.classList.add("visivel");
         }
       } else {
