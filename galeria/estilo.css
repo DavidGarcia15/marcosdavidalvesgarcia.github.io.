@@ -19,6 +19,14 @@
 
 * { box-sizing: border-box; }
 
+/* Garantia: nenhuma regra de componente abaixo (display:flex/grid/block)
+   pode vencer o atributo "hidden" do HTML. Sem isto, um elemento com
+   `hidden` e também uma classe com `display:` definido continua visível,
+   porque a regra do autor tem prioridade sobre o `[hidden]{display:none}`
+   padrão do navegador. Foi exatamente isto que fazia o aviso de "sem
+   suporte a 3D" aparecer sempre, em qualquer aparelho. */
+[hidden] { display: none !important; }
+
 html, body {
   height: 100%;
   margin: 0;

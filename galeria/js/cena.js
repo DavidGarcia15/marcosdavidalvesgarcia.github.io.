@@ -17,9 +17,16 @@ import {
   texturaInscricao,
 } from "./texturas.js";
 
-export function criarCena(THREE) {
+export function criarCena(THREE, nivel = "alto") {
   const scene = new THREE.Scene();
   scene.fog = new THREE.FogExp2(0x060b16, 0.028);
+
+  // Qualidade adaptativa: hardware modesto reduz custo, nunca recursos —
+  // ver detectarNivelGrafico() em main.js.
+  const qtdEstrelas = nivel === "baixo" ? 110 : nivel === "medio" ? 180 : 260;
+  const resolucaoCeu = nivel === "baixo" ? 512 : 1024;
+  const qtdParticulasAlvo = nivel === "baixo" ? 60 : nivel === "medio" ? 110 : 160;
+  const sombraLustre = nivel !== "baixo";
 
   const { meiaLargura: L, meiaProfundidade: P, altura: H, raioColuna, colunasZ } = SALA;
 
@@ -54,7 +61,11 @@ export function criarCena(THREE) {
   scene.add(piso);
 
   // ---------- Teto (céu estrelado) ----------
-  const ceu = texturaCeuEstrelado(THREE, { estrelas: 260 });
+  const ceu = texturaCeuEstrelado(THREE, {
+    estrelas: qtdEstrelas,
+    largura: resolucaoCeu,
+    altura: resolucaoCeu,
+  });
   const teto = new THREE.Mesh(
     new THREE.PlaneGeometry(L * 2, P * 2),
     new THREE.MeshStandardMaterial({
@@ -234,9 +245,12 @@ export function criarCena(THREE) {
 
   const luzLustre = new THREE.PointLight(0xffd9a0, 42, 17, 2);
   luzLustre.position.set(0, 5.5, 0);
-  luzLustre.castShadow = true;
-  luzLustre.shadow.mapSize.set(1024, 1024);
-  luzLustre.shadow.bias = -0.002;
+  luzLustre.castShadow = sombraLustre;
+  if (sombraLustre) {
+    const tamanhoSombra = nivel === "alto" ? 1024 : 512;
+    luzLustre.shadow.mapSize.set(tamanhoSombra, tamanhoSombra);
+    luzLustre.shadow.bias = -0.002;
+  }
   scene.add(luzLustre);
 
   // ---------- Luz ambiente e de preenchimento ----------
@@ -245,7 +259,7 @@ export function criarCena(THREE) {
   scene.add(hemi);
 
   // ---------- Poeira luminosa flutuante ----------
-  const qtdParticulas = 160;
+  const qtdParticulas = qtdParticulasAlvo;
   const posicoes = new Float32Array(qtdParticulas * 3);
   const fases = new Float32Array(qtdParticulas);
   for (let i = 0; i < qtdParticulas; i++) {

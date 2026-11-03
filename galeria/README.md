@@ -47,6 +47,30 @@ reprodução de "A Noite Estrelada" (mesma URL do Wikimedia já usada em
   `main.js`, após o clique em "Entrar na galeria" (já é o gesto do usuário
   exigido pelos navegadores para liberar áudio).
 
+## Qualidade gráfica adaptativa
+
+`main.js` estima um nível — `"baixo"`, `"medio"` ou `"alto"` — a partir de
+`navigator.hardwareConcurrency`, `navigator.deviceMemory` (quando o
+navegador expõe) e do tamanho da tela. **Isso só ajusta quanto custa
+renderizar** (sombra do lustre, resolução do céu estrelado, quantidade de
+partículas, pixel ratio, antialiasing) — nunca decide se o 3D roda. A
+decisão de rodar ou não depende só de `detectarSuporteWebGL()`
+conseguir criar um contexto WebGL de verdade. Se precisar de mais um
+parâmetro adaptativo no futuro, ele entra em `criarCena(THREE, nivel)` do
+mesmo jeito que `qtdEstrelas`/`qtdParticulasAlvo`/`sombraLustre`.
+
+### Lição aprendida: `hidden` pode ser silenciosamente ignorado
+Um elemento com o atributo HTML `hidden` só fica de fato invisível por uma
+regra `[hidden] { display: none }` do navegador — e **qualquer** regra do
+nosso CSS que defina `display` para esse elemento (mesmo vindo de uma
+classe) tem prioridade sobre ela. Foi exatamente isso que, na primeira
+versão, fazia o aviso de "sem suporte a 3D" aparecer sempre, em qualquer
+aparelho: `.fallback { display: flex; ... }` ignorava o `hidden`. A
+correção foi uma regra `[hidden] { display: none !important; }` logo no
+topo de `estilo.css` — **mantenha essa regra** se for mexer na folha de
+estilos, e tome cuidado ao criar um novo painel/overlay que use `hidden`
+para esconder.
+
 ## Limitações conhecidas desta primeira versão
 
 - Apenas a pintura "A Noite Estrelada" tem interação completa; as outras
