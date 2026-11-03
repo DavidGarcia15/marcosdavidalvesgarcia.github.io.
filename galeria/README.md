@@ -1,12 +1,14 @@
 # Galeria Marcos David — Sala 1 (fundação do museu)
 
-Primeira versão do museu virtual 3D descrito no projeto da Galeria. Esta
-etapa implementa **apenas o salão principal de entrada**: arquitetura,
-iluminação, movimentação em primeira pessoa e a interação completa com a
-primeira pintura ("A Noite Estrelada"). As demais funcionalidades descritas
-no projeto completo (curador com IA, salas adicionais, personagens
-históricos, trilha sonora) ainda não foram implementadas — ver "Próximos
-passos" abaixo.
+O museu virtual 3D possui um salão principal com arquitetura clássica,
+iluminação adaptativa, movimentação em primeira pessoa e quatro exposições
+interativas: "A Noite Estrelada", "Nenúfares", "O Astrônomo" e "O Caminhante
+sobre o Mar de Névoa". Cada obra tem reprodução própria, proporção de moldura,
+foco de luz, aproximação cinematográfica e painel curatorial com contexto,
+detalhes para observar e ligação temática com a galeria.
+
+As próximas etapas do projeto são um curador com IA, personagens históricos,
+mais salas e trilha sonora.
 
 ## Estrutura dos arquivos
 
@@ -29,16 +31,12 @@ reprodução de "A Noite Estrelada" (mesma URL do Wikimedia já usada em
 
 ## Como estender (próximas salas e funcionalidades)
 
-- **Novas pinturas / salas**: adicionar entradas em `PINTURAS` (em
-  `config.js`) com `implementada: true` e os textos reais; `pinturas.js` já
-  sabe criar a moldura, o holofote e a interação completa a partir disso.
-  Uma nova sala (corredor, segunda sala de exposição) deve virar uma nova
-  função em `cena.js` (ex.: `criarCorredorNorte()`), chamada a partir de
-  `criarCena()`, reaproveitando os materiais já definidos.
-- **Curador com IA**: `config.js` já centraliza os dados reais do
-  portfólio (`CONQUISTAS_DESTAQUE`) justamente para servir como fonte de
-  conhecimento também do curador, quando essa etapa for implementada —
-  evita manter dois lugares com a mesma informação.
+- **Novas pinturas / salas**: adicionar uma entrada em `PINTURAS` (em
+  `config.js`) com imagem, créditos, proporção, textos curatoriais e fontes.
+  `pinturas.js` gera moldura, iluminação, plano de interação e painel a
+  partir desses dados. Uma nova sala deve virar uma função em `cena.js`.
+- **Curador com IA**: `config.js` concentra os metadados e textos das obras,
+  servindo como base para um curador futuro sem duplicar informações.
 - **Personagens históricos**: nenhuma arte de personagem foi criada nesta
   etapa (não há ferramenta de geração de imagem disponível neste ambiente).
   Será necessário encomendar/gerar essas artes separadamente antes de
@@ -71,12 +69,26 @@ topo de `estilo.css` — **mantenha essa regra** se for mexer na folha de
 estilos, e tome cuidado ao criar um novo painel/overlay que use `hidden`
 para esconder.
 
-## Limitações conhecidas desta primeira versão
+## Créditos das reproduções
 
-- Apenas a pintura "A Noite Estrelada" tem interação completa; as outras
-  três exibem moldura, holofote e uma placa "em preparação".
-- Sem efeito de desfoque real no ambiente ao redor durante a aproximação
-  (usa uma vinheta escurecida, mais leve para carregar).
-- Sem áudio/trilha sonora ainda.
-- Em teclado "puro" (sem mouse/toque), dá para entrar e fechar o painel da
-  pintura, mas não dá para mirar nela — a mira é sempre o centro da tela.
+- **A Noite Estrelada**: Google Art Project / Wikimedia Commons, obra em
+  domínio público.
+- **Nenúfares (1916)**: fotografia de Sailko, Wikimedia Commons, CC BY-SA 3.0.
+  O crédito e o link da licença são exibidos no painel da obra.
+- **O Astrônomo**: reprodução de obra em domínio público, Wikimedia Commons
+  (PD-Art).
+- **O Caminhante sobre o Mar de Névoa**: reprodução de obra em domínio
+  público, Wikimedia Commons (PD-Art).
+
+Os links para as páginas de origem das reproduções e para as fichas dos
+museus ficam nos respectivos painéis.
+
+## Limitações atuais
+
+- O salão principal contém quatro exposições; novas salas e pinturas ainda
+  podem ser adicionadas.
+- A aproximação utiliza uma vinheta escurecida, não um desfoque óptico real.
+- O curador com IA, os personagens históricos e a trilha sonora ainda não
+  foram implementados.
+- Em teclado sem mouse, a mira continua no centro da tela; a exploração foi
+  desenhada principalmente para mouse ou controles de toque.
