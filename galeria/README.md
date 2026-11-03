@@ -73,8 +73,9 @@ para esconder.
 
 - **A Noite Estrelada**: Google Art Project / Wikimedia Commons, obra em
   domínio público.
-- **Nenúfares (1916)**: fotografia de Sailko, Wikimedia Commons, CC BY-SA 3.0.
-  O crédito e o link da licença são exibidos no painel da obra.
+- **Nenúfares (1916)**: reprodução do Google Art Project, via Wikimedia
+  Commons, identificada como domínio público (PD-Art). A página de origem
+  está ligada no painel da obra.
 - **O Astrônomo**: reprodução de obra em domínio público, Wikimedia Commons
   (PD-Art).
 - **O Caminhante sobre o Mar de Névoa**: reprodução de obra em domínio
