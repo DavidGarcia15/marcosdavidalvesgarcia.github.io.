@@ -1,2 +1,0 @@
-Teste temporário de permissão de escrita do ChatGPT Codex Connector.
-Este arquivo será removido em seguida.
