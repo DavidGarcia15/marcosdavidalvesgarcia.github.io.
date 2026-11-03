@@ -382,3 +382,119 @@ body.modo-toque .botao-interagir { display: block; }
 @media (prefers-reduced-motion: reduce) {
   .introducao, .vinheta, .painel-pintura, .aviso-temp { transition: none; }
 }
+
+
+/* ---------- Conteúdo curatorial dos painéis ---------- */
+.painel-secao {
+  border-top: 1px solid rgba(220, 187, 121, 0.2);
+  padding-top: 0.85rem;
+  margin-top: 0.95rem;
+}
+
+.painel-secao h3 {
+  margin: 0 0 0.45rem;
+  color: var(--gold-on-navy);
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 500;
+}
+
+.painel-secao p {
+  color: var(--ink);
+  font-size: 0.92rem;
+  line-height: 1.62;
+  margin: 0;
+}
+
+.painel-lista-observacao {
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+}
+
+.painel-lista-observacao li {
+  position: relative;
+  padding-left: 1rem;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.painel-lista-observacao li::before {
+  content: "✦";
+  position: absolute;
+  left: 0;
+  top: 0.02rem;
+  color: var(--gold-on-navy);
+  font-size: 0.72rem;
+}
+
+.painel-destaque {
+  margin: 1.1rem 0;
+  padding: 0.9rem 1rem;
+  border-left: 2px solid var(--gold-on-navy);
+  background: rgba(220, 187, 121, 0.07);
+  border-radius: 0 3px 3px 0;
+}
+
+.painel-destaque span {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--gold-on-navy);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+}
+
+.painel-destaque p,
+.painel-nota {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.9rem;
+  line-height: 1.58;
+}
+
+.painel-nota {
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  font-style: italic;
+  margin: 0.8rem 0;
+}
+
+.painel-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.7rem 1rem;
+  margin-top: 0.8rem;
+}
+
+.painel-link-fonte {
+  color: var(--gold-on-navy);
+  font-size: 0.82rem;
+  text-underline-offset: 3px;
+}
+
+.painel-link-fonte:hover {
+  color: var(--ink);
+}
+
+.painel-credito {
+  margin-top: 1rem;
+  margin-bottom: 0.2rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 560px) {
+  .painel-links {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .painel-links .btn-painel {
+    text-align: center;
+  }
+}
