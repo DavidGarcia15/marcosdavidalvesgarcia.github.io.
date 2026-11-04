@@ -28,7 +28,7 @@ function criarTexturaPlaca(THREE, titulo, subtitulo, pequeno = "") {
   ctx.font = "600 34px Georgia, serif";
   ctx.fillText(pequeno.toLocaleUpperCase("pt-BR"), 512, 112);
   ctx.fillStyle = "#f4efe4";
-  const palavras = titulo.split(/\\s+/);
+  const palavras = titulo.split(" ");
   const tituloLinhas = [];
   let linhaAtual = "";
   for (const palavra of palavras) {
@@ -90,14 +90,6 @@ export function criarAlasMuseu(THREE, scene, nivel = "alto") {
     mesh.position.set(x, y, z);
     mesh.rotation.y = rotY;
     mesh.receiveShadow = true;
-    scene.add(mesh);
-    return mesh;
-  }
-
-  function planoHorizontal(largura, profundidade, material, y, z) {
-    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(largura, profundidade), material);
-    mesh.rotation.x = -Math.PI / 2;
-    mesh.position.set(0, y, z);
     scene.add(mesh);
     return mesh;
   }
@@ -169,10 +161,10 @@ export function criarAlasMuseu(THREE, scene, nivel = "alto") {
 
     caixa(0.62, 0.48, 5.55, pedraClara, x, 7.26, z);
     const letreiro = new THREE.Group();
-    letreiro.position.set(x + (lado < 0 ? 0.34 : -0.34), 8.05, z);
+    letreiro.position.set(x + (lado < 0 ? 0.34 : -0.34), 4.75, z);
     letreiro.rotation.y = sinal;
     letreiro.userData.salaId = sala.id;
-    criarPlaca(letreiro, 4.7, 1.05, sala.titulo, "Entre para explorar", sala.setor);
+    criarPlaca(letreiro, 5.0, 1.55, sala.titulo, "Entre para explorar", sala.setor);
     scene.add(letreiro);
   }
 
@@ -269,7 +261,6 @@ export function criarAlasMuseu(THREE, scene, nivel = "alto") {
   ];
 
   configuracoes.forEach(({ sala, lado, zCentro, xCentro }) => {
-    const xInterno = lado * 14;
     const xExterno = lado * 42;
     const zFrente = zCentro + 6.3;
     const zFundo = zCentro - 6.3;
