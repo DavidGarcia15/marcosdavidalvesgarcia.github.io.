@@ -1,14 +1,18 @@
-# Galeria Marcos David — Sala 1 (fundação do museu)
+# Museu-biblioteca Marcos David
 
-O museu virtual 3D possui um salão principal com arquitetura clássica,
-iluminação adaptativa, movimentação em primeira pessoa e quatro exposições
-interativas: "A Noite Estrelada", "Nenúfares", "O Astrônomo" e "O Caminhante
-sobre o Mar de Névoa". Cada obra tem reprodução própria, proporção de moldura,
-foco de luz, aproximação cinematográfica e painel curatorial com contexto,
-detalhes para observar e ligação temática com a galeria.
+O museu virtual é organizado como um edifício modular com uma Galeria Artística,
+um Átrio Central e quatro salas temáticas iniciais. A galeria preserva suas
+quatro exposições interativas — "A Noite Estrelada", "Nenúfares", "O Astrônomo"
+e "O Caminhante sobre o Mar de Névoa" — e se conecta ao novo núcleo do edifício.
 
-As próximas etapas do projeto são um curador com IA, personagens históricos,
-mais salas e trilha sonora.
+O Átrio Central distribui o visitante entre a Biblioteca do Conhecimento
+(Sala de História e Sala de Geografia) e o Centro de Aprendizagem
+(Sala de Raciocínio e Laboratório de Investigação). Cada sala possui uma
+identidade arquitetônica, sinalização interativa e conteúdo curatorial próprio.
+
+A estrutura foi pensada para receber novas salas sem reconstruir o museu:
+dados, geometria, colisões, interações e apresentação móvel ficam separados
+em módulos com responsabilidades definidas.
 
 ## Estrutura dos arquivos
 
@@ -16,12 +20,16 @@ mais salas e trilha sonora.
 |---|---|
 | `index.html` | Estrutura da página: canvas, overlays de UI (introdução, painel, joystick) |
 | `estilo.css` | Toda a aparência dos overlays (reaproveita a paleta de `/style.css`) |
-| `js/config.js` | Dados de conteúdo: dimensões da sala, lista de pinturas, conquistas em destaque |
+| `js/config.js` | Dimensões da galeria artística e dados das pinturas |
+| `js/salas.js` | Catálogo de salas: textos, temas e propostas de exploração |
+| `js/alas.js` | Modelagem do átrio central, portais, sinalização e quatro salas temáticas |
 | `js/texturas.js` | Texturas geradas por `<canvas>` (mármore, céu estrelado, inscrição, placas) |
 | `js/cena.js` | Arquitetura, iluminação e partículas do salão |
-| `js/controles.js` | Movimentação (teclado/mouse/toque) e colisão |
-| `js/pinturas.js` | Molduras, mira/raycaster, aproximação cinematográfica e painel |
-| `js/main.js` | Liga tudo e roda o loop de renderização |
+| `js/controles.js` | Movimentação (teclado/mouse/toque) e colisões entre galeria, átrio e alas |
+| `js/pinturas.js` | Pinturas, personagens, toca-discos, mira/raycaster e painéis de pinturas/salas |
+| `js/main.js` | Liga a galeria e as alas, controla qualidade gráfica e loop de renderização |
+| `js/mobile.js` | Experiência editorial leve para telas móveis, com exposições e diretório das salas |
+| `museu.css` | Estilos do diretório móvel do museu-biblioteca |
 
 Tecnologia: Three.js via ES modules, carregado por CDN (import map no
 `index.html`, versão fixada em `0.160.0`). Nenhuma dependência externa além
@@ -29,21 +37,39 @@ disso — texturas são geradas por código, sem arquivos de imagem, exceto a
 reprodução de "A Noite Estrelada" (mesma URL do Wikimedia já usada em
 `/style.css`).
 
-## Como estender (próximas salas e funcionalidades)
+## Como estender o museu-biblioteca
 
-- **Novas pinturas / salas**: adicionar uma entrada em `PINTURAS` (em
-  `config.js`) com imagem, créditos, proporção, textos curatoriais e fontes.
-  `pinturas.js` gera moldura, iluminação, plano de interação e painel a
-  partir desses dados. Uma nova sala deve virar uma função em `cena.js`.
-- **Curador com IA**: `config.js` concentra os metadados e textos das obras,
-  servindo como base para um curador futuro sem duplicar informações.
-- **Personagens históricos**: nenhuma arte de personagem foi criada nesta
-  etapa (não há ferramenta de geração de imagem disponível neste ambiente).
-  Será necessário encomendar/gerar essas artes separadamente antes de
-  integrá-las.
-- **Trilha sonora**: ainda não implementada; o ponto de entrada natural é
-  `main.js`, após o clique em "Entrar na galeria" (já é o gesto do usuário
-  exigido pelos navegadores para liberar áudio).
+A arquitetura separa o conteúdo do desenho físico. Para criar uma nova sala:
+
+1. Acrescente o registro em `js/salas.js`, com `id`, `titulo`, `setor`,
+   `descricao`, `temas`, `convite` e `orientacao`.
+2. Acrescente a posição, o portal, a geometria e a decoração em
+   `js/alas.js`. Use os helpers existentes para pisos, paredes, caixas,
+   placas e luzes.
+3. Atualize os limites e os corredores em `js/controles.js`, para que a
+   circulação permita entrar e sair sem atravessar paredes ou colunas.
+4. A interação dos letreiros e os painéis de conteúdo são gerados a partir do
+   catálogo em `salas.js` e já são tratados por `pinturas.js`.
+5. Inclua a sala no diretório móvel, que lê automaticamente o catálogo
+   `SALAS_MUSEU` em `mobile.js`.
+
+As salas atuais são módulos independentes. Não é necessário adicionar fotos,
+medalhas ou certificados para criar uma nova área: texto curatorial,
+elementos arquitetônicos e experiências interativas já podem dar identidade
+ao espaço.
+
+## Organização espacial atual
+
+- **Galeria Artística:** salão original; preserva o ponto de entrada e as quatro
+  exposições existentes. O novo portal fica no fundo da sala.
+- **Átrio Central:** distribui o visitante entre as alas e funciona como núcleo
+  de orientação do edifício.
+- **Biblioteca do Conhecimento:** ala oeste, com História e Geografia.
+- **Centro de Aprendizagem:** ala leste, com Raciocínio e Investigação.
+
+A versão 3D é usada em telas maiores. Em celulares, a página oferece uma
+experiência editorial leve, com as quatro exposições, o diretório das salas,
+o player de música e Atena. O diretório móvel não simula a caminhada 3D.
 
 ## Qualidade gráfica adaptativa
 
@@ -86,10 +112,12 @@ museus ficam nos respectivos painéis.
 
 ## Limitações atuais
 
-- O salão principal contém quatro exposições; novas salas e pinturas ainda
-  podem ser adicionadas.
-- A aproximação utiliza uma vinheta escurecida, não um desfoque óptico real.
-- O curador com IA, os personagens históricos e a trilha sonora ainda não
-  foram implementados.
+- A primeira expansão do museu-biblioteca contém quatro salas temáticas. A
+  arquitetura permite ampliar o catálogo, mas a adição de uma nova sala ainda
+  exige modelagem física e atualização dos limites de circulação.
+- A aproximação das pinturas utiliza uma vinheta escurecida, não um desfoque
+  óptico real.
+- Atena usa um acervo curado com respostas determinísticas; não é uma IA
+  generativa.
 - Em teclado sem mouse, a mira continua no centro da tela; a exploração foi
   desenhada principalmente para mouse ou controles de toque.
