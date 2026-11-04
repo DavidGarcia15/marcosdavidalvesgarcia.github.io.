@@ -114,7 +114,7 @@ async function iniciar() {
 
     const camera = new THREE.PerspectiveCamera(68, window.innerWidth / window.innerHeight, 0.1, 100);
     camera.position.set(0, 1.65, 6.4);
-    camera.rotation.y = Math.PI; // apresentação inicial voltada para o portal de entrada
+    camera.rotation.y = 0; // apresentação inicial voltada para dentro do salão
 
     const { scene, atualizarParticulas, colunas } = criarCena(THREE, nivel);
 
