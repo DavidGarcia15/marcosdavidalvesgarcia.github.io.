@@ -1,8 +1,6 @@
 /*
  * Galeria Marcos David — experiência móvel leve
- * -----------------------------------------------
- * Em celulares, apresenta as mesmas exposições sem WebGL/Three.js.
- * Isso evita renderização 3D contínua e reduz consumo de GPU e memória.
+ * Em celulares, apresenta as exposições sem WebGL/Three.js.
  */
 import { PINTURAS } from "./config.js";
 import { responderAtena, PERGUNTAS_ATENA } from "./atena.js";
@@ -11,58 +9,9 @@ function escapar(valor) {
   return String(valor ?? "").replace(/[&<>"']/g, (c) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
   })[c]);
-
-  const atenaForm = document.getElementById("mobile-atena-form");
-  const atenaInput = document.getElementById("mobile-atena-pergunta");
-  const atenaMensagens = document.getElementById("mobile-atena-mensagens");
-
-  function responderNoCelular(pergunta) {
-    const visitante = document.createElement("p");
-    visitante.className = "mobile-atena-visitante";
-    visitante.textContent = pergunta;
-    atenaMensagens.appendChild(visitante);
-
-    const resultado = responderAtena(pergunta);
-    const resposta = document.createElement("p");
-    resposta.className = "mobile-atena-resposta";
-    resposta.textContent = resultado.texto;
-    atenaMensagens.appendChild(resposta);
-
-    if (resultado.fontes && resultado.fontes.length) {
-      const fontes = document.createElement("div");
-      fontes.className = "mobile-atena-fontes";
-      resultado.fontes.forEach((fonte) => {
-        const link = document.createElement("a");
-        link.href = fonte.url;
-        link.textContent = fonte.texto;
-        if (/^https?:/i.test(fonte.url)) {
-          link.target = "_blank";
-          link.rel = "noopener noreferrer";
-        }
-        fontes.appendChild(link);
-      });
-      atenaMensagens.appendChild(fontes);
-    }
-    atenaMensagens.scrollTop = atenaMensagens.scrollHeight;
-  }
-
-  if (atenaForm && atenaInput && atenaMensagens) {
-    atenaForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const pergunta = atenaInput.value.trim();
-      if (!pergunta) return;
-      responderNoCelular(pergunta);
-      atenaInput.value = "";
-    });
-    raiz.querySelectorAll("[data-atena-pergunta]").forEach((botao) => {
-      botao.addEventListener("click", () => responderNoCelular(botao.getAttribute("data-atena-pergunta")));
-    });
-  }
-
 }
 
 function imagemLeve(url) {
-  // As miniaturas de 640 px são suficientes para a visualização no celular.
   return String(url || "").replace(/\/(?:960|1280)px_/, "/640px_");
 }
 
@@ -103,9 +52,40 @@ function montarExposicao(p, indice) {
     </article>`;
 }
 
+function responderNoCelular(pergunta, mensagens) {
+  const visitante = document.createElement("p");
+  visitante.className = "mobile-atena-visitante";
+  visitante.textContent = pergunta;
+  mensagens.appendChild(visitante);
+
+  const resultado = responderAtena(pergunta);
+  const resposta = document.createElement("p");
+  resposta.className = "mobile-atena-resposta";
+  resposta.textContent = resultado.texto;
+  mensagens.appendChild(resposta);
+
+  if (resultado.fontes && resultado.fontes.length) {
+    const fontes = document.createElement("div");
+    fontes.className = "mobile-atena-fontes";
+    resultado.fontes.forEach((fonte) => {
+      const link = document.createElement("a");
+      link.href = fonte.url;
+      link.textContent = fonte.texto;
+      if (/^https?:/i.test(fonte.url)) {
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+      }
+      fontes.appendChild(link);
+    });
+    mensagens.appendChild(fontes);
+  }
+  mensagens.scrollTop = mensagens.scrollHeight;
+}
+
 export function iniciarGaleriaMobile() {
   const raiz = document.getElementById("mobile-gallery");
   if (!raiz) return;
+
   raiz.innerHTML = `
     <header class="mobile-cabecalho">
       <p class="mobile-eyebrow">Galeria Marcos David</p>
@@ -135,4 +115,20 @@ export function iniciarGaleriaMobile() {
     </section>
     <footer class="mobile-rodape">Galeria Marcos David <span>·</span> Arte, conhecimento e trajetória</footer>
   `;
+
+  const form = document.getElementById("mobile-atena-form");
+  const input = document.getElementById("mobile-atena-pergunta");
+  const mensagens = document.getElementById("mobile-atena-mensagens");
+  if (form && input && mensagens) {
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const pergunta = input.value.trim();
+      if (!pergunta) return;
+      responderNoCelular(pergunta, mensagens);
+      input.value = "";
+    });
+    raiz.querySelectorAll("[data-atena-pergunta]").forEach((botao) => {
+      botao.addEventListener("click", () => responderNoCelular(botao.getAttribute("data-atena-pergunta"), mensagens));
+    });
+  }
 }
