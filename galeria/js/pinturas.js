@@ -382,6 +382,7 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
   function atualizar(dt) {
     const conversaAtena = estado === "painel-aberto" && !!painelConteudo?.querySelector(".guia-chat");
     guiaIA.atualizar(dt, destinosGuia, conversaAtena);
+    tocaDiscos.atualizar(dt);
     if (estado === "livre") {
       // O artista só permanece exposto enquanto o visitante está perto
       // daquela obra. Ao sair da área, ocultamos também sua hitbox.
