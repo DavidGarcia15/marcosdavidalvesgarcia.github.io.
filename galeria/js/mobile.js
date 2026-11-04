@@ -3,6 +3,7 @@
  * Em celulares, apresenta as exposições sem WebGL/Three.js.
  */
 import { PINTURAS } from "./config.js";
+import { SALAS_MUSEU } from "./salas.js";
 import { responderAtena, PERGUNTAS_ATENA } from "./atena.js";
 import { montarPlayerMobile } from "./toca-discos.js";
 
@@ -53,6 +54,28 @@ function montarExposicao(p, indice) {
     </article>`;
 }
 
+
+function montarSalaMobile(sala, indice) {
+  const temas = (sala.temas || []).map((tema) => "<li>" + escapar(tema) + "</li>").join("");
+  return `
+    <article class="mobile-sala">
+      <div class="mobile-sala-numero" aria-hidden="true">0${indice + 1}</div>
+      <div class="mobile-sala-conteudo">
+        <p class="mobile-sala-setor">${escapar(sala.setor)}</p>
+        <h3>${escapar(sala.titulo)}</h3>
+        <p>${escapar(sala.descricao)}</p>
+        <details>
+          <summary>Ver temas e proposta de exploração</summary>
+          <ul>${temas}</ul>
+          <div class="mobile-sala-convite">
+            <strong>Uma pergunta para investigar</strong>
+            <p>${escapar(sala.convite)}</p>
+          </div>
+        </details>
+      </div>
+    </article>`;
+}
+
 function responderNoCelular(pergunta, mensagens) {
   const visitante = document.createElement("p");
   visitante.className = "mobile-atena-visitante";
@@ -91,12 +114,20 @@ export function iniciarGaleriaMobile() {
     <header class="mobile-cabecalho">
       <p class="mobile-eyebrow">Galeria Marcos David</p>
       <h1>Um céu de conquistas</h1>
-      <p>Arte, conhecimento e trajetória. Explore as quatro exposições no seu próprio ritmo.</p>
+      <p>Arte, conhecimento e trajetória. Conheça a galeria artística e consulte o mapa das novas alas do museu-biblioteca.</p>
       <div class="mobile-linha-ornamental" aria-hidden="true">✦ ━━━━━━━━━ ✦</div>
     </header>
     <main class="mobile-lista-obras">
       ${PINTURAS.filter((p) => p.implementada).map(montarExposicao).join("")}
     </main>
+    <section class="mobile-salas" aria-labelledby="mobile-salas-title">
+      <p class="mobile-eyebrow">Mapa do museu</p>
+      <h2 id="mobile-salas-title">Átrio e salas do conhecimento</h2>
+      <p class="mobile-salas-intro">A partir da galeria artística, uma passagem leva ao átrio central. De lá, quatro salas temáticas formam as primeiras alas da biblioteca.</p>
+      <div class="mobile-salas-lista">
+        ${SALAS_MUSEU.map(montarSalaMobile).join("")}
+      </div>
+    </section>
     <section class="mobile-atena" aria-labelledby="mobile-atena-title">
       <p class="mobile-eyebrow">Guia do museu</p>
       <h2 id="mobile-atena-title">Pergunte à Atena</h2>
