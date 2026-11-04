@@ -17,7 +17,7 @@ function imagemLeve(url) {
   return String(url || "").replace(/\/(?:960|1280)px_/, "/640px_");
 }
 
-function montarExposicao(p) {
+function montarExposicao(p, indice) {
   const observacoes = (p.observar || []).map((item) => "<li>" + escapar(item) + "</li>").join("");
   const linkMuseu = p.linkSaibaMais
     ? '<a class="mobile-link" href="' + escapar(p.linkSaibaMais) + '" target="_blank" rel="noopener noreferrer">' +
@@ -31,7 +31,7 @@ function montarExposicao(p) {
     <article class="mobile-obra">
       <div class="mobile-moldura">
         <img src="${escapar(imagemLeve(p.imagem))}" alt="${escapar(p.titulo)} — pintura de ${escapar(p.artista)}"
-          loading="lazy" decoding="async" width="640" height="640">
+          loading="${indice === 0 ? "eager" : "lazy"}" decoding="async" ${indice === 0 ? 'fetchpriority="high"' : ""} width="${Math.round((p.largura || 1) * 100)}" height="${Math.round((p.altura || 1) * 100)}">
       </div>
       <div class="mobile-obra-texto">
         <p class="mobile-tema">${escapar(p.tema)}</p>
