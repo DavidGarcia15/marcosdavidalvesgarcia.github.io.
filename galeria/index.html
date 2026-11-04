@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
-<title>Galeria Marcos David | Museu Virtual 3D</title>
-<meta name="description" content="Museu virtual 3D de Marcos David Alves Garcia — caminhe por um salão clássico e explore quatro pinturas de Van Gogh, Monet, Vermeer e Caspar David Friedrich, com contexto histórico e detalhes de cada obra.">
+<title>Museu-biblioteca Marcos David | Arte e Conhecimento 3D</title>
+<meta name="description" content="Museu-biblioteca virtual de Marcos David Alves Garcia: uma galeria artística conectada a um átrio central e quatro salas de História, Geografia, Raciocínio e Investigação.">
 <link rel="canonical" href="https://davidgarcia15.github.io/marcosdavidalvesgarcia.github.io./galeria/">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='31' fill='%230e2038'/%3E%3Ccircle cx='32' cy='32' r='31' fill='none' stroke='%23b8914a' stroke-width='2'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' fill='%23dcbb79' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
@@ -15,6 +15,7 @@
 
 <link rel="stylesheet" href="estilo.css">
 <link rel="stylesheet" href="toca-discos.css">
+<link rel="stylesheet" href="museu.css">
 
 <script type="importmap">
 {
@@ -41,7 +42,7 @@
 <div id="mobile-gallery" class="mobile-gallery" hidden></div>
 
 <div id="tela-carregamento" class="tela-carregamento">
-  <p>Preparando o salão principal…</p>
+  <p>Preparando o museu-biblioteca…</p>
 </div>
 
 <div id="fallback-sem-webgl" class="fallback" hidden>
@@ -59,14 +60,14 @@
 <div id="introducao" class="introducao">
   <div class="introducao-cartao">
     <p class="eyebrow">Galeria Marcos David</p>
-    <h1>Bem-vindo ao salão principal</h1>
-    <p>Caminhe pelo museu em primeira pessoa e explore quatro exposições: de Van Gogh, Monet, Vermeer e Caspar David Friedrich. Aproxime-se das pinturas para descobrir seus detalhes e encontre os artistas em pessoa: mire neles e pressione E para conversar.</p>
+    <h1>Bem-vindo ao museu-biblioteca</h1>
+    <p>Comece pela galeria artística e atravesse o portal ao fundo para chegar ao átrio central. De lá, explore as primeiras salas do museu-biblioteca: História, Geografia, Raciocínio e Investigação. Aproxime-se das placas e pressione E para descobrir o conteúdo de cada ambiente.</p>
     <ul class="lista-controles">
       <li><strong>Computador</strong> — WASD ou setas para andar, mouse para olhar ao redor, clique para interagir</li>
       <li><strong>Celular</strong> — joystick para andar, arraste a tela para olhar, toque no botão para interagir</li>
     </ul>
-    <p class="aviso-guia-entrada">✦ Novidade em teste: conheça Atena, sua guia virtual. Ela estará esperando por você no salão.</p>
-    <button id="botao-entrar" type="button" class="btn-painel">Entrar na galeria</button>
+    <p class="aviso-guia-entrada">✦ Atena continua no salão artístico como guia virtual. As novas salas são módulos independentes e poderão receber novos conteúdos nas próximas expansões.</p>
+    <button id="botao-entrar" type="button" class="btn-painel">Entrar no museu</button>
   </div>
 </div>
 
