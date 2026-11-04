@@ -154,25 +154,63 @@ export function criarControles(THREE, { camera, domElement, colunas, aoInteragir
     document.body.classList.toggle("ponteiro-travado", document.pointerLockElement === domElement);
   });
 
-  // ---------- Colisão ----------
+  // ---------- Colisão do museu modular ----------
   function resolverColisao(pos) {
-    const dentroDoPortal = Math.abs(pos.x) < 2.2;
-    const foraDoMuseu = pos.z > SALA.meiaProfundidade + 0.55;
+    const x = pos.x;
+    const z = pos.z;
+    const estaNoCorredorLateral = (valorZ) =>
+      (valorZ > -19.45 && valorZ < -13.55) ||
+      (valorZ > -32.55 && valorZ < -26.65);
+    const foraDoMuseu = z > SALA.meiaProfundidade + 0.55;
 
     if (foraDoMuseu) {
-      // O visitante pode sair pelo portal e explorar o patamar exterior.
+      // O pórtico externo continua sendo a única saída para o exterior.
       pos.x = Math.max(-9.5, Math.min(9.5, pos.x));
-      const limiteMinimo = dentroDoPortal
-        ? SALA.meiaProfundidade - margemParede
-        : SALA.meiaProfundidade + 0.55;
-      pos.z = Math.max(limiteMinimo, Math.min(SALA.meiaProfundidade + 16, pos.z));
-    } else {
+      pos.z = Math.max(SALA.meiaProfundidade + 0.55, Math.min(SALA.meiaProfundidade + 16, pos.z));
+    } else if (z > -SALA.meiaProfundidade + margemParede) {
+      // Salão artístico original: mantém suas dimensões e o spawn intactos.
       pos.x = Math.max(-SALA.meiaLargura + margemParede, Math.min(SALA.meiaLargura - margemParede, pos.x));
-      const limiteFrente = dentroDoPortal
-        ? SALA.meiaProfundidade + 0.8
-        : SALA.meiaProfundidade - margemParede;
-      pos.z = Math.max(-SALA.meiaProfundidade + margemParede, Math.min(limiteFrente, pos.z));
+
+      // Portal sul para o pátio e novo portal norte para o átrio.
+      if (pos.z > SALA.meiaProfundidade - margemParede && Math.abs(pos.x) > 2.2) {
+        pos.z = SALA.meiaProfundidade - margemParede;
+      }
+      if (pos.z < -SALA.meiaProfundidade + margemParede && Math.abs(pos.x) > 3.1) {
+        pos.z = -SALA.meiaProfundidade + margemParede;
+      }
+      pos.z = Math.min(SALA.meiaProfundidade + 0.8, pos.z);
+    } else {
+      // Átrio central e quatro salas laterais.
+      pos.z = Math.max(-37.45, pos.z);
+
+      if (pos.x < -13.45 || pos.x > 13.45) {
+        const lado = pos.x < 0 ? -1 : 1;
+
+        // As alas só se conectam ao átrio pelas duas portas sinalizadas.
+        if (!estaNoCorredorLateral(pos.z)) {
+          pos.x = lado * 13.25;
+        } else {
+          pos.x = Math.max(-41.25, Math.min(41.25, pos.x));
+
+          // A parede divisória mantém História/Raciocínio separados de
+          // Geografia/Investigação. Cada sala tem seu próprio acesso.
+          if (pos.z > -23.0) {
+            pos.z = Math.max(-22.35, Math.min(-10.65, pos.z));
+          } else {
+            pos.z = Math.max(-35.35, Math.min(-23.65, pos.z));
+          }
+        }
+      } else {
+        pos.x = Math.max(-13.25, Math.min(13.25, pos.x));
+
+        // Parede norte do átrio e abertura central de retorno à galeria.
+        if (pos.z > -SALA.meiaProfundidade - margemParede && Math.abs(pos.x) > 3.1) {
+          pos.z = -SALA.meiaProfundidade - margemParede;
+        }
+      }
     }
+
+    // Colunas, pilastras e elementos estruturais têm colisão física simples.
     for (const col of colunas) {
       const dx = pos.x - col.x;
       const dz = pos.z - col.z;
