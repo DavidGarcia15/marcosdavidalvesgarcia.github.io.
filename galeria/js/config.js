@@ -7,11 +7,11 @@
 
 // Limites da sala principal — compartilhados por cena, controles e pinturas.
 export const SALA = {
-  meiaLargura: 12,
-  meiaProfundidade: 8,
-  altura: 9,
-  raioColuna: 0.42,
-  colunasZ: [-6, -2, 2, 6],
+  meiaLargura: 14,
+  meiaProfundidade: 10,
+  altura: 10,
+  raioColuna: 0.46,
+  colunasZ: [-7.5, -2.5, 2.5, 7.5],
   raioJogador: 0.4,
 };
 
