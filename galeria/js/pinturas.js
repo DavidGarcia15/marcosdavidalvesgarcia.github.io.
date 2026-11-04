@@ -247,16 +247,22 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
         camera.position.z - centroPersonagem.z
       );
 
-      if (direcao.lengthSq() < 0.001) {
+      const distanciaAtual = direcao.length();
+
+      if (distanciaAtual < 0.001) {
         direcao.set(0, 0, 1);
       } else {
         direcao.normalize();
       }
 
+      // Nunca recua para cumprir uma distância fixa. Se o visitante já
+      // estiver perto do artista, mantém a posição horizontal atual.
+      const distanciaFinal = Math.min(2.35, distanciaAtual);
+
       registro.posAproximacao = new THREE.Vector3(
-        centroPersonagem.x + direcao.x * 2.35,
+        centroPersonagem.x + direcao.x * distanciaFinal,
         1.65,
-        centroPersonagem.z + direcao.z * 2.35
+        centroPersonagem.z + direcao.z * distanciaFinal
       );
 
       const cameraAlvo = new THREE.Object3D();
