@@ -7,6 +7,7 @@
  */
 
 import { SALA, PINTURAS } from "./config.js";
+import { SALAS_MUSEU } from "./salas.js";
 import { texturaEmPreparacao } from "./texturas.js";
 import { criarPersonagem } from "./personagens.js";
 import { criarGuiaIA } from "./guia.js";
@@ -43,6 +44,24 @@ function montarPainelPersonagem(perfil) {
     '<section class="painel-secao"><h3>Uma curiosidade</h3><p>',
     escaparHTML(perfil.curiosidade), "</p></section>",
     '<p class="painel-nota">Esta é uma representação 3D estilizada, criada para a experiência educativa do museu.</p>'
+  ].join("");
+}
+
+function montarPainelSala(sala) {
+  const topicos = (sala.temas || [])
+    .map((tema) => "<li>" + escaparHTML(tema) + "</li>")
+    .join("");
+  return [
+    '<p class="painel-tema">', escaparHTML(sala.setor), "</p>",
+    "<h2>", escaparHTML(sala.titulo), "</h2>",
+    '<p class="painel-intro">', escaparHTML(sala.descricao), "</p>",
+    '<section class="painel-secao"><h3>Temas desta sala</h3><ul class="painel-lista-observacao">',
+    topicos,
+    "</ul></section>",
+    '<aside class="painel-destaque"><span>Proposta de exploração</span><p>',
+    escaparHTML(sala.convite),
+    "</p></aside>",
+    '<p class="painel-nota">', escaparHTML(sala.orientacao), "</p>",
   ].join("");
 }
 
@@ -95,7 +114,7 @@ function montarPainelHTML(p) {
   ].join("");
 }
 
-export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio }) {
+export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio, alvosSalas = [] }) {
   const raycaster = new THREE.Raycaster();
   raycaster.far = 15;
   const centro = new THREE.Vector2(0, 0);
@@ -104,7 +123,7 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
   const loader = new THREE.TextureLoader();
   loader.setCrossOrigin("anonymous");
 
-  const objetosInterativos = [];
+  const objetosInterativos = [...alvosSalas];
   const registros = [];
   const destinosGuia = [];
   const guiaIA = criarGuiaIA(THREE, scene);
@@ -298,6 +317,16 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
 
   function tentarInteragir() {
     if (estado !== "livre" || !alvoAtual) return;
+    if (alvoAtual.userData.tipoInteracao === "sala") {
+      const sala = SALAS_MUSEU.find((item) => item.id === alvoAtual.userData.salaId);
+      if (!sala || !painelConteudo) return;
+      painelConteudo.innerHTML = montarPainelSala(sala);
+      estado = "painel-aberto";
+      if (dica) dica.classList.remove("visivel");
+      if (painel) { painel.classList.add("aberto"); painel.focus(); }
+      aoMudarBloqueio(true);
+      return;
+    }
     if (alvoAtual.userData.tipoInteracao === "toca-discos") {
       if (painelConteudo) tocaDiscos.abrir(painelConteudo);
       estado = "painel-aberto";
@@ -406,15 +435,20 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
         alvoAtual = hits[0].object;
         const registro = registros[alvoAtual.userData.indicePintura];
         if (dica) {
+          const salaAlvo = alvoAtual.userData.tipoInteracao === "sala"
+            ? SALAS_MUSEU.find((item) => item.id === alvoAtual.userData.salaId)
+            : null;
           dica.textContent = alvoAtual.userData.tipoInteracao === "toca-discos"
             ? "Ouça música clássica — pressione E ou clique"
             : alvoAtual.userData.tipoInteracao === "guia-ia"
             ? "Converse com Atena, a guia virtual — pressione E ou clique"
-            : alvoAtual.userData.tipoInteracao === "personagem"
-              ? "Conheça " + alvoAtual.userData.personagem.nome + " — pressione E ou clique"
-              : registro.config.implementada
-              ? registro.config.titulo + " — toque ou clique para se aproximar"
-              : registro.config.titulo + " — em preparação";
+            : alvoAtual.userData.tipoInteracao === "sala"
+              ? (salaAlvo ? salaAlvo.titulo : "Explore esta sala") + " — pressione E ou clique"
+              : alvoAtual.userData.tipoInteracao === "personagem"
+                ? "Conheça " + alvoAtual.userData.personagem.nome + " — pressione E ou clique"
+                : registro.config.implementada
+                  ? registro.config.titulo + " — toque ou clique para se aproximar"
+                  : registro.config.titulo + " — em preparação";
           dica.classList.add("visivel");
         }
       } else {
