@@ -8,6 +8,7 @@
 
 import { SALA, PINTURAS } from "./config.js";
 import { texturaEmPreparacao } from "./texturas.js";
+import { criarPersonagem } from "./personagens.js";
 
 const DURACAO_APROXIMAR = 2.2;
 const DURACAO_AFASTAR = 1.1;
@@ -28,6 +29,18 @@ function escaparHTML(valor) {
     '"': "&quot;",
     "'": "&#39;",
   })[caractere]);
+}
+
+function montarPainelPersonagem(perfil) {
+  return [
+    '<p class="painel-tema">Encontro no museu</p>',
+    "<h2>", escaparHTML(perfil.nome), "</h2>",
+    '<p class="painel-artista">', escaparHTML(perfil.papel), "</p>",
+    '<p class="painel-intro">', escaparHTML(perfil.fala), "</p>",
+    '<section class="painel-secao"><h3>Uma curiosidade</h3><p>',
+    escaparHTML(perfil.curiosidade), "</p></section>",
+    '<p class="painel-nota">Esta é uma representação 3D estilizada, criada para a experiência educativa do museu.</p>'
+  ].join("");
 }
 
 function montarPainelHTML(p) {
@@ -169,7 +182,14 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
     const yawAlvo = ehOeste ? Math.PI / 2 : -Math.PI / 2;
     const quatAproximacao = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, yawAlvo, 0, "YXZ"));
 
-    registros.push({ config: p, posAproximacao, quatAproximacao });
+    registros.push({ tipo: "pintura", config: p, posAproximacao, quatAproximacao });
+
+    const personagem = criarPersonagem(THREE, p, scene);
+    if (personagem) {
+      personagem.alvo.userData.posAproximacao = personagem.posAproximacao;
+      personagem.alvo.userData.quatAproximacao = personagem.quatAproximacao;
+      objetosInterativos.push(personagem.alvo);
+    }
   });
 
   // ---------- Elementos de UI ----------
@@ -198,9 +218,17 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
 
   function tentarInteragir() {
     if (estado !== "livre" || !alvoAtual) return;
-    const registro = registros[alvoAtual.userData.indicePintura];
+    const ehPersonagem = alvoAtual.userData.tipoInteracao === "personagem";
+    const registro = ehPersonagem
+      ? {
+          tipo: "personagem",
+          perfil: alvoAtual.userData.personagem,
+          posAproximacao: alvoAtual.userData.posAproximacao,
+          quatAproximacao: alvoAtual.userData.quatAproximacao,
+        }
+      : registros[alvoAtual.userData.indicePintura];
 
-    if (!registro.config.implementada) {
+    if (registro.tipo === "pintura" && !registro.config.implementada) {
       mostrarAviso('"' + registro.config.titulo + '" — exposição em preparação. Volte em breve.');
       return;
     }
@@ -237,9 +265,11 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
         alvoAtual = hits[0].object;
         const registro = registros[alvoAtual.userData.indicePintura];
         if (dica) {
-          dica.textContent = registro.config.implementada
-            ? registro.config.titulo + " — toque ou clique para se aproximar"
-            : registro.config.titulo + " — em preparação";
+          dica.textContent = alvoAtual.userData.tipoInteracao === "personagem"
+            ? "Conheça " + alvoAtual.userData.personagem.nome + " — pressione E ou clique"
+            : registro.config.implementada
+              ? registro.config.titulo + " — toque ou clique para se aproximar"
+              : registro.config.titulo + " — em preparação";
           dica.classList.add("visivel");
         }
       } else {
@@ -266,7 +296,11 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
       if (t >= 1) {
         if (estado === "aproximando") {
           estado = "painel-aberto";
-          if (painelConteudo) painelConteudo.innerHTML = montarPainelHTML(registroAtivo.config);
+          if (painelConteudo) {
+            painelConteudo.innerHTML = registroAtivo.tipo === "personagem"
+              ? montarPainelPersonagem(registroAtivo.perfil)
+              : montarPainelHTML(registroAtivo.config);
+          }
           if (painel) {
             painel.classList.add("aberto");
             painel.focus();
