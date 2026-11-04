@@ -244,21 +244,19 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
       }
     }
 
-    // Para artistas, não deslocamos a câmera: apenas a orientamos para
-    // o personagem a partir da posição atual do visitante. Isso evita
-    // atravessar o modelo ou terminar do lado oposto, como numa visão em
-    // primeira pessoa do pintor.
+    // O pintor é uma interação direta: o visitante já o encontrou
+    // mirando com o mouse. Não movemos nem giramos a câmera ao conversar.
     if (registro.tipo === "personagem") {
-      const centroPersonagem = new THREE.Vector3();
-      alvoAtual.getWorldPosition(centroPersonagem);
-      centroPersonagem.y = 1.85;
-
-      registro.posAproximacao = camera.position.clone();
-
-      const cameraAlvo = new THREE.Object3D();
-      cameraAlvo.position.copy(registro.posAproximacao);
-      cameraAlvo.lookAt(centroPersonagem);
-      registro.quatAproximacao = cameraAlvo.quaternion.clone();
+      registroAtivo = registro;
+      if (painelConteudo) painelConteudo.innerHTML = montarPainelPersonagem(registro.perfil);
+      estado = "painel-aberto";
+      if (dica) dica.classList.remove("visivel");
+      if (painel) {
+        painel.classList.add("aberto");
+        painel.focus();
+      }
+      aoMudarBloqueio(true);
+      return;
     }
 
     registroAtivo = registro;
@@ -273,9 +271,13 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
 
   function fechar() {
     if (estado !== "painel-aberto") return;
-    estado = "afastando";
-    tempoTransicao = 0;
+    // A câmera permanece no ponto da exposição. Assim, após ler sobre a
+    // pintura, o visitante pode girar livremente e encontrar o artista ao lado.
+    estado = "livre";
+    registroAtivo = null;
     if (painel) painel.classList.remove("aberto");
+    if (vinheta) vinheta.classList.remove("ativa");
+    aoMudarBloqueio(false);
   }
 
   if (botaoFechar) botaoFechar.addEventListener("click", fechar);
@@ -287,6 +289,22 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
 
   function atualizar(dt) {
     if (estado === "livre") {
+      // O artista só permanece exposto enquanto o visitante está perto
+      // daquela obra. Ao sair da área, ocultamos também sua hitbox.
+      for (const registro of registros) {
+        const personagem = registro.personagem;
+        if (!personagem || !personagem.grupo.visible) continue;
+        const dx = camera.position.x - personagem.grupo.position.x;
+        const dz = camera.position.z - personagem.grupo.position.z;
+        if (Math.hypot(dx, dz) > 6.5) {
+          personagem.grupo.visible = false;
+          personagem.alvo.visible = false;
+          const indice = objetosInterativos.indexOf(personagem.alvo);
+          if (indice !== -1) objetosInterativos.splice(indice, 1);
+          if (alvoAtual === personagem.alvo) alvoAtual = null;
+        }
+      }
+
       raycaster.setFromCamera(centro, camera);
       const hits = raycaster.intersectObjects(objetosInterativos);
       if (hits.length) {
