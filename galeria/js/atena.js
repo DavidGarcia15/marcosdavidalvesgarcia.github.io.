@@ -5,6 +5,8 @@ export const PERGUNTAS_ATENA = [
   "Quais são as principais conquistas de Marcos?",
   "Por que Marcos gosta de Geopolítica?",
   "Quem pintou A Noite Estrelada?",
+  "Onde ficam as novas salas?",
+  "O que posso explorar na Sala de Raciocínio?",
 ];
 
 function normalizar(valor) {
@@ -142,6 +144,36 @@ const respostas = [
     fontes: [{ texto: "Coleção da Hamburger Kunsthalle", url: "https://www.hamburger-kunsthalle.de/en/nineteenth-century" }]
   },
   {
+    id: "museu-biblioteca",
+    termos: ["museu biblioteca", "museu-biblioteca", "atrio central", "novas salas", "onde ficam as salas", "como chegar as salas"],
+    texto: "O museu-biblioteca começa pela Galeria Artística. Uma passagem ao fundo leva ao Átrio Central, que distribui o visitante entre quatro salas: História e Geografia, na Biblioteca do Conhecimento; Raciocínio e Laboratório de Investigação, no Centro de Aprendizagem. Cada ambiente tem placas próprias: mire em uma delas e pressione E ou clique para abrir a explicação.",
+    fontes: [{ texto: "Mapa das salas (versão móvel)", url: "#mobile-salas-title" }]
+  },
+  {
+    id: "sala-historia",
+    termos: ["sala de historia", "sala historia", "fontes historicas", "o que tem na sala de historia"],
+    texto: "A Sala de História faz parte da Biblioteca do Conhecimento. Ela propõe investigar sociedades e acontecimentos por meio de fontes históricas, considerando contexto, memória, mudanças e permanências. A ideia é comparar registros antes de construir uma interpretação.",
+    fontes: [{ texto: "Mapa das salas", url: "#mobile-salas-title" }]
+  },
+  {
+    id: "sala-geografia",
+    termos: ["sala de geografia", "sala geografia", "o que tem na sala de geografia", "cartografia na sala"],
+    texto: "A Sala de Geografia integra a Biblioteca do Conhecimento. O espaço aborda cartografia, território, geopolítica, paisagens e relações entre sociedade e natureza. Um dos convites é perceber que mapas são representações feitas a partir de escolhas de escala, projeção, legenda e informação.",
+    fontes: [{ texto: "Mapa das salas", url: "#mobile-salas-title" }]
+  },
+  {
+    id: "sala-raciocinio",
+    termos: ["sala de raciocinio", "sala raciocinio", "o que tem na sala de raciocinio", "problemas de logica"],
+    texto: "A Sala de Raciocínio pertence ao Centro de Aprendizagem. Ela é dedicada a padrões, lógica, estratégias e demonstrações. A proposta é experimentar diferentes caminhos para um problema e explicar por que cada etapa funciona — não apenas chegar a um resultado.",
+    fontes: [{ texto: "Mapa das salas", url: "#mobile-salas-title" }]
+  },
+  {
+    id: "laboratorio-investigacao",
+    termos: ["laboratorio de investigacao", "sala de investigacao", "o que tem no laboratorio", "investigacao cientifica"],
+    texto: "O Laboratório de Investigação é uma das salas do Centro de Aprendizagem. Ele apresenta o processo de investigação: formular perguntas, observar fenômenos, propor hipóteses, buscar evidências e revisar conclusões. A proposta é valorizar o raciocínio científico e o cuidado com as explicações.",
+    fontes: [{ texto: "Mapa das salas", url: "#mobile-salas-title" }]
+  },
+  {
     id: "controles",
     termos: ["como andar", "controles", "teclas", "como jogar", "como interagir"],
     texto: "Na versão 3D para computador, use W, A, S e D ou as setas para caminhar. Mova o mouse para olhar ao redor e mire em uma pintura ou personagem; depois pressione E ou clique para interagir. No celular, o museu apresenta uma versão leve em formato de exposições.",
@@ -178,7 +210,7 @@ export function responderAtena(pergunta) {
 
   if (melhor) return { texto: melhor.texto, fontes: melhor.fontes, id: melhor.id };
   return {
-    texto: "Ainda não encontrei essa informação no acervo publicado. Posso responder sobre as conquistas e olimpíadas de Marcos, seus interesses e trajetória, ou as quatro obras do museu. Experimente uma das sugestões abaixo.",
+    texto: "Ainda não encontrei essa informação no acervo publicado. Posso responder sobre a trajetória, as obras, as quatro novas salas e os temas abordados no museu-biblioteca. Experimente uma das sugestões abaixo.",
     fontes: [{ texto: "Consultar o portfólio completo", url: "../" }]
   };
 }
