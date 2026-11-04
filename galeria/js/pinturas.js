@@ -188,7 +188,7 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
     if (personagem) {
       personagem.alvo.userData.posAproximacao = personagem.posAproximacao;
       personagem.alvo.userData.quatAproximacao = personagem.quatAproximacao;
-      objetosInterativos.push(personagem.alvo);
+      registros[indice].personagem = personagem;
     }
   });
 
@@ -228,8 +228,25 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
         }
       : registros[alvoAtual.userData.indicePintura];
 
-    if (registro.tipo === "pintura" && !registro.config.implementada) {
-      mostrarAviso('"' + registro.config.titulo + '" — exposição em preparação. Volte em breve.');
+    if (registro.tipo === "pintura") {
+      if (!registro.config.implementada) {
+        mostrarAviso('"' + registro.config.titulo + '" — exposição em preparação. Volte em breve.');
+        return;
+      }
+
+      // A obra funciona como portal: ao selecioná-la, o artista aparece
+      // discretamente ao lado. O visitante então gira o mouse e mira nele.
+      const personagem = registro.personagem;
+      if (personagem && !personagem.grupo.visible) {
+        personagem.grupo.visible = true;
+        personagem.alvo.visible = true;
+        objetosInterativos.push(personagem.alvo);
+        alvoAtual = null;
+        if (dica) dica.classList.remove("visivel");
+        mostrarAviso(personagem.perfil.nome + " apareceu ao lado da obra. Gire a câmera para encontrá-lo.");
+      } else {
+        mostrarAviso("O artista já está ao lado desta obra. Mire nele para conversar.");
+      }
       return;
     }
 
