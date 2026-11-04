@@ -68,6 +68,22 @@ function mostrarFallback(mensagem) {
 }
 
 async function iniciar() {
+  // Em telas móveis com toque, não inicializa Three.js nem cria o loop WebGL.
+  // A versão 2D mantém as obras e o conteúdo curatorial com custo gráfico baixo.
+  const ehCelular = (navigator.maxTouchPoints > 0 || "ontouchstart" in window) &&
+    window.matchMedia("(max-width: 760px)").matches;
+  if (ehCelular) {
+    document.body.classList.add("modo-mobile");
+    document.getElementById("canvas-galeria").hidden = true;
+    document.getElementById("tela-carregamento").hidden = true;
+    document.getElementById("introducao").hidden = true;
+    const mobile = document.getElementById("mobile-gallery");
+    if (mobile) mobile.hidden = false;
+    const { iniciarGaleriaMobile } = await import("./mobile.js");
+    iniciarGaleriaMobile();
+    return;
+  }
+
   if (!detectarSuporteWebGL()) {
     mostrarFallback(
       "Este navegador ou dispositivo não conseguiu iniciar o WebGL, necessário para a experiência 3D do museu virtual. Você ainda pode explorar todo o conteúdo do portfólio nas páginas abaixo."
