@@ -163,9 +163,10 @@ export function criarTocaDiscos(THREE, scene) {
   luz.position.set(0, 2.4, 1.0);
   scene.add(luz);
   let faixaAtual = 0;
-  const atualizar = (dt, tocando) => { if (tocando) vinil.rotation.y += dt * 2.2; };
+  let audioPlayer = null;
+  const atualizar = (dt) => { if (audioPlayer && !audioPlayer.paused) vinil.rotation.y += dt * 2.2; };
   function abrir(container) {
-    criarInterface(container, null, () => faixaAtual, (n) => { faixaAtual = n; });
+    audioPlayer = criarInterface(container, null, () => faixaAtual, (n) => { faixaAtual = n; });
   }
   return { alvo, atualizar, abrir };
 }
