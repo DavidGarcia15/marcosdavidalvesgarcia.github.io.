@@ -42,7 +42,7 @@ reprodução de "A Noite Estrelada" (mesma URL do Wikimedia já usada em
 A arquitetura separa o conteúdo do desenho físico. Para criar uma nova sala:
 
 1. Acrescente o registro em `js/salas.js`, com `id`, `titulo`, `setor`,
-   `descricao`, `temas`, `convite` e `orientacao`.
+   `descricao`, `temas`, `convite`, `orientacao` e, quando houver, `atividade`.
 2. Acrescente a posição, o portal, a geometria e a decoração em
    `js/alas.js`. Use os helpers existentes para pisos, paredes, caixas,
    placas e luzes.
