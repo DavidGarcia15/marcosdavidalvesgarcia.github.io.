@@ -226,9 +226,14 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
     const q = pergunta.toLocaleLowerCase("pt-BR").normalize("NFD").replace(/[\\u0300-\\u036f]/g, "");
     const tem = (...termos) => termos.some((termo) => q.includes(termo));
 
-    // Perfil e trajetória — informações retiradas da página "Sobre mim".
-    if (tem("quem e marcos", "quem e o criador", "quem criou", "dono do museu", "sobre marcos", "quem sou"))
-      return "O criador deste museu é Marcos David Alves Garcia, estudante do Ensino Médio em Petrolina, no interior de Pernambuco. Desde 2015, participa, em diferentes momentos, de olimpíadas e desafios acadêmicos. Este portfólio reúne parte dessa trajetória.";
+    // Reconhece as diferentes formas de perguntar pela identidade do criador.
+    // "David", "Marcos" e "Marcos David" apontam para a mesma pessoa.
+    const perguntaIdentidade = /^(quem e|quem seria|me fale sobre|fale sobre|sobre|identifique)\\s+(o\\s+)?(marcos(\\s+david(\\s+alves(\\s+garcia)?)?)?|david)(\\s+garcia)?[?.! ]*$/.test(q)
+      || /^(quem e|quem seria)\\s+(o\\s+)?criador( do museu)?[?.! ]*$/.test(q)
+      || /^(quem sou eu|quem e ele|quem e o dono do museu)[?.! ]*$/.test(q)
+      || /^(marcos|david|marcos david|marcos david alves garcia)[?.! ]*$/.test(q);
+    if (perguntaIdentidade || tem("quem e marcos", "quem e david", "quem e o david", "quem e o marcos", "quem e marcos david", "quem e marcos david alves garcia", "quem e o criador", "quem criou", "dono do museu", "sobre marcos", "sobre david", "sobre marcos david", "quem sou"))
+      return "Marcos David Alves Garcia é o criador deste museu. Ele é estudante do Ensino Médio em Petrolina, Pernambuco, e participa de olimpíadas e desafios acadêmicos desde 2015. No site, você pode conhecer sua trajetória, seus interesses e suas conquistas.";
     if (tem("onde marcos", "onde ele mora", "cidade", "petrolina", "pernambuco"))
       return "O site apresenta Marcos como estudante do Ensino Médio em Petrolina, interior de Pernambuco.";
     if (tem("profissao", "professor", "carreira", "futuro", "quer ser"))
