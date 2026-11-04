@@ -155,10 +155,9 @@ export function criarControles(THREE, { camera, domElement, colunas, aoInteragir
   });
 
   // ---------- Colisão do museu modular ----------
-  function resolverColisao(pos) {
-    const x = pos.x;
+  function resolverColisao(pos, anterior) {
     const z = pos.z;
-    const estaNoCorredorLateral = (valorZ) =>
+    const estaNaPortaLateral = (valorZ) =>
       (valorZ > -18.85 && valorZ < -14.15) ||
       (valorZ > -31.95 && valorZ < -27.25);
     const foraDoMuseu = z > SALA.meiaProfundidade + 0.55;
@@ -171,50 +170,54 @@ export function criarControles(THREE, { camera, domElement, colunas, aoInteragir
       // Salão artístico original: mantém suas dimensões e o spawn intactos.
       pos.x = Math.max(-SALA.meiaLargura + margemParede, Math.min(SALA.meiaLargura - margemParede, pos.x));
 
-      // Portal sul para o pátio e novo portal norte para o átrio.
+      // Portal sul para o pátio. A parede norte só permite passagem no centro.
       if (pos.z > SALA.meiaProfundidade - margemParede && Math.abs(pos.x) > 2.2) {
         pos.z = SALA.meiaProfundidade - margemParede;
-      }
-      if (pos.z < -SALA.meiaProfundidade + margemParede && Math.abs(pos.x) > 3.1) {
-        pos.z = -SALA.meiaProfundidade + margemParede;
       }
       pos.z = Math.min(SALA.meiaProfundidade + 0.8, pos.z);
     } else {
       // Átrio central e quatro salas laterais.
       pos.z = Math.max(-37.45, pos.z);
 
-      if (pos.x < -13.45 || pos.x > 13.45) {
-        const lado = pos.x < 0 ? -1 : 1;
+      const ladoAnterior = Math.abs(anterior.x) > 13.25 ? (anterior.x < 0 ? -1 : 1) : 0;
+      const dentroDeAla = Math.abs(pos.x) > 13.25 || ladoAnterior !== 0;
+      const portaLateral = estaNaPortaLateral(pos.z);
 
-        // As alas só se conectam ao átrio pelas duas portas sinalizadas.
-        if (!estaNoCorredorLateral(pos.z)) {
-          pos.x = lado * 13.25;
+      if (portaLateral) {
+        // Permite cruzar o plano das portas em ambos os sentidos.
+        pos.x = Math.max(-41.25, Math.min(41.25, pos.x));
+      } else if (ladoAnterior !== 0) {
+        // Fora do vão, quem já está numa ala permanece do lado da sala.
+        // A pessoa precisa voltar à abertura para retornar ao átrio.
+        const movendoParaAtrio = pos.x * ladoAnterior < anterior.x * ladoAnterior;
+        if (movendoParaAtrio) pos.x = ladoAnterior * 14.75;
+        pos.x = ladoAnterior < 0 ? Math.max(-41.25, pos.x) : Math.min(41.25, pos.x);
+      } else {
+        // Quem está no átrio não atravessa uma parede fora dos portais.
+        pos.x = Math.max(-13.25, Math.min(13.25, pos.x));
+      }
+
+      if (dentroDeAla) {
+        // A parede divisória mantém as duas salas de cada ala separadas.
+        if (pos.z > -23.65 && pos.z < -22.35) {
+          pos.z = anterior.z > -23.0 ? -22.35 : -23.65;
+        }
+        if (pos.z > -23.0) {
+          pos.z = Math.max(-22.35, Math.min(-10.65, pos.z));
         } else {
-          pos.x = Math.max(-41.25, Math.min(41.25, pos.x));
-
-          // A parede divisória mantém as duas salas de cada ala separadas.
-          // O sentido da velocidade impede atravessar a divisória em diagonal.
-          if (pos.z > -23.65 && pos.z < -22.35) {
-            pos.z = vel.y > 0 ? -23.65 : -22.35;
-          }
-          if (pos.z > -23.0) {
-            pos.z = Math.max(-22.35, Math.min(-10.65, pos.z));
-          } else {
-            pos.z = Math.max(-35.35, Math.min(-23.65, pos.z));
-          }
+          pos.z = Math.max(-35.35, Math.min(-23.65, pos.z));
         }
       } else {
-        pos.x = Math.max(-13.25, Math.min(13.25, pos.x));
-
-        // Parede norte do átrio e abertura central de retorno à galeria.
-        // A faixa de espessura da parede bloqueia a passagem fora do portal,
-        // inclusive quando o movimento cruza o plano entre dois quadros.
+        // Parede norte da galeria: o sentido anterior identifica de que lado
+        // veio o visitante e evita atravessar o trecho sólido em diagonal.
         if (
           pos.z > -SALA.meiaProfundidade - 0.55 &&
           pos.z < -SALA.meiaProfundidade + margemParede &&
           Math.abs(pos.x) > 3.1
         ) {
-          pos.z = -SALA.meiaProfundidade + margemParede;
+          pos.z = anterior.z > -SALA.meiaProfundidade - 0.25
+            ? -SALA.meiaProfundidade + margemParede
+            : -SALA.meiaProfundidade - 0.55;
         }
       }
     }
@@ -261,9 +264,10 @@ export function criarControles(THREE, { camera, domElement, colunas, aoInteragir
     vel.x += (desejadoX - vel.x) * k;
     vel.y += (desejadoZ - vel.y) * k;
 
+    const posicaoAnterior = { x: camera.position.x, z: camera.position.z };
     camera.position.x += vel.x * dt;
     camera.position.z += vel.y * dt;
-    resolverColisao(camera.position);
+    resolverColisao(camera.position, posicaoAnterior);
   }
 
   function bloquear(sim) {
