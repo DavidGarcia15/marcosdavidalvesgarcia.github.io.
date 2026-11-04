@@ -180,7 +180,6 @@ export function criarControles(THREE, { camera, domElement, colunas, aoInteragir
       pos.z = Math.max(-37.45, pos.z);
 
       const ladoAnterior = Math.abs(anterior.x) > 13.25 ? (anterior.x < 0 ? -1 : 1) : 0;
-      const dentroDeAla = Math.abs(pos.x) > 13.25 || ladoAnterior !== 0;
       const portaLateral = estaNaPortaLateral(pos.z);
 
       if (portaLateral) {
@@ -197,6 +196,7 @@ export function criarControles(THREE, { camera, domElement, colunas, aoInteragir
         pos.x = Math.max(-13.25, Math.min(13.25, pos.x));
       }
 
+      const dentroDeAla = ladoAnterior !== 0 || (portaLateral && Math.abs(pos.x) > 14.75);
       if (dentroDeAla) {
         // A parede divisória mantém as duas salas de cada ala separadas.
         if (pos.z > -23.65 && pos.z < -22.35) {
