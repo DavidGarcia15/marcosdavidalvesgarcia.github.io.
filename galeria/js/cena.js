@@ -330,7 +330,7 @@ export function criarCena(THREE, nivel = "alto") {
   formaFrontao.closePath();
   const frontao = new THREE.Mesh(
     new THREE.ExtrudeGeometry(formaFrontao, { depth: 0.42, bevelEnabled: false }),
-    matPedra
+    new THREE.MeshStandardMaterial({ color: 0xf1efe8, roughness: 0.42, side: THREE.DoubleSide })
   );
   frontao.position.set(0, portalAltura + 0.18, portalZ - 0.18);
   scene.add(frontao);
@@ -342,6 +342,7 @@ export function criarCena(THREE, nivel = "alto") {
       roughness: 0.8,
       emissive: 0x101d32,
       emissiveIntensity: 0.35,
+      side: THREE.DoubleSide,
     })
   );
   timpano.position.set(0, portalAltura + 0.3, portalZ + 0.255);
