@@ -443,7 +443,7 @@ export function criarCena(THREE, nivel = "alto") {
       emissiveIntensity: 0.25,
     })
   );
-  inscricao.position.set(0, 8.55, -P - espessura + 0.02);
+  inscricao.position.set(0, 8.55, -P + 0.02);
   inscricao.scale.y = 0.72;
   scene.add(inscricao);
 
