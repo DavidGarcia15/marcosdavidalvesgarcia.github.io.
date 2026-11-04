@@ -104,3 +104,55 @@
   .mobile-salas { padding: 2rem 1.4rem; }
   .mobile-salas-lista { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+/* ---------- Atividades e desafios das salas ---------- */
+.painel-desafio {
+  margin-top: .8rem;
+  padding: .75rem .9rem;
+  border: 1px solid rgba(220, 187, 121, .25);
+  background: rgba(220, 187, 121, .055);
+}
+.painel-desafio summary {
+  color: var(--gold-on-navy);
+  cursor: pointer;
+  font-size: .86rem;
+  font-weight: 600;
+}
+.painel-desafio p {
+  margin: .65rem 0 0;
+  color: var(--ink-soft);
+  font-size: .9rem;
+  line-height: 1.65;
+}
+.mobile-sala-atividade {
+  margin-top: .9rem !important;
+  padding: .75rem .8rem !important;
+  border: 1px solid rgba(220, 187, 121, .24);
+  background: rgba(220, 187, 121, .045);
+}
+.mobile-sala-atividade > summary {
+  color: var(--gold-on-navy);
+  font-size: .84rem;
+}
+.mobile-sala-atividade > p {
+  margin: .65rem 0 0;
+  color: var(--ink);
+  font-size: .84rem;
+  line-height: 1.6;
+}
+.mobile-sala-solucao {
+  margin-top: .75rem !important;
+  padding-top: .65rem !important;
+  border-top: 1px solid rgba(220, 187, 121, .17) !important;
+  border-left: 0 !important;
+  background: transparent !important;
+}
+.mobile-sala-solucao > summary {
+  font-size: .8rem;
+}
+.mobile-sala-solucao > p {
+  margin: .55rem 0 0;
+  color: var(--ink-soft);
+  font-size: .82rem;
+  line-height: 1.6;
+}
