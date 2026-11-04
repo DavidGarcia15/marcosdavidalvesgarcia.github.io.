@@ -106,7 +106,7 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
       new THREE.BoxGeometry(larguraTela + 0.2, alturaTela + 0.2, 0.1),
       matDourado
     );
-    moldura.position.z = -0.05 * normal;
+    moldura.position.z = -0.05;
     grupo.add(moldura);
 
     let matTela;
@@ -135,7 +135,7 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
     }
 
     const tela = new THREE.Mesh(new THREE.PlaneGeometry(larguraTela, alturaTela), matTela);
-    tela.position.z = 0.01 * normal;
+    tela.position.z = 0.01;
     grupo.add(tela);
 
     scene.add(grupo);
