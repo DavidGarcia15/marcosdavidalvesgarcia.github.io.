@@ -9,6 +9,7 @@
 import { SALA, PINTURAS } from "./config.js";
 import { texturaEmPreparacao } from "./texturas.js";
 import { criarPersonagem } from "./personagens.js";
+import { criarGuiaIA } from "./guia.js";
 
 const DURACAO_APROXIMAR = 2.2;
 const DURACAO_AFASTAR = 1.1;
@@ -103,6 +104,8 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
 
   const objetosInterativos = [];
   const registros = [];
+  const guiaIA = criarGuiaIA(THREE, scene);
+  objetosInterativos.push(guiaIA.alvo);
 
   PINTURAS.forEach((p, indice) => {
     const ehOeste = p.parede === "oeste";
@@ -216,8 +219,74 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
     timeoutAviso = setTimeout(() => aviso.classList.remove("visivel"), 2200);
   }
 
+  function responderGuia(pergunta) {
+    const q = pergunta.toLocaleLowerCase("pt-BR");
+    if (/\b(oi|olá|ola|bom dia|boa tarde|boa noite)\b/.test(q))
+      return "Olá! Sou Atena, a guia virtual deste museu. Posso apresentar as salas, explicar as pinturas ou ajudar você a encontrar as conquistas do portfólio.";
+    if (/\b(quem|o que|sobre você|atena|guia)\b/.test(q))
+      return "Fui criada para acompanhar os visitantes pela galeria. Ainda estou em fase de testes, mas já consigo responder perguntas sobre as obras, os artistas e a organização do museu.";
+    if (/\b(pintura|obra|quadro|galeria|sala|museu)\b/.test(q))
+      return "Temos quatro exposições: A Noite Estrelada, de Van Gogh; Nenúfares, de Monet; O Astrônomo, de Vermeer; e O Caminhante sobre o Mar de Névoa, de Caspar David Friedrich. Mire em uma pintura e pressione E para explorar.";
+    if (/\b(van gogh|noite estrelada)\b/.test(q))
+      return "Van Gogh pintou A Noite Estrelada em 1889, durante sua estadia em Saint-Rémy. As curvas do céu e as cores intensas transformam a paisagem numa interpretação cheia de movimento.";
+    if (/\b(monet|nenúfar|nenufar)\b/.test(q))
+      return "Claude Monet voltou muitas vezes ao tema dos Nenúfares, observando como a luz e os reflexos mudavam no lago de seu jardim em Giverny.";
+    if (/\b(vermeer|astrônomo|astronomo)\b/.test(q))
+      return "Em O Astrônomo, Vermeer retrata um estudioso diante de um globo celeste. A luz, os livros e os instrumentos ajudam a construir o clima de investigação.";
+    if (/\b(friedrich|caminhante|névoa|nevoa)\b/.test(q))
+      return "Caspar David Friedrich é um dos nomes do Romantismo alemão. O caminhante diante da névoa convida a pensar sobre escolhas, descobertas e o que ainda não conhecemos.";
+    if (/\b(conquista|medalha|olimpíada|olimpiada|certificado|portfólio|portfolio)\b/.test(q))
+      return "A galeria conecta arte e trajetória acadêmica. A exposição de A Noite Estrelada leva à página de conquistas, onde você pode conhecer medalhas, certificados e participações em olimpíadas.";
+    if (/\b(controle|andar|moviment|tecla|mouse|interagir)\b/.test(q))
+      return "No computador, use W, A, S e D ou as setas para caminhar. Mova o mouse para olhar, mire numa pintura ou personagem e pressione E ou clique para interagir.";
+    return "Ainda estou aprendendo a responder esse tipo de pergunta. Experimente perguntar sobre uma das quatro pinturas, seus artistas, os controles ou as conquistas do portfólio.";
+  }
+
+  function abrirGuia() {
+    if (!painelConteudo) return;
+    painelConteudo.innerHTML = [
+      '<div class="guia-chat">',
+      '<div class="guia-chat-cabecalho"><span class="guia-avatar">A</span><div><strong>Atena</strong><small>Guia virtual · protótipo em teste</small></div></div>',
+      '<div class="guia-mensagens" id="guia-mensagens"><div class="guia-mensagem">Olá! Sou Atena. Posso ajudar você a explorar o museu. Pergunte sobre as pinturas, os artistas, os controles ou as conquistas.</div></div>',
+      '<form class="guia-form" id="guia-form"><input id="guia-pergunta" type="text" maxlength="240" placeholder="Escreva sua pergunta..." autocomplete="off" required><button type="submit">Enviar</button></form>',
+      '<p class="guia-aviso">Versão experimental: as respostas são locais e pré-programadas; ainda não estou conectada a um serviço de IA.</p>',
+      '</div>'
+    ].join("");
+    estado = "painel-aberto";
+    if (dica) dica.classList.remove("visivel");
+    if (painel) {
+      painel.classList.add("aberto");
+      painel.focus();
+    }
+    aoMudarBloqueio(true);
+    const form = document.getElementById("guia-form");
+    const input = document.getElementById("guia-pergunta");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const pergunta = input.value.trim();
+      if (!pergunta) return;
+      const mensagens = document.getElementById("guia-mensagens");
+      const visitante = document.createElement("div");
+      visitante.className = "guia-mensagem visitante";
+      visitante.textContent = pergunta;
+      mensagens.appendChild(visitante);
+      const resposta = document.createElement("div");
+      resposta.className = "guia-mensagem";
+      resposta.textContent = responderGuia(pergunta);
+      mensagens.appendChild(resposta);
+      mensagens.scrollTop = mensagens.scrollHeight;
+      input.value = "";
+      input.focus();
+    });
+    input.focus();
+  }
+
   function tentarInteragir() {
     if (estado !== "livre" || !alvoAtual) return;
+    if (alvoAtual.userData.tipoInteracao === "guia-ia") {
+      abrirGuia();
+      return;
+    }
     const ehPersonagem = alvoAtual.userData.tipoInteracao === "personagem";
     const registro = ehPersonagem
       ? {
@@ -311,9 +380,11 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
         alvoAtual = hits[0].object;
         const registro = registros[alvoAtual.userData.indicePintura];
         if (dica) {
-          dica.textContent = alvoAtual.userData.tipoInteracao === "personagem"
-            ? "Conheça " + alvoAtual.userData.personagem.nome + " — pressione E ou clique"
-            : registro.config.implementada
+          dica.textContent = alvoAtual.userData.tipoInteracao === "guia-ia"
+            ? "Converse com Atena, a guia virtual — pressione E ou clique"
+            : alvoAtual.userData.tipoInteracao === "personagem"
+              ? "Conheça " + alvoAtual.userData.personagem.nome + " — pressione E ou clique"
+              : registro.config.implementada
               ? registro.config.titulo + " — toque ou clique para se aproximar"
               : registro.config.titulo + " — em preparação";
           dica.classList.add("visivel");
