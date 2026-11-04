@@ -98,7 +98,7 @@ export const PINTURAS = [
     tema: "Conhecimento, ciência e investigação",
     implementada: true,
     imagem:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Johannes_Vermeer_-_The_Astronomer_-_1668.jpg/1920px-Johannes_Vermeer_-_The_Astronomer_-_1668.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Johannes_Vermeer_-_The_Astronomer_-_1668.jpg/960px-Johannes_Vermeer_-_The_Astronomer_-_1668.jpg",
     largura: 1.92,
     altura: 2.18,
     corLuz: 0xffd39a,
@@ -134,7 +134,7 @@ export const PINTURAS = [
     tema: "Trajetória, escolhas e futuro",
     implementada: true,
     imagem:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Caspar_David_Friedrich_-_Wanderer_above_the_Sea_of_Fog.jpeg/1920px-Caspar_David_Friedrich_-_Wanderer_above_the_Sea_of_Fog.jpeg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Caspar_David_Friedrich_-_Wanderer_above_the_Sea_of_Fog.jpeg/960px-Caspar_David_Friedrich_-_Wanderer_above_the_Sea_of_Fog.jpeg",
     largura: 1.72,
     altura: 2.2,
     corLuz: 0xc9d9f4,
