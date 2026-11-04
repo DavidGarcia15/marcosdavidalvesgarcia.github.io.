@@ -156,8 +156,23 @@ export function criarControles(THREE, { camera, domElement, colunas, aoInteragir
 
   // ---------- Colisão ----------
   function resolverColisao(pos) {
-    pos.x = Math.max(-SALA.meiaLargura + margemParede, Math.min(SALA.meiaLargura - margemParede, pos.x));
-    pos.z = Math.max(-SALA.meiaProfundidade + margemParede, Math.min(SALA.meiaProfundidade - margemParede, pos.z));
+    const dentroDoPortal = Math.abs(pos.x) < 2.2;
+    const foraDoMuseu = pos.z > SALA.meiaProfundidade + 0.55;
+
+    if (foraDoMuseu) {
+      // O visitante pode sair pelo portal e explorar o patamar exterior.
+      pos.x = Math.max(-9.5, Math.min(9.5, pos.x));
+      const limiteMinimo = dentroDoPortal
+        ? SALA.meiaProfundidade - margemParede
+        : SALA.meiaProfundidade + 0.55;
+      pos.z = Math.max(limiteMinimo, Math.min(SALA.meiaProfundidade + 16, pos.z));
+    } else {
+      pos.x = Math.max(-SALA.meiaLargura + margemParede, Math.min(SALA.meiaLargura - margemParede, pos.x));
+      const limiteFrente = dentroDoPortal
+        ? SALA.meiaProfundidade + 0.8
+        : SALA.meiaProfundidade - margemParede;
+      pos.z = Math.max(-SALA.meiaProfundidade + margemParede, Math.min(limiteFrente, pos.z));
+    }
     for (const col of colunas) {
       const dx = pos.x - col.x;
       const dz = pos.z - col.z;
