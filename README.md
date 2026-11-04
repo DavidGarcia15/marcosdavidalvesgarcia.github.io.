@@ -76,8 +76,10 @@ caminhos relativos) continuam funcionando normalmente.
 ## 3. Checklist antes de tornar o site público
 
 - [x] URL real já configurada em todos os arquivos (seção 1).
-- [ ] Revisei a seção **ExpressArte 2015** — ela está marcada como
-      "informação a confirmar" até que o certificado seja conferido.
+- [x] Revisei a seção **ExpressArte 2015** com a matéria do Blog do Carlos
+      Britto, que confirma a seleção da produção de desenho “A Luta do Povo
+      Sertanejo” na relação publicada em 20/10/2015; nenhuma colocação ou
+      medalha foi atribuída sem comprovação.
 - [ ] Se for adicionar uma foto, ela está autorizada e comprimida (ver
       `assets/README.md`).
 - [ ] Se for adicionar imagens de certificados, conferi se não expõem CPF,
