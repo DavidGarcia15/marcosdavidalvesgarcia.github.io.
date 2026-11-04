@@ -11,6 +11,7 @@ import { texturaEmPreparacao } from "./texturas.js";
 import { criarPersonagem } from "./personagens.js";
 import { criarGuiaIA } from "./guia.js";
 import { responderAtena } from "./atena.js";
+import { criarTocaDiscos } from "./toca-discos.js";
 
 const DURACAO_APROXIMAR = 2.2;
 const DURACAO_AFASTAR = 1.1;
@@ -108,6 +109,8 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
   const destinosGuia = [];
   const guiaIA = criarGuiaIA(THREE, scene);
   objetosInterativos.push(guiaIA.alvo);
+  const tocaDiscos = criarTocaDiscos(THREE, scene);
+  objetosInterativos.push(tocaDiscos.alvo);
 
   PINTURAS.forEach((p, indice) => {
     const ehOeste = p.parede === "oeste";
@@ -295,6 +298,14 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
 
   function tentarInteragir() {
     if (estado !== "livre" || !alvoAtual) return;
+    if (alvoAtual.userData.tipoInteracao === "toca-discos") {
+      if (painelConteudo) tocaDiscos.abrir(painelConteudo);
+      estado = "painel-aberto";
+      if (dica) dica.classList.remove("visivel");
+      if (painel) { painel.classList.add("aberto"); painel.focus(); }
+      aoMudarBloqueio(true);
+      return;
+    }
     if (alvoAtual.userData.tipoInteracao === "guia-ia") {
       abrirGuia();
       return;
@@ -394,7 +405,9 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
         alvoAtual = hits[0].object;
         const registro = registros[alvoAtual.userData.indicePintura];
         if (dica) {
-          dica.textContent = alvoAtual.userData.tipoInteracao === "guia-ia"
+          dica.textContent = alvoAtual.userData.tipoInteracao === "toca-discos"
+            ? "Ouça música clássica — pressione E ou clique"
+            : alvoAtual.userData.tipoInteracao === "guia-ia"
             ? "Converse com Atena, a guia virtual — pressione E ou clique"
             : alvoAtual.userData.tipoInteracao === "personagem"
               ? "Conheça " + alvoAtual.userData.personagem.nome + " — pressione E ou clique"
