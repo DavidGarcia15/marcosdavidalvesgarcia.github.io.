@@ -104,6 +104,7 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
 
   const objetosInterativos = [];
   const registros = [];
+  const destinosGuia = [];
   const guiaIA = criarGuiaIA(THREE, scene);
   objetosInterativos.push(guiaIA.alvo);
 
@@ -182,6 +183,8 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
     objetosInterativos.push(alvo);
 
     const posAproximacao = new THREE.Vector3(x + normal * DIST_APROXIMACAO, Y_CENTRO, p.z);
+    // Rota independente: pontos internos próximos de cada obra.
+    destinosGuia.push({ posicao: new THREE.Vector3(x + normal * 3.8, 0, p.z), yaw: Math.atan2(-normal, 0) });
     const yawAlvo = ehOeste ? Math.PI / 2 : -Math.PI / 2;
     const quatAproximacao = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, yawAlvo, 0, "YXZ"));
 
@@ -390,6 +393,8 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
   }
 
   function atualizar(dt) {
+    const conversaAtena = estado === "painel-aberto" && !!painelConteudo?.querySelector(".guia-chat");
+    guiaIA.atualizar(dt, destinosGuia, conversaAtena);
     if (estado === "livre") {
       // O artista só permanece exposto enquanto o visitante está perto
       // daquela obra. Ao sair da área, ocultamos também sua hitbox.
