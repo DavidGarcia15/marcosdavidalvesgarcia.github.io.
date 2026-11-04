@@ -164,13 +164,13 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
     // Cada obra recebe um foco de luz próprio, com temperatura ajustada à paleta.
     const spot = new THREE.SpotLight(
       p.corLuz ?? 0xffe3b0,
-      p.intensidadeLuz ?? (p.implementada ? 26 : 14),
-      9,
-      Math.PI / 7,
-      0.45,
+      p.intensidadeLuz ?? (p.implementada ? 34 : 19),
+      11,
+      Math.PI / 6,
+      0.58,
       1.6
     );
-    spot.position.set(x + normal * 1.1, Y_CENTRO + 2.1, p.z + 0.4);
+    spot.position.set(x + normal * 1.35, Y_CENTRO + 2.45, p.z + 0.4);
     spot.target = grupo;
     scene.add(spot);
     scene.add(spot.target);
