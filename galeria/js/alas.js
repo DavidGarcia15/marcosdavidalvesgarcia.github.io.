@@ -337,11 +337,17 @@ export function criarAlasMuseu(THREE, scene, nivel = "alto") {
       esfera.position.set(xCentro + 0.8, 1.55, zCentro + 1.1);
       scene.add(esfera);
       const quadro = new THREE.Mesh(new THREE.BoxGeometry(5.5, 2.8, 0.18), azul);
-      quadro.position.set(41.6, 4.2, zCentro - 4.8);
+      quadro.position.set(xCentro, 4.2, zCentro - 5.95);
       scene.add(quadro);
-      for (let i = 0; i < 3; i++) {
-        caixa(0.08, 0.08, 3.8, ouro, 41.48, 3.3 + i * 0.8, zCentro - 4.8);
-      }
+      const textoDesafio = new THREE.Mesh(
+        new THREE.PlaneGeometry(5.22, 2.55),
+        new THREE.MeshStandardMaterial({
+          map: criarTexturaPlaca(THREE, "2 • 6 • 12 • 20 • 30 • ?", "Qual seria o próximo termo?", "Desafio de padrões"),
+          roughness: 0.62,
+        })
+      );
+      textoDesafio.position.set(xCentro, 4.2, zCentro - 5.845);
+      scene.add(textoDesafio);
     }
 
     if (sala.id === "investigacao") {
