@@ -12,7 +12,7 @@ para ser publicado gratuitamente no GitHub Pages.
 ├── script.js               → menu mobile + filtros da página de conquistas
 ├── robots.txt
 ├── sitemap.xml
-└── assets/                 → onde colocar foto e imagens de certificados (ver assets/README.md)
+└── galeria/                → museu-biblioteca virtual 3D e seus módulos
 ```
 
 ---
@@ -20,8 +20,8 @@ para ser publicado gratuitamente no GitHub Pages.
 ## 1. Endereço do site (já configurado)
 
 Todos os arquivos já apontam para a URL real do projeto:
-`https://davidgarcia15.github.io/marcosdavidalvesgarcia.github.io/`
-(repositório `marcosdavidalvesgarcia.github.io`, conta `DavidGarcia15` — como
+`https://davidgarcia15.github.io/marcosdavidalvesgarcia.github.io./`
+(repositório `marcosdavidalvesgarcia.github.io.`, conta `DavidGarcia15` — como
 o nome do repositório não é exatamente `davidgarcia15.github.io`, o GitHub
 publica como site de projeto, com esse caminho mais longo; o site funciona
 normalmente nele). Isso já está refletido em:
@@ -33,7 +33,7 @@ normalmente nele). Isso já está refletido em:
 - `sitemap.xml` (as três tags `<loc>`)
 
 Se um dia renomear o repositório ou trocar de usuário, procure e substitua
-`davidgarcia15.github.io/marcosdavidalvesgarcia.github.io` nesses mesmos
+`davidgarcia15.github.io/marcosdavidalvesgarcia.github.io.` nesses mesmos
 cinco arquivos.
 
 ---
@@ -62,7 +62,7 @@ cinco arquivos.
 5. Em **Build and deployment → Source**, selecione **Deploy from a branch**.
 6. Em **Branch**, selecione `main` e a pasta `/ (root)`, depois **Save**.
 7. Aguarde alguns minutos. O GitHub mostrará a URL pública, no formato
-   `https://davidgarcia15.github.io/marcosdavidalvesgarcia.github.io/`.
+   `https://davidgarcia15.github.io/marcosdavidalvesgarcia.github.io./`.
 8. Abra essa URL (de preferência em uma aba anônima) para confirmar que o
    site está acessível publicamente.
 
@@ -82,7 +82,7 @@ caminhos relativos) continuam funcionando normalmente.
       recebido como prêmio foram acrescentados conforme relato do estudante;
       a matéria não detalha esses dois pontos.
 - [ ] Se for adicionar uma foto, ela está autorizada e comprimida (ver
-      `assets/README.md`).
+      a pasta `assets/`, a ser criada quando houver imagens autorizadas para publicar).
 - [ ] Se for adicionar imagens de certificados, conferi se não expõem CPF,
       data de nascimento completa, QR Code de verificação ou outros dados
       que não precisam ser públicos.
@@ -112,13 +112,13 @@ Depois que o site estiver no ar:
 
 1. Acesse [search.google.com/search-console](https://search.google.com/search-console).
 2. Adicione uma propriedade do tipo **"Prefixo do URL"** com o endereço
-   completo do site (ex.: `https://davidgarcia15.github.io/marcosdavidalvesgarcia.github.io/`).
+   completo do site (ex.: `https://davidgarcia15.github.io/marcosdavidalvesgarcia.github.io./`).
 3. Verifique a propriedade pelo método **"Tag HTML"**: o Search Console
    fornecerá uma tag `<meta name="google-site-verification" ...>` — adicione
    essa tag dentro do `<head>` de `index.html`, publique a alteração e
    clique em "Verificar".
 4. Em **Sitemaps**, envie o endereço `sitemap.xml` (ex.:
-   `https://davidgarcia15.github.io/marcosdavidalvesgarcia.github.io/sitemap.xml`).
+   `https://davidgarcia15.github.io/marcosdavidalvesgarcia.github.io./sitemap.xml`).
 5. Em **Inspeção de URL**, cole a URL da página inicial e clique em
    **"Solicitar indexação"**.
 6. Repita a inspeção/solicitação para `/conquistas/` e `/sobre/`.
@@ -165,7 +165,7 @@ Referências oficiais usadas neste projeto:
 - [x] URL real configurada em todos os arquivos (seção 1).
 - [ ] **Pendente do seu lado:** depois que o site estiver no ar, validar o
       JSON-LD em [validator.schema.org](https://validator.schema.org)
-      colando `https://davidgarcia15.github.io/marcosdavidalvesgarcia.github.io/`.
+      colando `https://davidgarcia15.github.io/marcosdavidalvesgarcia.github.io./`.
 
 ---
 
@@ -219,10 +219,11 @@ como pendente até a conferência do certificado.
 
 - O JSON-LD usa apenas o distrito/cidade (Petrolina, PE) como localização,
   nunca endereço completo.
-- Não há imagens de certificados incluídas por padrão — a pasta `assets/`
-  está pronta para recebê-las quando forem revisadas.
-- O domínio/URL do site precisa ser configurado manualmente (seção 1) antes
-  da publicação, pois a URL real só existe depois da criação do repositório.
+- Não há fotos nem imagens de certificados incluídas por enquanto. A pasta
+  `assets/` será criada quando houver arquivos autorizados e revisados para publicar.
+- A URL pública atual corresponde ao nome literal do repositório, que termina
+  em ponto. Se o repositório for renomeado, atualize canonical, Open Graph,
+  JSON-LD, robots.txt e sitemap.xml em conjunto.
 - Como não há como verificar de forma independente o conteúdo de
   certificados que não foram enviados, as conquistas foram registradas tal
   como informadas, sinalizando com clareza o que ainda depende de
