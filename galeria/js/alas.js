@@ -28,9 +28,22 @@ function criarTexturaPlaca(THREE, titulo, subtitulo, pequeno = "") {
   ctx.font = "600 34px Georgia, serif";
   ctx.fillText(pequeno.toLocaleUpperCase("pt-BR"), 512, 112);
   ctx.fillStyle = "#f4efe4";
-  ctx.font = "600 66px Georgia, serif";
-  const tituloLinhas = titulo.length > 24 ? [titulo.slice(0, 24), titulo.slice(24)] : [titulo];
-  tituloLinhas.forEach((linha, i) => ctx.fillText(linha, 512, 238 + i * 70));
+  const palavras = titulo.split(/\\s+/);
+  const tituloLinhas = [];
+  let linhaAtual = "";
+  for (const palavra of palavras) {
+    const tentativa = linhaAtual ? linhaAtual + " " + palavra : palavra;
+    if (tentativa.length > 22 && linhaAtual) {
+      tituloLinhas.push(linhaAtual);
+      linhaAtual = palavra;
+    } else {
+      linhaAtual = tentativa;
+    }
+  }
+  if (linhaAtual) tituloLinhas.push(linhaAtual);
+  ctx.font = tituloLinhas.length > 1 ? "600 58px Georgia, serif" : "600 66px Georgia, serif";
+  const inicioTitulo = tituloLinhas.length > 1 ? 218 : 260;
+  tituloLinhas.slice(0, 2).forEach((linha, i) => ctx.fillText(linha, 512, inicioTitulo + i * 70));
   ctx.fillStyle = "#b9c4d2";
   ctx.font = "28px Arial, sans-serif";
   ctx.fillText(subtitulo, 512, 410);
@@ -172,6 +185,23 @@ export function criarAlasMuseu(THREE, scene, nivel = "alto") {
   caixa(0.82, 0.3, 0.82, pedraSombra, 3.35, 7.48, -10.05);
   caixa(7.25, 0.56, 0.72, pedraClara, 0, 7.62, -10.05);
   colunas.push({ x: -3.35, z: -10.05, topoY: 7.8 }, { x: 3.35, z: -10.05, topoY: 7.8 });
+
+  // Letreiro no lado do átrio, voltado para quem chega da galeria artística.
+  const placaGaleria = new THREE.Group();
+  placaGaleria.position.set(0, 8.55, -10.52);
+  placaGaleria.rotation.y = Math.PI;
+  const molduraGaleria = new THREE.Mesh(new THREE.BoxGeometry(7.4, 1.35, 0.2), ouro);
+  placaGaleria.add(molduraGaleria);
+  const textoGaleria = new THREE.Mesh(
+    new THREE.PlaneGeometry(7.15, 1.1),
+    new THREE.MeshStandardMaterial({
+      map: criarTexturaPlaca(THREE, "Galeria Artística", "Van Gogh • Monet • Vermeer • Friedrich", "Ala de entrada"),
+      roughness: 0.5,
+    })
+  );
+  textoGaleria.position.z = 0.11;
+  placaGaleria.add(textoGaleria);
+  scene.add(placaGaleria);
 
   // ---------- Átrio central ----------
   const atrioZ = -24;
