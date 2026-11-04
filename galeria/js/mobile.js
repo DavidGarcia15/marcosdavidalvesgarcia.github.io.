@@ -72,6 +72,15 @@ function montarSalaMobile(sala, indice) {
             <p>${escapar(sala.convite)}</p>
           </div>
         </details>
+        ${sala.atividade ? `
+          <details class="mobile-sala-atividade">
+            <summary>${escapar(sala.atividade.titulo)}</summary>
+            <p>${escapar(sala.atividade.enunciado)}</p>
+            <details class="mobile-sala-solucao">
+              <summary>Ver uma abordagem possível</summary>
+              <p>${escapar(sala.atividade.desenvolvimento)}</p>
+            </details>
+          </details>` : ""}
       </div>
     </article>`;
 }
