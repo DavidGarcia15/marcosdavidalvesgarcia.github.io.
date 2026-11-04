@@ -8,8 +8,19 @@ export function criarGuiaIA(THREE, scene) {
   const pedestal=new THREE.Mesh(new THREE.CylinderGeometry(0.48,0.56,0.18,28),dourado); pedestal.position.y=0.09; grupo.add(pedestal);
   const corpo=new THREE.Mesh(new THREE.CylinderGeometry(0.28,0.43,1.15,20),azul); corpo.position.y=0.82; grupo.add(corpo);
   const faixa=new THREE.Mesh(new THREE.TorusGeometry(0.34,0.035,8,28),dourado); faixa.rotation.x=Math.PI/2; faixa.position.y=0.55; grupo.add(faixa);
+  const manto=new THREE.Mesh(new THREE.CylinderGeometry(0.42,0.5,0.22,24),mat(0x344e70,0.18,0.62)); manto.position.y=0.28; grupo.add(manto);
   const cabeca=new THREE.Group(); cabeca.position.y=1.65;
   cabeca.add(new THREE.Mesh(new THREE.SphereGeometry(0.34,24,18),claro));
+  // Cabelos longos e presos parcialmente, dando à Atena uma aparência feminina.
+  const topoCabelo=new THREE.Mesh(new THREE.SphereGeometry(0.355,24,16),cabelo);
+  topoCabelo.scale.set(1.02,0.55,1.02); topoCabelo.position.set(0,0.19,-0.035); cabeca.add(topoCabelo);
+  const coque=new THREE.Mesh(new THREE.SphereGeometry(0.19,18,14),cabelo);
+  coque.position.set(0,0.12,-0.31); cabeca.add(coque);
+  for(const lado of [-1,1]){
+    const mecha=new THREE.Mesh(new THREE.CapsuleGeometry(0.085,0.48,5,10),cabelo);
+    mecha.position.set(lado*0.27,-0.27,-0.045);
+    mecha.rotation.z=lado*-0.12; cabeca.add(mecha);
+  }
   const aro=new THREE.Mesh(new THREE.TorusGeometry(0.46,0.035,10,36),dourado); aro.rotation.x=Math.PI/2.7; cabeca.add(aro);
   const olho=new THREE.Mesh(new THREE.SphereGeometry(0.075,16,12),brilho); olho.position.set(0,0.03,0.29); cabeca.add(olho); grupo.add(cabeca);
   const bracos=[];
