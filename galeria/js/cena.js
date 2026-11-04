@@ -108,7 +108,7 @@ export function criarCena(THREE, nivel = "alto") {
   criarParedeLisa(L * 2 + espessura, espessura, 0, -P - espessura / 2);
 
   // sul (entrada, com vão central para a porta)
-  const vaoPorta = 3.6;
+  const vaoPorta = 5.2;
   const segSul = (L * 2 - vaoPorta) / 2;
   criarParedeLisa(segSul, espessura, -(vaoPorta / 2 + segSul / 2), P + espessura / 2);
   criarParedeLisa(segSul, espessura, vaoPorta / 2 + segSul / 2, P + espessura / 2);
@@ -255,7 +255,7 @@ export function criarCena(THREE, nivel = "alto") {
       new THREE.BoxGeometry(1.55, 0.48, P * 2 + 0.2),
       matPedra
     );
-    arquitrave.position.set(x, 8.28, 0);
+    arquitrave.position.set(x, H - 0.78, 0);
     arquitrave.castShadow = true;
     scene.add(arquitrave);
 
@@ -263,14 +263,14 @@ export function criarCena(THREE, nivel = "alto") {
       new THREE.BoxGeometry(1.62, 0.18, P * 2 + 0.28),
       matDetalhePedra
     );
-    friso.position.set(x, 8.58, 0);
+    friso.position.set(x, H - 0.42, 0);
     scene.add(friso);
 
     const cornijaSuperior = new THREE.Mesh(
       new THREE.BoxGeometry(1.82, 0.16, P * 2 + 0.42),
       matPedra
     );
-    cornijaSuperior.position.set(x, 8.75, 0);
+    cornijaSuperior.position.set(x, H - 0.18, 0);
     scene.add(cornijaSuperior);
 
     // Dentículos discretos sob a cornija, detalhe típico da arquitetura clássica.
@@ -279,10 +279,142 @@ export function criarCena(THREE, nivel = "alto") {
         new THREE.BoxGeometry(1.35, 0.12, 0.16),
         matDetalhePedra
       );
-      denticulo.position.set(x, 8.43, -P + 0.45 + i * 0.94);
+      denticulo.position.set(x, H - 0.57, -P + 0.55 + i * ((P * 2 - 1.1) / 16));
       scene.add(denticulo);
     }
   });
+
+
+  // ---------- Grande portal de entrada e pórtico exterior ----------
+  // A entrada sul ganha moldura monumental, frontão neoclássico,
+  // colunas externas e uma escadaria de chegada.
+  const portalZ = P + 0.28;
+  const portalLargura = 7.2;
+  const portalAltura = 8.2;
+
+  [-1, 1].forEach((lado) => {
+    const pilastra = new THREE.Mesh(
+      new THREE.BoxGeometry(0.62, portalAltura, 0.48),
+      matPedra
+    );
+    pilastra.position.set(lado * (vaoPorta / 2 + 0.36), portalAltura / 2, portalZ);
+    scene.add(pilastra);
+
+    const capitelPortal = new THREE.Mesh(
+      new THREE.BoxGeometry(0.95, 0.32, 0.72),
+      matDetalhePedra
+    );
+    capitelPortal.position.set(lado * (vaoPorta / 2 + 0.36), portalAltura - 0.16, portalZ);
+    scene.add(capitelPortal);
+
+    const basePortal = new THREE.Mesh(
+      new THREE.BoxGeometry(0.9, 0.34, 0.72),
+      matDetalhePedra
+    );
+    basePortal.position.set(lado * (vaoPorta / 2 + 0.36), 0.17, portalZ);
+    scene.add(basePortal);
+  });
+
+  const lintelPortal = new THREE.Mesh(
+    new THREE.BoxGeometry(portalLargura, 0.55, 0.62),
+    matPedra
+  );
+  lintelPortal.position.set(0, portalAltura - 0.12, portalZ);
+  scene.add(lintelPortal);
+
+  // Frontão triangular clássico e tímpano azul profundo.
+  const formaFrontao = new THREE.Shape();
+  formaFrontao.moveTo(-4.25, 0);
+  formaFrontao.lineTo(4.25, 0);
+  formaFrontao.lineTo(0, 1.9);
+  formaFrontao.closePath();
+  const frontao = new THREE.Mesh(
+    new THREE.ExtrudeGeometry(formaFrontao, { depth: 0.42, bevelEnabled: false }),
+    matPedra
+  );
+  frontao.position.set(0, portalAltura + 0.18, portalZ - 0.18);
+  scene.add(frontao);
+
+  const timpano = new THREE.Mesh(
+    new THREE.ShapeGeometry(formaFrontao),
+    new THREE.MeshStandardMaterial({
+      color: 0x182944,
+      roughness: 0.8,
+      emissive: 0x101d32,
+      emissiveIntensity: 0.35,
+    })
+  );
+  timpano.position.set(0, portalAltura + 0.3, portalZ + 0.255);
+  scene.add(timpano);
+
+  // Colunas livres do pórtico, em escala menor que as da nave principal.
+  [-3.45, 3.45].forEach((x) => {
+    const basePortico = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.86, 0.96, 0.32, 32),
+      matDetalhePedra
+    );
+    basePortico.position.set(x, 0.16, P + 2.8);
+    const fustePortico = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.58, 0.64, 7.35, 32),
+      matPedra
+    );
+    fustePortico.position.set(x, 3.99, P + 2.8);
+    fustePortico.castShadow = true;
+    const capitelPortico = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.88, 0.64, 0.48, 32),
+      matPedra
+    );
+    capitelPortico.position.set(x, 7.9, P + 2.8);
+    scene.add(basePortico, fustePortico, capitelPortico);
+    colunas.push({ x, z: P + 2.8, topoY: 8.2 });
+  });
+
+  const coberturaPortico = new THREE.Mesh(
+    new THREE.BoxGeometry(9.2, 0.55, 3.8),
+    matPedra
+  );
+  coberturaPortico.position.set(0, 8.25, P + 2.8);
+  scene.add(coberturaPortico);
+
+  const faixaPortico = new THREE.Mesh(
+    new THREE.BoxGeometry(9.6, 0.2, 4.05),
+    matDetalhePedra
+  );
+  faixaPortico.position.set(0, 8.62, P + 2.8);
+  scene.add(faixaPortico);
+
+  // Escadaria larga, patamar de chegada e caminho exterior.
+  for (let i = 0; i < 4; i++) {
+    const degrau = new THREE.Mesh(
+      new THREE.BoxGeometry(10.5, 0.24, 0.82),
+      i % 2 === 0 ? matPedra : matDetalhePedra
+    );
+    degrau.position.set(0, -0.06 - i * 0.13, P + 0.75 + i * 0.82);
+    scene.add(degrau);
+  }
+
+  const patamarExterior = new THREE.Mesh(
+    new THREE.BoxGeometry(20, 0.24, 8),
+    new THREE.MeshStandardMaterial({ map: texturaMarmore(THREE), roughness: 0.48, metalness: 0.08 })
+  );
+  patamarExterior.position.set(0, -0.62, P + 6.2);
+  scene.add(patamarExterior);
+
+  for (let i = 0; i < 5; i++) {
+    const placa = new THREE.Mesh(
+      new THREE.BoxGeometry(5.2, 0.08, 1.15),
+      matDetalhePedra
+    );
+    placa.position.set(0, -0.46, P + 10.2 + i * 1.2);
+    scene.add(placa);
+  }
+
+  const horizonte = new THREE.Mesh(
+    new THREE.PlaneGeometry(30, 12),
+    new THREE.MeshBasicMaterial({ color: 0x081326 })
+  );
+  horizonte.position.set(0, 5.4, P + 17.5);
+  scene.add(horizonte);
 
   // ---------- Inscrição de entrada, na parede norte ----------
   const inscricao = new THREE.Mesh(
@@ -294,7 +426,7 @@ export function criarCena(THREE, nivel = "alto") {
       emissiveIntensity: 0.25,
     })
   );
-  inscricao.position.set(0, 5.6, -P - espessura + 0.02);
+  inscricao.position.set(0, 6.1, -P - espessura + 0.02);
   scene.add(inscricao);
 
   // ---------- Janelas (parede sul, ladeando a entrada) ----------
