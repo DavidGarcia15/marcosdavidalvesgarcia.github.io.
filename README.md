@@ -76,10 +76,11 @@ caminhos relativos) continuam funcionando normalmente.
 ## 3. Checklist antes de tornar o site público
 
 - [x] URL real já configurada em todos os arquivos (seção 1).
-- [x] Revisei a seção **ExpressArte 2015** com a matéria do Blog do Carlos
-      Britto, que confirma a seleção da produção de desenho “A Luta do Povo
-      Sertanejo” na relação publicada em 20/10/2015; nenhuma colocação ou
-      medalha foi atribuída sem comprovação.
+- [x] Revisei a seção **ExpressArte 2015**: a matéria do Blog do Carlos
+      Britto confirma a seleção do desenho “A Luta do Povo Sertanejo” na
+      relação parcial publicada em 20/10/2015. O 1º lugar e o notebook
+      recebido como prêmio foram acrescentados conforme relato do estudante;
+      a matéria não detalha esses dois pontos.
 - [ ] Se for adicionar uma foto, ela está autorizada e comprimida (ver
       `assets/README.md`).
 - [ ] Se for adicionar imagens de certificados, conferi se não expõem CPF,
@@ -180,8 +181,10 @@ Referências oficiais usadas neste projeto:
 - Olimpíada Mandacaru de Matemática 2023 — 3º lugar / bronze
 
 ### Pendentes (não publicadas como fato definitivo)
-- **ExpressArte 2015** (Petrolina): categoria, modalidade e natureza exata do
-  reconhecimento — aguardando conferência do certificado.
+- **ExpressArte 2015** (Petrolina): 1º lugar em desenho com “A Luta do Povo
+  Sertanejo” e notebook como prêmio, conforme relato do estudante; a matéria
+  do Carlos Britto confirma a seleção da produção na relação parcial, mas
+  não registra a classificação final nem a premiação.
 - Classificação para a 2ª fase da OBMEP 2026 (se desejar incluir).
 - Classificação no processo seletivo do IFSertãoPE (Técnico em
   Agropecuária, Campus Petrolina Zona Rural) — só deve ser publicada
