@@ -159,8 +159,8 @@ export function criarControles(THREE, { camera, domElement, colunas, aoInteragir
     const x = pos.x;
     const z = pos.z;
     const estaNoCorredorLateral = (valorZ) =>
-      (valorZ > -19.45 && valorZ < -13.55) ||
-      (valorZ > -32.55 && valorZ < -26.65);
+      (valorZ > -18.85 && valorZ < -14.15) ||
+      (valorZ > -31.95 && valorZ < -27.25);
     const foraDoMuseu = z > SALA.meiaProfundidade + 0.55;
 
     if (foraDoMuseu) {
@@ -192,8 +192,11 @@ export function criarControles(THREE, { camera, domElement, colunas, aoInteragir
         } else {
           pos.x = Math.max(-41.25, Math.min(41.25, pos.x));
 
-          // A parede divisória mantém História/Raciocínio separados de
-          // Geografia/Investigação. Cada sala tem seu próprio acesso.
+          // A parede divisória mantém as duas salas de cada ala separadas.
+          // O sentido da velocidade impede atravessar a divisória em diagonal.
+          if (pos.z > -23.65 && pos.z < -22.35) {
+            pos.z = vel.y > 0 ? -23.65 : -22.35;
+          }
           if (pos.z > -23.0) {
             pos.z = Math.max(-22.35, Math.min(-10.65, pos.z));
           } else {
@@ -204,8 +207,14 @@ export function criarControles(THREE, { camera, domElement, colunas, aoInteragir
         pos.x = Math.max(-13.25, Math.min(13.25, pos.x));
 
         // Parede norte do átrio e abertura central de retorno à galeria.
-        if (pos.z > -SALA.meiaProfundidade - margemParede && Math.abs(pos.x) > 3.1) {
-          pos.z = -SALA.meiaProfundidade - margemParede;
+        // A faixa de espessura da parede bloqueia a passagem fora do portal,
+        // inclusive quando o movimento cruza o plano entre dois quadros.
+        if (
+          pos.z > -SALA.meiaProfundidade - 0.55 &&
+          pos.z < -SALA.meiaProfundidade + margemParede &&
+          Math.abs(pos.x) > 3.1
+        ) {
+          pos.z = -SALA.meiaProfundidade + margemParede;
         }
       }
     }
