@@ -181,7 +181,7 @@ export function criarAlasMuseu(THREE, scene, nivel = "alto") {
   // Letreiro no lado do átrio, voltado para quem chega da galeria artística.
   const placaGaleria = new THREE.Group();
   placaGaleria.position.set(0, 8.55, -10.52);
-  placaGaleria.rotation.y = Math.PI;
+  placaGaleria.rotation.y = 0; // voltada ao átrio, indicando o retorno à galeria
   const molduraGaleria = new THREE.Mesh(new THREE.BoxGeometry(7.4, 1.35, 0.2), ouro);
   placaGaleria.add(molduraGaleria);
   const textoGaleria = new THREE.Mesh(
