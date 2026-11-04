@@ -3,7 +3,7 @@ export function criarGuiaIA(THREE, scene) {
   const grupo = new THREE.Group();
   grupo.position.set(0, 0, 2.7);
   const mat = (cor, metalness=0.08, roughness=0.55) => new THREE.MeshStandardMaterial({color:cor,metalness,roughness});
-  const azul=mat(0x263f63,0.22), dourado=mat(0xd1aa62,0.72,0.28), claro=mat(0xe8dfca);
+  const azul=mat(0x263f63,0.22), dourado=mat(0xd1aa62,0.72,0.28), claro=mat(0xe8dfca), cabelo=mat(0x382638,0.12,0.72);
   const brilho=new THREE.MeshStandardMaterial({color:0x8fc8e8,emissive:0x28658a,emissiveIntensity:1.2,metalness:0.25,roughness:0.25});
   const pedestal=new THREE.Mesh(new THREE.CylinderGeometry(0.48,0.56,0.18,28),dourado); pedestal.position.y=0.09; grupo.add(pedestal);
   const corpo=new THREE.Mesh(new THREE.CylinderGeometry(0.28,0.43,1.15,20),azul); corpo.position.y=0.82; grupo.add(corpo);
