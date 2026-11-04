@@ -181,14 +181,17 @@ export function criarAlasMuseu(THREE, scene, nivel = "alto") {
   const centrosPortas = [-16.5, -29.6];
   [-14, 14].forEach((x) => {
     const lado = x < 0 ? -1 : 1;
+    const portas = lado < 0
+      ? [{ centro: -29.6, sala: SALAS_MUSEU[1] }, { centro: -16.5, sala: SALAS_MUSEU[0] }]
+      : [{ centro: -29.6, sala: SALAS_MUSEU[3] }, { centro: -16.5, sala: SALAS_MUSEU[2] }];
     let limite = -38;
-    for (const centro of centrosPortas) {
-      const inicio = centro - 2.8;
-      const fim = centro + 2.8;
+    for (const porta of portas) {
+      const inicio = porta.centro - 2.8;
+      const fim = porta.centro + 2.8;
       const antes = inicio - limite;
       if (antes > 0.1) paredeY(0.5, 10, antes, x, 5, (limite + inicio) / 2);
-      caixa(0.56, 2.8, 5.75, pedraClara, x, 8.6, centro);
-      criarPortalLateral(x, centro, lado, SALAS_MUSEU[centrosPortas.indexOf(centro) + (lado < 0 ? 0 : 2)]);
+      caixa(0.56, 2.8, 5.75, pedraClara, x, 8.6, porta.centro);
+      criarPortalLateral(x, porta.centro, lado, porta.sala);
       limite = fim;
     }
     const depois = -10 - limite;
@@ -345,13 +348,6 @@ export function criarAlasMuseu(THREE, scene, nivel = "alto") {
     const luzSala = new THREE.PointLight(0xffd8a0, nivel === "baixo" ? 5 : 8, 13, 2);
     luzSala.position.set(xCentro, 6.2, zCentro);
     scene.add(luzSala);
-  });
-
-  // Parede divisória entre as duas salas de cada ala e paredes dos limites.
-  [-1, 1].forEach((lado) => {
-    paredeY(28, 10, 0.5, lado * 28, 5, -23);
-    paredeY(28, 10, 0.5, lado * 28, 5, -10);
-    paredeY(28, 10, 0.5, lado * 28, 5, -36);
   });
 
   // Placa de orientação no fundo do átrio: assinala a lógica modular do edifício.
