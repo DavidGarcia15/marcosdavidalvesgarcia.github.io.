@@ -234,20 +234,14 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
         return;
       }
 
-      // A obra funciona como portal: ao selecioná-la, o artista aparece
-      // discretamente ao lado. O visitante então gira o mouse e mira nele.
+      // Selecionar a pintura revela seu artista, mas mantém a experiência
+      // cinematográfica e abre o conteúdo curatorial da própria obra.
       const personagem = registro.personagem;
       if (personagem && !personagem.grupo.visible) {
         personagem.grupo.visible = true;
         personagem.alvo.visible = true;
         objetosInterativos.push(personagem.alvo);
-        alvoAtual = null;
-        if (dica) dica.classList.remove("visivel");
-        mostrarAviso(personagem.perfil.nome + " apareceu ao lado da obra. Gire a câmera para encontrá-lo.");
-      } else {
-        mostrarAviso("O artista já está ao lado desta obra. Mire nele para conversar.");
       }
-      return;
     }
 
     // Para artistas, não deslocamos a câmera: apenas a orientamos para
