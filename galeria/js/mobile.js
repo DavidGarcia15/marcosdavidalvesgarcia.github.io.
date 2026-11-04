@@ -113,7 +113,7 @@ export function iniciarGaleriaMobile() {
   raiz.innerHTML = `
     <header class="mobile-cabecalho">
       <p class="mobile-eyebrow">Galeria Marcos David</p>
-      <h1>Um céu de conquistas</h1>
+      <h1>Museu-biblioteca</h1>
       <p>Arte, conhecimento e trajetória. Conheça a galeria artística e consulte o mapa das novas alas do museu-biblioteca.</p>
       <div class="mobile-linha-ornamental" aria-hidden="true">✦ ━━━━━━━━━ ✦</div>
     </header>
