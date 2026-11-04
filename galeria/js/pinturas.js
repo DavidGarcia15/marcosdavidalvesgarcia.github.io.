@@ -279,7 +279,7 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
       '<div class="guia-chat">',
       '<div class="guia-chat-cabecalho"><span class="guia-avatar">A</span><div><strong>Atena</strong><small>Guia virtual · acervo curado</small></div></div>',
       '<div class="guia-mensagens" id="guia-mensagens"><div class="guia-mensagem">Olá! Sou Atena. Agora posso responder sobre a trajetória, as conquistas, os interesses e as obras deste museu. Também posso indicar fontes para você conferir.</div></div>',
-      '<div class="guia-sugestoes" aria-label="Sugestões de perguntas"><button type="button" data-pergunta="Quais são as principais conquistas de Marcos?">Conquistas</button><button type="button" data-pergunta="Por que Marcos gosta de Geopolítica?">Interesses</button><button type="button" data-pergunta="Quem pintou A Noite Estrelada?">As pinturas</button></div>',
+      '<div class="guia-sugestoes" aria-label="Sugestões de perguntas"><button type="button" data-pergunta="Onde ficam as novas salas?">Mapa do museu</button><button type="button" data-pergunta="O que posso explorar na Sala de Raciocínio?">Sala de Raciocínio</button><button type="button" data-pergunta="Quem pintou A Noite Estrelada?">As pinturas</button></div>',
       '<form class="guia-form" id="guia-form"><input id="guia-pergunta" type="text" maxlength="240" placeholder="Escreva sua pergunta..." autocomplete="off" required><button type="submit">Enviar</button></form>',
       '<p class="guia-aviso">Respostas baseadas em um acervo curado do próprio portfólio. Não sou uma IA generativa; quando possível, apresento fontes para consulta.</p>',
       '</div>'
