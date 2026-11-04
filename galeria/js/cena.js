@@ -36,10 +36,16 @@ export function criarCena(THREE, nivel = "alto") {
     metalness: 0.65,
     roughness: 0.32,
   });
+  // Mármore branco-marfim, com acabamento acetinado de edifício clássico.
   const matPedra = new THREE.MeshStandardMaterial({
-    color: 0xd9cdb0,
-    roughness: 0.75,
-    metalness: 0.05,
+    color: 0xf1efe8,
+    roughness: 0.42,
+    metalness: 0.025,
+  });
+  const matDetalhePedra = new THREE.MeshStandardMaterial({
+    color: 0xd8d4ca,
+    roughness: 0.5,
+    metalness: 0.02,
   });
   const matParede = new THREE.MeshStandardMaterial({
     map: texturaParede(THREE),
@@ -120,64 +126,161 @@ export function criarCena(THREE, nivel = "alto") {
     criarFaixa(L * 2 + 0.6, 0.34, 0, y, P + 0.08);
   });
 
-  // ---------- Colunas (base + fuste + capitel) ----------
-  const alturaFuste = H - 1.3;
-  const colunas = []; // {x, z, topoY} — usado para os arcos
+  // ---------- Colunata monumental em mármore branco ----------
+  // Proporções inspiradas na ordem coríntia: plinto escalonado,
+  // fuste estriado, capitel folhado e entablamento contínuo.
+  const alturaFuste = H - 2.15;
+  const raioFuste = raioColuna + 0.17;
+  const topoColuna = 0.42 + alturaFuste + 0.82;
+  const colunas = []; // {x, z, topoY} — referência arquitetônica
+
+  function geometriaFusteEstriado(raio, altura, segmentos = 96, anéis = 8) {
+    const vertices = [];
+    const indices = [];
+    for (let j = 0; j <= anéis; j++) {
+      const v = j / anéis;
+      for (let i = 0; i <= segmentos; i++) {
+        const a = (i / segmentos) * Math.PI * 2;
+        // 24 estrias rasas e contínuas, esculpidas diretamente na malha.
+        const estria = 1 - 0.035 * (0.5 + 0.5 * Math.cos(a * 24));
+        const afunilamento = 1.035 - 0.035 * v;
+        const r = raio * estria * afunilamento;
+        vertices.push(Math.cos(a) * r, v * altura, Math.sin(a) * r);
+      }
+    }
+    for (let j = 0; j < anéis; j++) {
+      for (let i = 0; i < segmentos; i++) {
+        const a = j * (segmentos + 1) + i;
+        const b = a + segmentos + 1;
+        indices.push(a, b, a + 1, b, b + 1, a + 1);
+      }
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.Float32BufferAttribute(vertices, 3));
+    geo.setIndex(indices);
+    geo.computeVertexNormals();
+    return geo;
+  }
 
   function criarColuna(x, z) {
     const grupo = new THREE.Group();
+    const baseY = 0;
 
-    const base = new THREE.Mesh(
-      new THREE.CylinderGeometry(raioColuna + 0.14, raioColuna + 0.18, 0.3, 20),
-      matDourado
-    );
-    base.position.y = 0.15;
-
-    const fuste = new THREE.Mesh(
-      new THREE.CylinderGeometry(raioColuna, raioColuna * 1.06, alturaFuste, 20),
+    // Plinto e molduras da base em mármore claro.
+    const plinto = new THREE.Mesh(
+      new THREE.BoxGeometry(1.55, 0.22, 1.55),
       matPedra
     );
-    fuste.position.y = 0.3 + alturaFuste / 2;
-    fuste.castShadow = true;
-
-    const capitel = new THREE.Mesh(
-      new THREE.CylinderGeometry(raioColuna + 0.2, raioColuna + 0.05, 0.32, 20),
-      matDourado
+    plinto.position.y = 0.11;
+    const baseInferior = new THREE.Mesh(
+      new THREE.CylinderGeometry(raioFuste + 0.28, raioFuste + 0.34, 0.18, 48),
+      matDetalhePedra
     );
-    capitel.position.y = 0.3 + alturaFuste + 0.16;
+    baseInferior.position.y = 0.31;
+    const baseSuperior = new THREE.Mesh(
+      new THREE.CylinderGeometry(raioFuste + 0.16, raioFuste + 0.28, 0.16, 48),
+      matPedra
+    );
+    baseSuperior.position.y = 0.48;
 
-    grupo.add(base, fuste, capitel);
-    grupo.position.set(x, 0, z);
+    const fuste = new THREE.Mesh(
+      geometriaFusteEstriado(raioFuste, alturaFuste),
+      matPedra
+    );
+    fuste.position.y = 0.56;
+    fuste.castShadow = true;
+    fuste.receiveShadow = true;
+
+    // Anéis discretos separam o fuste do capitel.
+    const astragalo = new THREE.Mesh(
+      new THREE.CylinderGeometry(raioFuste + 0.07, raioFuste + 0.07, 0.12, 48),
+      matDetalhePedra
+    );
+    astragalo.position.y = 0.56 + alturaFuste + 0.06;
+    const gola = new THREE.Mesh(
+      new THREE.CylinderGeometry(raioFuste + 0.14, raioFuste + 0.08, 0.16, 48),
+      matPedra
+    );
+    gola.position.y = 0.56 + alturaFuste + 0.19;
+
+    // Capitel coríntio estilizado: duas coroas de folhas de acanto.
+    const capitelGrupo = new THREE.Group();
+    const yCapitel = 0.56 + alturaFuste + 0.25;
+    const folhas = 12;
+    for (let nivelFolha = 0; nivelFolha < 2; nivelFolha++) {
+      for (let i = 0; i < folhas; i++) {
+        const ang = (i / folhas) * Math.PI * 2 + (nivelFolha * Math.PI / folhas);
+        const folha = new THREE.Mesh(
+          new THREE.SphereGeometry(1, 10, 8),
+          nivelFolha === 0 ? matPedra : matDetalhePedra
+        );
+        folha.scale.set(0.15, 0.34, 0.12);
+        const r = raioFuste + (nivelFolha === 0 ? 0.1 : 0.2);
+        folha.position.set(Math.cos(ang) * r, nivelFolha * 0.28 + 0.25, Math.sin(ang) * r);
+        folha.rotation.z = -Math.cos(ang) * 0.28;
+        folha.rotation.x = Math.sin(ang) * 0.28;
+        capitelGrupo.add(folha);
+      }
+    }
+    const equino = new THREE.Mesh(
+      new THREE.CylinderGeometry(raioFuste + 0.25, raioFuste + 0.2, 0.18, 48),
+      matPedra
+    );
+    equino.position.y = 0.67;
+    capitelGrupo.add(equino);
+    const abaco = new THREE.Mesh(
+      new THREE.BoxGeometry(1.55, 0.22, 1.55),
+      matPedra
+    );
+    abaco.position.y = 0.86;
+    capitelGrupo.add(abaco);
+    capitelGrupo.position.y = yCapitel;
+
+    grupo.add(plinto, baseInferior, baseSuperior, fuste, astragalo, gola, capitelGrupo);
+    grupo.position.set(x, baseY, z);
     scene.add(grupo);
-
-    colunas.push({ x, z, topoY: 0.3 + alturaFuste + 0.32 });
+    colunas.push({ x, z, topoY: topoColuna });
   }
 
-  [-L + 0.75, L - 0.75].forEach((x) => {
+  const posicoesColunas = [-L + 1.15, L - 1.15];
+  posicoesColunas.forEach((x) => {
     colunasZ.forEach((z) => criarColuna(x, z));
   });
 
-  // ---------- Arcos ornamentais entre colunas consecutivas ----------
-  // Cada arco é tracejado por pequenos blocos dourados ao longo de um
-  // semicírculo — evita depender de rotações complexas de geometria de
-  // toro e já transmite bem a ideia de "arco" visto do chão do salão.
-  function criarArco(x, z1, z2, baseY) {
-    const centroZ = (z1 + z2) / 2;
-    const raio = Math.abs(z2 - z1) / 2;
-    const passos = 10;
-    for (let i = 0; i <= passos; i++) {
-      const t = (i / passos) * Math.PI;
-      const y = baseY + raio * Math.sin(t);
-      const z = centroZ + raio * Math.cos(t) * Math.sign(z2 - z1 || 1);
-      const bloco = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.28, 0.22), matDourado);
-      bloco.position.set(x, y, z);
-      scene.add(bloco);
-    }
-  }
+  // ---------- Entablamento clássico ----------
+  // Em vez de pequenos blocos suspensos, uma arquitrave de mármore
+  // contínua une os capitéis e dá à sala a leitura de um templo/museu.
+  posicoesColunas.forEach((x) => {
+    const arquitrave = new THREE.Mesh(
+      new THREE.BoxGeometry(1.55, 0.48, P * 2 + 0.2),
+      matPedra
+    );
+    arquitrave.position.set(x, 8.28, 0);
+    arquitrave.castShadow = true;
+    scene.add(arquitrave);
 
-  [-L + 0.75, L - 0.75].forEach((x) => {
-    for (let i = 0; i < colunasZ.length - 1; i++) {
-      criarArco(x, colunasZ[i], colunasZ[i + 1], 0.3 + alturaFuste + 0.32);
+    const friso = new THREE.Mesh(
+      new THREE.BoxGeometry(1.62, 0.18, P * 2 + 0.28),
+      matDetalhePedra
+    );
+    friso.position.set(x, 8.58, 0);
+    scene.add(friso);
+
+    const cornijaSuperior = new THREE.Mesh(
+      new THREE.BoxGeometry(1.82, 0.16, P * 2 + 0.42),
+      matPedra
+    );
+    cornijaSuperior.position.set(x, 8.75, 0);
+    scene.add(cornijaSuperior);
+
+    // Dentículos discretos sob a cornija, detalhe típico da arquitetura clássica.
+    for (let i = 0; i < 17; i++) {
+      const denticulo = new THREE.Mesh(
+        new THREE.BoxGeometry(1.35, 0.12, 0.16),
+        matDetalhePedra
+      );
+      denticulo.position.set(x, 8.43, -P + 0.45 + i * 0.94);
+      scene.add(denticulo);
     }
   });
 
