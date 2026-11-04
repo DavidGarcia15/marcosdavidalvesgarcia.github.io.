@@ -6,9 +6,13 @@ export function criarGuiaIA(THREE, scene) {
   const azul=mat(0x263f63,0.22), dourado=mat(0xd1aa62,0.72,0.28), claro=mat(0xe8dfca), cabelo=mat(0x382638,0.12,0.72);
   const brilho=new THREE.MeshStandardMaterial({color:0x8fc8e8,emissive:0x28658a,emissiveIntensity:1.2,metalness:0.25,roughness:0.25});
   const pedestal=new THREE.Mesh(new THREE.CylinderGeometry(0.48,0.56,0.18,28),dourado); pedestal.position.y=0.09; grupo.add(pedestal);
-  const corpo=new THREE.Mesh(new THREE.CylinderGeometry(0.28,0.43,1.15,20),azul); corpo.position.y=0.82; grupo.add(corpo);
+  const corpo=new THREE.Mesh(new THREE.CylinderGeometry(0.27,0.48,1.18,24),azul); corpo.position.y=0.82; grupo.add(corpo);
+  const gola=new THREE.Mesh(new THREE.TorusGeometry(0.25,0.035,10,32),dourado); gola.position.y=1.34; gola.rotation.x=Math.PI/2; grupo.add(gola);
+  const colar=new THREE.Mesh(new THREE.TorusGeometry(0.19,0.018,8,28),dourado); colar.position.set(0,1.19,0.23); colar.rotation.x=0.18; grupo.add(colar);
+  const pingente=new THREE.Mesh(new THREE.OctahedronGeometry(0.075,0),brilho); pingente.position.set(0,1.02,0.29); grupo.add(pingente);
   const faixa=new THREE.Mesh(new THREE.TorusGeometry(0.34,0.035,8,28),dourado); faixa.rotation.x=Math.PI/2; faixa.position.y=0.55; grupo.add(faixa);
-  const manto=new THREE.Mesh(new THREE.CylinderGeometry(0.42,0.5,0.22,24),mat(0x344e70,0.18,0.62)); manto.position.y=0.28; grupo.add(manto);
+  const manto=new THREE.Mesh(new THREE.CylinderGeometry(0.42,0.56,0.28,24),mat(0x344e70,0.18,0.62)); manto.position.y=0.3; grupo.add(manto);
+  const bordaManto=new THREE.Mesh(new THREE.TorusGeometry(0.49,0.025,8,32),dourado); bordaManto.position.y=0.17; bordaManto.rotation.x=Math.PI/2; grupo.add(bordaManto);
   const cabeca=new THREE.Group(); cabeca.position.y=1.65;
   cabeca.add(new THREE.Mesh(new THREE.SphereGeometry(0.34,24,18),claro));
   // Cabelos longos e presos parcialmente, dando à Atena uma aparência feminina.
@@ -21,8 +25,24 @@ export function criarGuiaIA(THREE, scene) {
     mecha.position.set(lado*0.27,-0.27,-0.045);
     mecha.rotation.z=lado*-0.12; cabeca.add(mecha);
   }
-  const aro=new THREE.Mesh(new THREE.TorusGeometry(0.46,0.035,10,36),dourado); aro.rotation.x=Math.PI/2.7; cabeca.add(aro);
-  const olho=new THREE.Mesh(new THREE.SphereGeometry(0.075,16,12),brilho); olho.position.set(0,0.03,0.29); cabeca.add(olho); grupo.add(cabeca);
+  // Diadema clássico de rainha, com pequenas pedras azuis.
+  const aro=new THREE.Mesh(new THREE.TorusGeometry(0.365,0.027,10,40),dourado); aro.position.y=0.13; aro.rotation.x=Math.PI/2; cabeca.add(aro);
+  for(let i=-2;i<=2;i++){
+    const joia=new THREE.Mesh(new THREE.SphereGeometry(i===0?0.055:0.032,12,10),i===0?brilho:dourado);
+    joia.position.set(i*0.13,0.25-Math.abs(i)*0.025,0.265); cabeca.add(joia);
+  }
+  // Olhos em par, com íris e pupilas.
+  const brancoOlho=mat(0xf4eee2,0.02,0.3), iris=mat(0x426f91,0.2,0.28), pupila=mat(0x172332,0.05,0.2);
+  for(const lado of [-1,1]){
+    const olhoBase=new THREE.Mesh(new THREE.SphereGeometry(0.057,16,12),brancoOlho); olhoBase.position.set(lado*0.12,0.025,0.296); olhoBase.scale.set(1.08,0.82,0.48); cabeca.add(olhoBase);
+    const irisOlho=new THREE.Mesh(new THREE.SphereGeometry(0.031,14,10),iris); irisOlho.position.set(lado*0.12,0.025,0.324); cabeca.add(irisOlho);
+    const pupilaOlho=new THREE.Mesh(new THREE.SphereGeometry(0.015,12,8),pupila); pupilaOlho.position.set(lado*0.12,0.025,0.348); cabeca.add(pupilaOlho);
+    const brinco=new THREE.Mesh(new THREE.SphereGeometry(0.045,12,10),dourado); brinco.position.set(lado*0.325,-0.12,0.04); cabeca.add(brinco);
+    const gota=new THREE.Mesh(new THREE.OctahedronGeometry(0.045,0),brilho); gota.position.set(lado*0.325,-0.2,0.045); cabeca.add(gota);
+  }
+  const nariz=new THREE.Mesh(new THREE.SphereGeometry(0.035,12,10),claro); nariz.position.set(0,-0.065,0.32); nariz.scale.set(0.7,1,0.65); cabeca.add(nariz);
+  const boca=new THREE.Mesh(new THREE.SphereGeometry(0.035,12,8),mat(0x9b6568,0,0.8)); boca.position.set(0,-0.16,0.315); boca.scale.set(1.2,0.42,0.45); cabeca.add(boca);
+  grupo.add(cabeca);
   const bracos=[];
   for(const lado of [-1,1]){
     const piv=new THREE.Group(); piv.position.set(lado*0.3,1.22,0);
