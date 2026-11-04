@@ -88,6 +88,12 @@ const respostas = [
     ]
   },
   {
+    id: "geopolitica-interesse",
+    termos: ["por que marcos gosta de geopolitica", "gosta de geopolitica", "por que geopolitica", "interesse por geopolitica"],
+    texto: "O portfólio destaca a Geopolítica porque ela conecta áreas que Marcos gosta de estudar: História, Geografia, política e economia. Esse campo ajuda a entender como os territórios, os recursos, as relações de poder e os acontecimentos históricos influenciam o mundo.",
+    fontes: [{ texto: "Conheça as áreas de interesse", url: "../sobre/" }]
+  },
+  {
     id: "interesses",
     termos: ["o que marcos gosta", "interesses", "materias favoritas", "o que estuda", "areas de interesse"],
     texto: "História e Geografia ocupam um lugar especial nos interesses de Marcos, sobretudo a Geopolítica. Ele também gosta de Matemática e raciocínio lógico, Biologia, Ciências e Tecnologia, incluindo programação.",
@@ -113,7 +119,7 @@ const respostas = [
     termos: ["van gogh", "noite estrelada", "starry night"],
     texto: "Vincent van Gogh pintou A Noite Estrelada em 1889, durante sua estadia em Saint-Rémy-de-Provence, na França. A composição combina observação e interpretação artística. No museu, a obra simboliza persistência, curiosidade e aprendizagem.",
     fontes: [
-      { texto: "Explorar a exposição", url: "#noite-estrelada" },
+      { texto: "Crédito da obra no Wikimedia Commons", url: "https://commons.wikimedia.org/wiki/File:Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg" },
       { texto: "Crédito da reprodução", url: "https://commons.wikimedia.org/wiki/File:Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg" }
     ]
   },
