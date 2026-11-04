@@ -51,6 +51,15 @@ function montarPainelSala(sala) {
   const topicos = (sala.temas || [])
     .map((tema) => "<li>" + escaparHTML(tema) + "</li>")
     .join("");
+  const atividade = sala.atividade
+    ? [
+        '<section class="painel-secao painel-atividade"><h3>', escaparHTML(sala.atividade.titulo), "</h3>",
+        '<p class="painel-intro">', escaparHTML(sala.atividade.enunciado), "</p>",
+        '<details class="painel-desafio"><summary>Ver uma abordagem possível</summary><p>',
+        escaparHTML(sala.atividade.desenvolvimento),
+        "</p></details></section>",
+      ].join("")
+    : "";
   return [
     '<p class="painel-tema">', escaparHTML(sala.setor), "</p>",
     "<h2>", escaparHTML(sala.titulo), "</h2>",
@@ -61,6 +70,7 @@ function montarPainelSala(sala) {
     '<aside class="painel-destaque"><span>Proposta de exploração</span><p>',
     escaparHTML(sala.convite),
     "</p></aside>",
+    atividade,
     '<p class="painel-nota">', escaparHTML(sala.orientacao), "</p>",
   ].join("");
 }
