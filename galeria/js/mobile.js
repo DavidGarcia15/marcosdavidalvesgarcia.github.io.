@@ -4,6 +4,7 @@
  */
 import { PINTURAS } from "./config.js";
 import { responderAtena, PERGUNTAS_ATENA } from "./atena.js";
+import { montarPlayerMobile } from "./toca-discos.js";
 
 function escapar(valor) {
   return String(valor ?? "").replace(/[&<>"']/g, (c) => ({
@@ -115,6 +116,8 @@ export function iniciarGaleriaMobile() {
     </section>
     <footer class="mobile-rodape">Galeria Marcos David <span>·</span> Arte, conhecimento e trajetória</footer>
   `;
+
+  montarPlayerMobile(raiz);
 
   const form = document.getElementById("mobile-atena-form");
   const input = document.getElementById("mobile-atena-pergunta");
