@@ -233,6 +233,38 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
       return;
     }
 
+    // Para artistas, calcula a aproximação a partir da posição atual do
+    // visitante. Assim a câmera sempre avança pelo lado de onde ele veio,
+    // em vez de tentar alcançar uma coordenada fixa do outro lado do salão.
+    if (registro.tipo === "personagem") {
+      const centroPersonagem = new THREE.Vector3();
+      alvoAtual.getWorldPosition(centroPersonagem);
+      centroPersonagem.y = 1.85;
+
+      const direcao = new THREE.Vector3(
+        camera.position.x - centroPersonagem.x,
+        0,
+        camera.position.z - centroPersonagem.z
+      );
+
+      if (direcao.lengthSq() < 0.001) {
+        direcao.set(0, 0, 1);
+      } else {
+        direcao.normalize();
+      }
+
+      registro.posAproximacao = new THREE.Vector3(
+        centroPersonagem.x + direcao.x * 2.35,
+        1.65,
+        centroPersonagem.z + direcao.z * 2.35
+      );
+
+      const cameraAlvo = new THREE.Object3D();
+      cameraAlvo.position.copy(registro.posAproximacao);
+      cameraAlvo.lookAt(centroPersonagem);
+      registro.quatAproximacao = cameraAlvo.quaternion.clone();
+    }
+
     registroAtivo = registro;
     origemPos.copy(camera.position);
     origemQuat.copy(camera.quaternion);
