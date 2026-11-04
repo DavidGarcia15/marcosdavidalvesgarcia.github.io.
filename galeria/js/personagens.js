@@ -147,8 +147,9 @@ export function criarPersonagem(THREE, pintura, scene) {
   grupo.add(gola);
 
   scene.add(grupo);
+  grupo.visible = false;
 
-  // Volume invisível para mirar e conversar com a figura.
+  // Volume de interação: também fica oculto até a obra ser selecionada.
   const alvo = new THREE.Mesh(
     new THREE.BoxGeometry(1.25, 2.35, 0.95),
     new THREE.MeshBasicMaterial({ visible: false })
@@ -157,6 +158,7 @@ export function criarPersonagem(THREE, pintura, scene) {
   alvo.userData.tipoInteracao = "personagem";
   alvo.userData.personagem = perfil;
   scene.add(alvo);
+  alvo.visible = false;
 
   const posAproximacao = new THREE.Vector3(x + normal * 2.35, 1.65, z);
   const cameraTemporaria = new THREE.Object3D();
@@ -164,5 +166,5 @@ export function criarPersonagem(THREE, pintura, scene) {
   cameraTemporaria.lookAt(x, 1.85, z);
   const quatAproximacao = cameraTemporaria.quaternion.clone();
 
-  return { alvo, posAproximacao, quatAproximacao, perfil };
+  return { grupo, alvo, posAproximacao, quatAproximacao, perfil };
 }
