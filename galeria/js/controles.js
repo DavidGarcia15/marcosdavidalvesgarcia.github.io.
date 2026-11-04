@@ -20,7 +20,7 @@ export function criarControles(THREE, { camera, domElement, colunas, aoInteragir
   const margemParede = SALA.raioJogador + 0.35;
   const minDistColuna = SALA.raioColuna + SALA.raioJogador + 0.08;
 
-  let yaw = 0;
+  let yaw = camera.rotation.y || 0;
   let pitch = 0;
   let bloqueado = false;
   const vel = new THREE.Vector2(0, 0);
