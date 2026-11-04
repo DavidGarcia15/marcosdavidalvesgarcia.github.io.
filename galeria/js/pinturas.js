@@ -228,8 +228,8 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
 
     // Reconhece as diferentes formas de perguntar pela identidade do criador.
     // "David", "Marcos" e "Marcos David" apontam para a mesma pessoa.
-    const perguntaIdentidade = /^(quem e|quem seria|me fale sobre|fale sobre|sobre|identifique)\\s+(o\\s+)?(marcos(\\s+david(\\s+alves(\\s+garcia)?)?)?|david)(\\s+garcia)?[?.! ]*$/.test(q)
-      || /^(quem e|quem seria)\\s+(o\\s+)?criador( do museu)?[?.! ]*$/.test(q)
+    const perguntaIdentidade = /^(quem e|quem seria|me fale sobre|fale sobre|sobre|identifique)\s+(o\s+)?(marcos(\s+david(\s+alves(\s+garcia)?)?)?|david)(\s+garcia)?[?.! ]*$/.test(q)
+      || /^(quem e|quem seria)\s+(o\s+)?criador( do museu)?[?.! ]*$/.test(q)
       || /^(quem sou eu|quem e ele|quem e o dono do museu)[?.! ]*$/.test(q)
       || /^(marcos|david|marcos david|marcos david alves garcia)[?.! ]*$/.test(q);
     if (perguntaIdentidade || tem("quem e marcos", "quem e david", "quem e o david", "quem e o marcos", "quem e marcos david", "quem e marcos david alves garcia", "quem e o criador", "quem criou", "dono do museu", "sobre marcos", "sobre david", "sobre marcos david", "quem sou"))
