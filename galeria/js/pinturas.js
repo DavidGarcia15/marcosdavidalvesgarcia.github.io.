@@ -10,6 +10,7 @@ import { SALA, PINTURAS } from "./config.js";
 import { texturaEmPreparacao } from "./texturas.js";
 import { criarPersonagem } from "./personagens.js";
 import { criarGuiaIA } from "./guia.js";
+import { responderAtena } from "./atena.js";
 
 const DURACAO_APROXIMAR = 2.2;
 const DURACAO_AFASTAR = 1.1;
@@ -223,74 +224,42 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
   }
 
   function responderGuia(pergunta) {
-    const q = pergunta.toLocaleLowerCase("pt-BR").normalize("NFD").replace(/[\\u0300-\\u036f]/g, "");
-    const tem = (...termos) => termos.some((termo) => q.includes(termo));
+    return responderAtena(pergunta);
+  }
 
-    // Reconhece as diferentes formas de perguntar pela identidade do criador.
-    // "David", "Marcos" e "Marcos David" apontam para a mesma pessoa.
-    const perguntaIdentidade = /^(quem e|quem seria|me fale sobre|fale sobre|sobre|identifique)\s+(o\s+)?(marcos(\s+david(\s+alves(\s+garcia)?)?)?|david)(\s+garcia)?[?.! ]*$/.test(q)
-      || /^(quem e|quem seria)\s+(o\s+)?criador( do museu)?[?.! ]*$/.test(q)
-      || /^(quem sou eu|quem e ele|quem e o dono do museu)[?.! ]*$/.test(q)
-      || /^(marcos|david|marcos david|marcos david alves garcia)[?.! ]*$/.test(q);
-    if (perguntaIdentidade || tem("quem e marcos", "quem e david", "quem e o david", "quem e o marcos", "quem e marcos david", "quem e marcos david alves garcia", "quem e o criador", "quem criou", "dono do museu", "sobre marcos", "sobre david", "sobre marcos david", "quem sou"))
-      return "Marcos David Alves Garcia é o criador deste museu. Ele é estudante do Ensino Médio em Petrolina, Pernambuco, e participa de olimpíadas e desafios acadêmicos desde 2015. No site, você pode conhecer sua trajetória, seus interesses e suas conquistas.";
-    if (tem("onde marcos", "onde ele mora", "cidade", "petrolina", "pernambuco"))
-      return "O site apresenta Marcos como estudante do Ensino Médio em Petrolina, interior de Pernambuco.";
-    if (tem("profissao", "professor", "carreira", "futuro", "quer ser"))
-      return "Segundo a página Sobre mim, Marcos pretende seguir carreira como professor de História e Geografia. Ele vê o ensino como uma forma de compartilhar a curiosidade pelo mundo, pelo tempo e pelos lugares.";
-    if (tem("interesse", "materia favorita", "materias", "gosta de estudar", "areas"))
-      return "O site destaca o interesse de Marcos por História e Geografia, especialmente Geopolítica. Ele também gosta de desafios de Matemática e raciocínio lógico, Biologia, ciências da natureza, Informática e programação.";
-    if (tem("por que criou", "porque criou", "objetivo do site", "objetivo do portfolio", "para que serve"))
-      return "Marcos criou o portfólio para reunir, em um só lugar, registros de olimpíadas e desafios acadêmicos. A proposta é manter um espaço público, organizado e confiável para ele, professores, escolas e visitantes conhecerem sua trajetória.";
+  function adicionarRespostaAtena(mensagens, resultado) {
+    const resposta = document.createElement("div");
+    resposta.className = "guia-mensagem";
+    resposta.textContent = resultado.texto;
+    mensagens.appendChild(resposta);
 
-    // Conquistas — dados publicados na página /conquistas/.
-    if (tem("ouro", "medalha de ouro"))
-      return "Entre os resultados publicados, Marcos conquistou medalha de ouro no Torneio Nacional de Biologia (TNBio), em 2026. Foi sua primeira participação nessa competição.";
-    if (tem("menção honrosa", "mencao honrosa"))
-      return "Na 20ª OBMEP, em 2025, Marcos recebeu Menção Honrosa Nacional. O próprio site esclarece que essa distinção é diferente das medalhas de ouro, prata e bronze.";
-    if (tem("mandacaru", "2023", "terceiro lugar", "3 lugar"))
-      return "Em 2023, Marcos conquistou o terceiro lugar, com reconhecimento em bronze, na Olimpíada Mandacaru de Matemática. O site destaca a identidade regional nordestina da competição.";
-    if (tem("obgp", "geopolitica"))
-      return "Marcos participou da Olimpíada Brasileira de Geopolítica em três edições consecutivas: bronze em 2024, bronze em 2025 e prata em 2026. A página Sobre também explica que Geopolítica é uma das áreas que mais despertam seu interesse.";
-    if (tem("obmep"))
-      return "O site registra Menção Honrosa Nacional na 20ª OBMEP, em 2025. Também registra a participação na edição de 2026, cujo resultado aparece como aguardando divulgação na página de conquistas.";
-    if (tem("tnbio", "biologia"))
-      return "Em 2026, Marcos conquistou medalha de ouro no Torneio Nacional de Biologia (TNBio), organizado pela Seleta Educação. A prova aborda temas que vão da célula aos ecossistemas, incluindo biodiversidade, genética e conservação ambiental.";
-    if (tem("obmf", "matematica financeira", "juros", "investimento"))
-      return "Marcos conquistou medalha de prata na Olimpíada Brasileira de Matemática Financeira (OBMF), em 2025. A competição aborda temas como orçamento, juros, crédito e investimentos.";
-    if (tem("obge", "geoinformacao", "geoinformação"))
-      return "Em 2025, Marcos conquistou medalha de prata na Olimpíada Brasileira de Geoinformação (OBGE), competição relacionada à Geografia e à geoinformação.";
-    if (tem("medalha", "conquista", "resultado", "premio", "prêmio", "certificado", "olimpiada", "olimpíada"))
-      return "A página de conquistas registra, entre outros resultados: ouro no TNBio 2026; prata na OBGP 2026; bronze na OBGP 2025; prata na OBMF e na OBGE 2025; Menção Honrosa Nacional na OBMEP 2025; bronze na OBGP 2024; e terceiro lugar/bronze na Olimpíada Mandacaru de Matemática 2023. Há também participações cujo resultado está pendente ou cuja informação ainda está sendo confirmada. Você pode consultar a linha do tempo completa na página Conquistas do portfólio.";
-
-    // Museu e funcionamento.
-    if (tem("oi", "ola", "bom dia", "boa tarde", "boa noite"))
-      return "Olá! Sou Atena, guia deste museu. Agora também posso responder perguntas sobre Marcos usando as informações publicadas no portfólio. O que gostaria de conhecer?";
-    if (tem("van gogh", "noite estrelada"))
-      return "Van Gogh pintou A Noite Estrelada em 1889, durante sua estadia em Saint-Rémy. No museu, a obra representa persistência, curiosidade e trajetória de aprendizagem.";
-    if (tem("monet", "nenufar"))
-      return "Claude Monet voltou muitas vezes ao tema dos Nenúfares, observando como a luz e os reflexos mudavam no lago de seu jardim em Giverny.";
-    if (tem("vermeer", "astronomo"))
-      return "Em O Astrônomo, Vermeer retrata um estudioso diante de um globo celeste. A luz, os livros e os instrumentos ajudam a construir o clima de investigação.";
-    if (tem("friedrich", "caminhante", "nevoa"))
-      return "Caspar David Friedrich é um dos nomes do Romantismo alemão. O caminhante diante da névoa convida a pensar sobre escolhas, descobertas e o que ainda não conhecemos.";
-    if (tem("pintura", "obra", "quadro", "galeria", "sala", "museu"))
-      return "Temos quatro exposições: A Noite Estrelada, de Van Gogh; Nenúfares, de Monet; O Astrônomo, de Vermeer; e O Caminhante sobre o Mar de Névoa, de Caspar David Friedrich. Mire em uma pintura e pressione E para explorar.";
-    if (tem("controle", "andar", "moviment", "tecla", "mouse", "interagir"))
-      return "No computador, use W, A, S e D ou as setas para caminhar. Mova o mouse para olhar, mire numa pintura ou personagem e pressione E ou clique para interagir.";
-    if (tem("atena", "quem e voce", "sobre voce", "guia"))
-      return "Sou Atena, a guia virtual do museu. Minhas respostas sobre Marcos são baseadas nos textos publicados nas páginas Sobre mim e Conquistas. Quando uma informação não está no site, não devo inventá-la.";
-    return "Ainda não encontrei essa informação nos textos do portfólio. Posso falar sobre a trajetória de Marcos, seus interesses, as olimpíadas e medalhas registradas ou as obras deste museu. Tente perguntar de outro jeito.";
+    if (resultado.fontes && resultado.fontes.length) {
+      const fontes = document.createElement("div");
+      fontes.className = "guia-fontes";
+      resultado.fontes.forEach((fonte) => {
+        const link = document.createElement("a");
+        link.href = fonte.url;
+        link.textContent = fonte.texto;
+        if (/^https?:/i.test(fonte.url)) {
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+        }
+        fontes.appendChild(link);
+      });
+      mensagens.appendChild(fontes);
+    }
+    mensagens.scrollTop = mensagens.scrollHeight;
   }
 
   function abrirGuia() {
     if (!painelConteudo) return;
     painelConteudo.innerHTML = [
       '<div class="guia-chat">',
-      '<div class="guia-chat-cabecalho"><span class="guia-avatar">A</span><div><strong>Atena</strong><small>Guia virtual · protótipo em teste</small></div></div>',
-      '<div class="guia-mensagens" id="guia-mensagens"><div class="guia-mensagem">Olá! Sou Atena. Posso ajudar você a explorar o museu. Pergunte sobre as pinturas, os artistas, os controles ou as conquistas.</div></div>',
+      '<div class="guia-chat-cabecalho"><span class="guia-avatar">A</span><div><strong>Atena</strong><small>Guia virtual · acervo curado</small></div></div>',
+      '<div class="guia-mensagens" id="guia-mensagens"><div class="guia-mensagem">Olá! Sou Atena. Agora posso responder sobre a trajetória, as conquistas, os interesses e as obras deste museu. Também posso indicar fontes para você conferir.</div></div>',
+      '<div class="guia-sugestoes" aria-label="Sugestões de perguntas"><button type="button" data-pergunta="Quais são as principais conquistas de Marcos?">Conquistas</button><button type="button" data-pergunta="Por que Marcos gosta de Geopolítica?">Interesses</button><button type="button" data-pergunta="Quem pintou A Noite Estrelada?">As pinturas</button></div>',
       '<form class="guia-form" id="guia-form"><input id="guia-pergunta" type="text" maxlength="240" placeholder="Escreva sua pergunta..." autocomplete="off" required><button type="submit">Enviar</button></form>',
-      '<p class="guia-aviso">Minhas respostas sobre Marcos usam informações publicadas nas páginas Sobre mim e Conquistas. Ainda sou um protótipo local, sem conexão a uma IA externa.</p>',
+      '<p class="guia-aviso">Respostas baseadas em um acervo curado do próprio portfólio. Não sou uma IA generativa; quando possível, apresento fontes para consulta.</p>',
       '</div>'
     ].join("");
     estado = "painel-aberto";
@@ -302,20 +271,22 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
     aoMudarBloqueio(true);
     const form = document.getElementById("guia-form");
     const input = document.getElementById("guia-pergunta");
+    const mensagens = document.getElementById("guia-mensagens");
+    painelConteudo.querySelectorAll("[data-pergunta]").forEach((botao) => {
+      botao.addEventListener("click", () => {
+        input.value = botao.getAttribute("data-pergunta");
+        form.requestSubmit();
+      });
+    });
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const pergunta = input.value.trim();
       if (!pergunta) return;
-      const mensagens = document.getElementById("guia-mensagens");
       const visitante = document.createElement("div");
       visitante.className = "guia-mensagem visitante";
       visitante.textContent = pergunta;
       mensagens.appendChild(visitante);
-      const resposta = document.createElement("div");
-      resposta.className = "guia-mensagem";
-      resposta.textContent = responderGuia(pergunta);
-      mensagens.appendChild(resposta);
-      mensagens.scrollTop = mensagens.scrollHeight;
+      adicionarRespostaAtena(mensagens, responderGuia(pergunta));
       input.value = "";
       input.focus();
     });
