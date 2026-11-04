@@ -131,7 +131,7 @@ export function iniciarGaleriaMobile() {
     <section class="mobile-atena" aria-labelledby="mobile-atena-title">
       <p class="mobile-eyebrow">Guia do museu</p>
       <h2 id="mobile-atena-title">Pergunte à Atena</h2>
-      <p class="mobile-atena-intro">Explore as conquistas, os interesses e as histórias por trás das obras. As respostas vêm de um acervo curado e incluem fontes quando disponíveis.</p>
+      <p class="mobile-atena-intro">Explore as obras, as quatro salas temáticas, a trajetória e os interesses de Marcos. As respostas vêm de um acervo curado e incluem fontes quando disponíveis.</p>
       <div class="mobile-atena-sugestoes" aria-label="Sugestões de perguntas">
         ${PERGUNTAS_ATENA.map((pergunta) => '<button type="button" data-atena-pergunta="' + escapar(pergunta) + '">' + escapar(pergunta) + '</button>').join("")}
       </div>
@@ -145,7 +145,7 @@ export function iniciarGaleriaMobile() {
       </form>
       <p class="mobile-atena-aviso">Não sou uma IA generativa. Se uma informação não estiver no acervo, vou avisar em vez de inventar.</p>
     </section>
-    <footer class="mobile-rodape">Galeria Marcos David <span>·</span> Arte, conhecimento e trajetória</footer>
+    <footer class="mobile-rodape">Museu-biblioteca Marcos David <span>·</span> Arte, conhecimento e investigação</footer>
   `;
 
   montarPlayerMobile(raiz);
