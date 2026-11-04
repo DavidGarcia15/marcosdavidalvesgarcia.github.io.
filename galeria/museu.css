@@ -1,0 +1,106 @@
+/*
+ * Museu-biblioteca — diretório móvel das salas
+ * A versão móvel é uma visita editorial leve, sem WebGL.
+ */
+.mobile-salas {
+  margin: 3.2rem 0 2.6rem;
+  padding: 1.6rem 1.1rem;
+  border-top: 1px solid rgba(220, 187, 121, 0.28);
+  border-bottom: 1px solid rgba(220, 187, 121, 0.28);
+  background: linear-gradient(145deg, rgba(20, 41, 71, 0.42), rgba(8, 19, 34, 0.18));
+}
+.mobile-salas > h2 {
+  max-width: 34rem;
+  margin: 0 auto;
+  text-align: center;
+  color: var(--ink);
+  font: 600 clamp(1.55rem, 6vw, 2.1rem)/1.15 var(--font-display);
+}
+.mobile-salas-intro {
+  max-width: 34rem;
+  margin: .8rem auto 1.6rem;
+  color: var(--ink-soft);
+  font-size: .9rem;
+  line-height: 1.65;
+  text-align: center;
+}
+.mobile-salas-lista {
+  display: grid;
+  gap: .85rem;
+  max-width: 42rem;
+  margin: 0 auto;
+}
+.mobile-sala {
+  display: grid;
+  grid-template-columns: 2.8rem minmax(0, 1fr);
+  gap: .8rem;
+  padding: 1rem .9rem;
+  border: 1px solid rgba(220, 187, 121, .2);
+  background: rgba(7, 17, 31, .55);
+}
+.mobile-sala-numero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: .12rem;
+  color: var(--gold-on-navy);
+  font: 500 1.4rem/1 var(--font-display);
+}
+.mobile-sala-setor {
+  margin: 0 0 .25rem;
+  color: var(--gold-on-navy);
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.mobile-sala h3 {
+  margin: 0 0 .45rem;
+  color: var(--ink);
+  font: 600 1.25rem/1.2 var(--font-display);
+}
+.mobile-sala-conteudo > p:not(.mobile-sala-setor) {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: .85rem;
+  line-height: 1.58;
+}
+.mobile-sala details {
+  margin-top: .7rem;
+  border-top: 1px solid rgba(220, 187, 121, .15);
+  padding-top: .55rem;
+}
+.mobile-sala summary {
+  color: var(--gold-on-navy);
+  cursor: pointer;
+  font-size: .8rem;
+  font-weight: 600;
+}
+.mobile-sala ul {
+  display: grid;
+  gap: .35rem;
+  padding-left: 1.1rem;
+  color: var(--ink-soft);
+  font-size: .82rem;
+  line-height: 1.5;
+}
+.mobile-sala-convite {
+  margin-top: .75rem;
+  padding: .75rem .85rem;
+  border-left: 2px solid var(--gold);
+  background: rgba(220, 187, 121, .06);
+}
+.mobile-sala-convite strong {
+  color: var(--gold-on-navy);
+  font-size: .76rem;
+}
+.mobile-sala-convite p {
+  margin: .3rem 0 0;
+  color: var(--ink);
+  font-size: .82rem;
+  line-height: 1.55;
+}
+@media (min-width: 620px) {
+  .mobile-salas { padding: 2rem 1.4rem; }
+  .mobile-salas-lista { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
