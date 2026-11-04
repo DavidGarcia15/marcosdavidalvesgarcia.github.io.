@@ -15,6 +15,7 @@
  */
 
 import { criarCena } from "./cena.js";
+import { criarAlasMuseu } from "./alas.js";
 import { criarControles } from "./controles.js";
 import { criarGerenciadorPinturas } from "./pinturas.js";
 
@@ -117,6 +118,8 @@ async function iniciar() {
     camera.rotation.y = 0; // apresentação inicial voltada para dentro do salão
 
     const { scene, atualizarParticulas, colunas } = criarCena(THREE, nivel);
+    const alasMuseu = criarAlasMuseu(THREE, scene, nivel);
+    colunas.push(...alasMuseu.colunas);
 
     // referência preenchida após a criação do gerenciador de pinturas —
     // os controles precisam do callback de interação antes dele existir.
@@ -132,6 +135,7 @@ async function iniciar() {
     gerenciadorPinturas = criarGerenciadorPinturas(THREE, {
       scene,
       camera,
+      alvosSalas: alasMuseu.alvosSalas,
       aoMudarBloqueio: (bloqueado) => controles.bloquear(bloqueado),
     });
 
