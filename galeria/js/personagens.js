@@ -50,7 +50,7 @@ export function criarPersonagem(THREE, pintura, scene) {
   const ehOeste = pintura.parede === "oeste";
   const normal = ehOeste ? 1 : -1;
   const paredeX = ehOeste ? -11.93 : 11.93;
-  const x = paredeX + normal * 1.25;
+  const x = paredeX + normal * 1.9;
   const z = pintura.z + (pintura.z < 0 ? 1.55 : -1.55);
   const grupo = new THREE.Group();
   grupo.position.set(x, 0, z);
