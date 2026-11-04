@@ -1,0 +1,17 @@
+/* ---------- Toca-discos clássico ---------- */
+.vinil-player { display:grid; gap:.75rem; color:var(--ink); }
+.vinil-player h2 { margin:0; font:600 1.55rem var(--font-display); }
+.vinil-descricao { margin:0; color:var(--ink-soft); line-height:1.55; }
+.vinil-label { color:var(--gold-on-navy); font-size:.82rem; font-weight:700; }
+.vinil-select { width:100%; min-width:0; padding:.75rem; border:1px solid rgba(220,187,121,.42); border-radius:3px; background:#091526; color:var(--ink); font:inherit; }
+.vinil-controles { display:flex; align-items:center; justify-content:center; gap:.6rem; }
+.vinil-controles button { min-height:42px; padding:.65rem .85rem; border:1px solid rgba(220,187,121,.5); border-radius:3px; background:rgba(220,187,121,.1); color:var(--gold-on-navy); font:inherit; font-weight:700; cursor:pointer; }
+.vinil-controles .vinil-play { min-width:132px; background:var(--gold); color:var(--navy-deep); }
+.vinil-status { margin:0; color:var(--gold-on-navy); font-size:.82rem; text-align:center; }
+.vinil-credito { margin:0; color:var(--ink-soft); font-size:.74rem; line-height:1.5; text-align:center; }
+.vinil-credito a { color:var(--gold-on-navy); text-underline-offset:3px; }
+.vinil-player audio { display:none; }
+.mobile-vinil { margin-top:2rem; }
+.mobile-vinil .vinil-mobile-player { margin-top:.8rem; }
+.mobile-vinil .vinil-player { padding:.9rem; border:1px solid rgba(220,187,121,.25); background:rgba(3,10,19,.28); border-radius:3px; }
+@media(max-width:560px) { .vinil-controles { gap:.35rem; } .vinil-controles button { padding:.6rem .65rem; } }
