@@ -81,8 +81,8 @@ caminhos relativos) continuam funcionando normalmente.
       relação parcial publicada em 20/10/2015. O 1º lugar e o notebook
       recebido como prêmio foram acrescentados conforme relato do estudante;
       a matéria não detalha esses dois pontos.
-- [ ] Se for adicionar uma foto, ela está autorizada e comprimida (ver
-      a pasta `assets/`, a ser criada quando houver imagens autorizadas para publicar).
+- [ ] Antes de adicionar uma foto, confirme a autorização e otimize o arquivo;
+      crie a pasta `assets/` somente quando houver imagens escolhidas para publicar.
 - [ ] Se for adicionar imagens de certificados, conferi se não expõem CPF,
       data de nascimento completa, QR Code de verificação ou outros dados
       que não precisam ser públicos.
