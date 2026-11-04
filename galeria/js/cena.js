@@ -104,8 +104,18 @@ export function criarCena(THREE, nivel = "alto") {
   criarParedeLisa(espessura, P * 2 + espessura, -L - espessura / 2, 0);
   criarParedeLisa(espessura, P * 2 + espessura, L + espessura / 2, 0);
 
-  // norte (fundo, com a inscrição)
-  criarParedeLisa(L * 2 + espessura, espessura, 0, -P - espessura / 2);
+  // norte (passagem interna para o átrio central)
+  // Mantém a parede em dois segmentos e deixa um portal central de 7,2 m.
+  const vaoNorte = 7.2;
+  const segNorte = (L * 2 - vaoNorte) / 2;
+  criarParedeLisa(segNorte, espessura, -(vaoNorte / 2 + segNorte / 2), -P - espessura / 2);
+  criarParedeLisa(segNorte, espessura, vaoNorte / 2 + segNorte / 2, -P - espessura / 2);
+  const vergaNorte = new THREE.Mesh(
+    new THREE.BoxGeometry(vaoNorte, H - 7.45, espessura),
+    matParede
+  );
+  vergaNorte.position.set(0, (H + 7.45) / 2, -P - espessura / 2);
+  scene.add(vergaNorte);
 
   // sul (entrada, com vão central para a porta)
   const vaoPorta = 5.2;
@@ -122,7 +132,13 @@ export function criarCena(THREE, nivel = "alto") {
   [0.3, H - 0.25].forEach((y) => {
     criarFaixa(0.34, P * 2 + 0.6, -L - 0.08, y, 0);
     criarFaixa(0.34, P * 2 + 0.6, L + 0.08, y, 0);
-    criarFaixa(L * 2 + 0.6, 0.34, 0, y, -P - 0.08);
+    if (y < 1) {
+      const comprimentoLateral = (L * 2 - vaoNorte) / 2 + 0.3;
+      criarFaixa(comprimentoLateral, 0.34, -(vaoNorte / 2 + comprimentoLateral / 2 - 0.15), y, -P - 0.08);
+      criarFaixa(comprimentoLateral, 0.34, vaoNorte / 2 + comprimentoLateral / 2 - 0.15, y, -P - 0.08);
+    } else {
+      criarFaixa(L * 2 + 0.6, 0.34, 0, y, -P - 0.08);
+    }
     criarFaixa(L * 2 + 0.6, 0.34, 0, y, P + 0.08);
   });
 
@@ -427,7 +443,8 @@ export function criarCena(THREE, nivel = "alto") {
       emissiveIntensity: 0.25,
     })
   );
-  inscricao.position.set(0, 6.1, -P - espessura + 0.02);
+  inscricao.position.set(0, 8.55, -P - espessura + 0.02);
+  inscricao.scale.y = 0.72;
   scene.add(inscricao);
 
   // ---------- Janelas (parede sul, ladeando a entrada) ----------
