@@ -19,7 +19,7 @@ import {
 
 export function criarCena(THREE, nivel = "alto") {
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x060b16, 0.028);
+  scene.fog = new THREE.FogExp2(0x060b16, 0.019);
 
   // Qualidade adaptativa: hardware modesto reduz custo, nunca recursos —
   // ver detectarNivelGrafico() em main.js.
@@ -254,9 +254,30 @@ export function criarCena(THREE, nivel = "alto") {
   scene.add(luzLustre);
 
   // ---------- Luz ambiente e de preenchimento ----------
-  scene.add(new THREE.AmbientLight(0x1a2744, 0.85));
-  const hemi = new THREE.HemisphereLight(0x3a5a8c, 0x05070c, 0.55);
+  // A sala continua noturna, mas com leitura confortável das obras,
+  // do piso e das colunas. Estas luzes não projetam sombras para poupar GPU.
+  scene.add(new THREE.AmbientLight(0x34415d, 1.05));
+  const hemi = new THREE.HemisphereLight(0x7892b8, 0x17131a, 0.78);
   scene.add(hemi);
+
+  // Luzes amplas e suaves no eixo central: preenchem os corredores sem
+  // apagar o contraste do teto estrelado.
+  const intensidadePreenchimento = nivel === "baixo" ? 9 : nivel === "medio" ? 12 : 15;
+  [-5, 0, 5].forEach((z) => {
+    const luzCorredor = new THREE.PointLight(0xffd9aa, intensidadePreenchimento, 13, 2);
+    luzCorredor.position.set(0, 6.7, z);
+    scene.add(luzCorredor);
+  });
+
+  // Arandelas discretas nas laterais: dão volume às colunas e deixam
+  // a arquitetura legível sem transformar as paredes em superfícies claras.
+  [-5, 0, 5].forEach((z) => {
+    [-1, 1].forEach((lado) => {
+      const arandela = new THREE.PointLight(0xd9b77d, 4.5, 6.5, 2);
+      arandela.position.set(lado * (L - 1.1), 3.2, z);
+      scene.add(arandela);
+    });
+  });
 
   // ---------- Poeira luminosa flutuante ----------
   const qtdParticulas = qtdParticulasAlvo;
