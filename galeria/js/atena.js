@@ -164,7 +164,7 @@ const respostas = [
   {
     id: "sala-raciocinio",
     termos: ["sala de raciocinio", "sala raciocinio", "o que tem na sala de raciocinio", "problemas de logica"],
-    texto: "A Sala de Raciocínio pertence ao Centro de Aprendizagem. Ela é dedicada a padrões, lógica, estratégias e demonstrações. A proposta é experimentar diferentes caminhos para um problema e explicar por que cada etapa funciona — não apenas chegar a um resultado.",
+    texto: "A Sala de Raciocínio pertence ao Centro de Aprendizagem. Ela é dedicada a padrões, lógica, estratégias e demonstrações. Um dos primeiros desafios apresenta a sequência 2, 6, 12, 20, 30 e convida o visitante a justificar o próximo termo. Uma regra possível leva a 42: cada termo é o produto de um número natural pelo seu sucessor. A proposta é experimentar caminhos e explicar por que cada etapa funciona — não apenas chegar a um resultado.",
     fontes: []
   },
   {
