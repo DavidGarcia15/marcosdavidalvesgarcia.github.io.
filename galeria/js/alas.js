@@ -220,6 +220,27 @@ export function criarAlasMuseu(THREE, scene, nivel = "alto") {
     if (depois > 0.1) paredeY(0.5, 10, depois, x, 5, (limite - 10) / 2);
   });
 
+  // Identificação permanente das duas grandes alas, entre os portais.
+  function criarLetreiroAla(x, z, rotY, titulo, subtitulo) {
+    const grupo = new THREE.Group();
+    grupo.position.set(x, 5.35, z);
+    grupo.rotation.y = rotY;
+    const moldura = new THREE.Mesh(new THREE.BoxGeometry(6.5, 1.8, 0.22), ouro);
+    grupo.add(moldura);
+    const painel = new THREE.Mesh(
+      new THREE.PlaneGeometry(6.25, 1.55),
+      new THREE.MeshStandardMaterial({
+        map: criarTexturaPlaca(THREE, titulo, subtitulo, "Orientação das alas"),
+        roughness: 0.5,
+      })
+    );
+    painel.position.z = 0.12;
+    grupo.add(painel);
+    scene.add(grupo);
+  }
+  criarLetreiroAla(-13.66, -23.05, Math.PI / 2, "Biblioteca do Conhecimento", "História • Geografia");
+  criarLetreiroAla(13.66, -23.05, -Math.PI / 2, "Centro de Aprendizagem", "Raciocínio • Investigação");
+
   // Parede norte do átrio e molduras contínuas de piso e teto.
   paredeY(28, 10, 0.5, 0, 5, -38);
   caixa(28.5, 0.18, 0.42, ouro, 0, 0.32, atrioZ);
