@@ -69,23 +69,25 @@
     <div class="wrap">
       <div class="filter-row filter-group" role="group" aria-label="Filtrar por ano">
         <span class="filter-label">Ano:</span>
-        <button class="filter-btn" data-filter-group="ano" data-filter-value="todos" aria-pressed="true">Todos</button>
-        <button class="filter-btn" data-filter-group="ano" data-filter-value="2026" aria-pressed="false">2026</button>
-        <button class="filter-btn" data-filter-group="ano" data-filter-value="2025" aria-pressed="false">2025</button>
-        <button class="filter-btn" data-filter-group="ano" data-filter-value="2024" aria-pressed="false">2024</button>
-        <button class="filter-btn" data-filter-group="ano" data-filter-value="2023" aria-pressed="false">2023</button>
-        <button class="filter-btn" data-filter-group="ano" data-filter-value="2015" aria-pressed="false">2015</button>
+        <button type="button" class="filter-btn" data-filter-group="ano" data-filter-value="todos" aria-pressed="true">Todos</button>
+        <button type="button" class="filter-btn" data-filter-group="ano" data-filter-value="2026" aria-pressed="false">2026</button>
+        <button type="button" class="filter-btn" data-filter-group="ano" data-filter-value="2025" aria-pressed="false">2025</button>
+        <button type="button" class="filter-btn" data-filter-group="ano" data-filter-value="2024" aria-pressed="false">2024</button>
+        <button type="button" class="filter-btn" data-filter-group="ano" data-filter-value="2023" aria-pressed="false">2023</button>
+        <button type="button" class="filter-btn" data-filter-group="ano" data-filter-value="2015" aria-pressed="false">2015</button>
       </div>
       <div class="filter-row filter-group" role="group" aria-label="Filtrar por área do conhecimento">
         <span class="filter-label">Área:</span>
-        <button class="filter-btn" data-filter-group="area" data-filter-value="todas" aria-pressed="true">Todas</button>
-        <button class="filter-btn" data-filter-group="area" data-filter-value="geopolitica" aria-pressed="false">Geopolítica</button>
-        <button class="filter-btn" data-filter-group="area" data-filter-value="biologia" aria-pressed="false">Biologia</button>
-        <button class="filter-btn" data-filter-group="area" data-filter-value="matematica" aria-pressed="false">Matemática</button>
-        <button class="filter-btn" data-filter-group="area" data-filter-value="matematica-financeira" aria-pressed="false">Matemática Financeira</button>
-        <button class="filter-btn" data-filter-group="area" data-filter-value="geoinformacao" aria-pressed="false">Geoinformação</button>
-        <button class="filter-btn" data-filter-group="area" data-filter-value="literatura" aria-pressed="false">Literatura</button>
+        <button type="button" class="filter-btn" data-filter-group="area" data-filter-value="todas" aria-pressed="true">Todas</button>
+        <button type="button" class="filter-btn" data-filter-group="area" data-filter-value="geopolitica" aria-pressed="false">Geopolítica</button>
+        <button type="button" class="filter-btn" data-filter-group="area" data-filter-value="biologia" aria-pressed="false">Biologia</button>
+        <button type="button" class="filter-btn" data-filter-group="area" data-filter-value="matematica" aria-pressed="false">Matemática</button>
+        <button type="button" class="filter-btn" data-filter-group="area" data-filter-value="matematica-financeira" aria-pressed="false">Matemática Financeira</button>
+        <button type="button" class="filter-btn" data-filter-group="area" data-filter-value="geoinformacao" aria-pressed="false">Geoinformação</button>
+        <button type="button" class="filter-btn" data-filter-group="area" data-filter-value="literatura" aria-pressed="false">Literatura</button>
+        <button type="button" class="filter-btn" data-filter-group="area" data-filter-value="arte" aria-pressed="false">Arte</button>
       </div>
+      <p id="filter-status" class="filter-status" role="status" aria-live="polite" aria-atomic="true">11 registros no catálogo. Use os filtros para explorar a lista.</p>
     </div>
   </nav>
 
@@ -307,7 +309,7 @@
             <div class="achievement-dot-col"><span class="achievement-dot dot-pendente"></span></div>
             <div class="achievement-card is-pending">
               <div class="achievement-top">
-                <span class="medal-tag medal-ouro">1º lugar · ExpressArte 2015</span>
+                <span class="resultado-tag resultado-primeiro-lugar">1º lugar · ExpressArte 2015</span>
               </div>
               <h3>ExpressArte 2015 — “A Luta do Povo Sertanejo”</h3>
               <p class="achievement-meta">2015 · 1º lugar · Categoria: desenho · Petrolina, Pernambuco</p>
