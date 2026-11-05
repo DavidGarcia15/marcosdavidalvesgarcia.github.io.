@@ -565,7 +565,7 @@ section {
 /* =====================================================================
    Seção especial: "Um céu de conquistas"
    A pintura completa, em suas proporções originais, como numa galeria —
-   com as medalhas reais posicionadas sobre o céu estrelado.
+   com os registros de conquistas posicionados sobre o céu estrelado.
    ===================================================================== */
 
 .sky-gallery {
@@ -653,7 +653,7 @@ section {
 .sky-twinkles span:nth-child(17) { top: 42%; left: 64%; animation-delay: 2.6s;  animation-duration: 5.3s; }
 .sky-twinkles span:nth-child(18) { top: 12%; left: 76%; animation-delay: 0.6s;  animation-duration: 5.7s; }
 
-/* Medalhas: pontos de luz clicáveis/focáveis sobre a pintura */
+/* Conquistas: pontos de luz clicáveis/focáveis sobre a pintura */
 .medal-star {
   position: absolute;
   left: var(--x);
