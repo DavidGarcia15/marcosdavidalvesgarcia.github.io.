@@ -76,6 +76,28 @@ function montarExposicao(p, indice) {
 
 function montarSalaMobile(sala, indice) {
   const temas = (sala.temas || []).map((tema) => "<li>" + escapar(tema) + "</li>").join("");
+  const rosaDosVentos = sala.id === "geografia" ? `
+    <figure class="mobile-rosa">
+      <svg viewBox="0 0 320 320" role="img" aria-labelledby="mobile-rosa-titulo">
+        <title id="mobile-rosa-titulo">Rosa dos ventos com oito direções</title>
+        <circle cx="160" cy="160" r="126" fill="rgba(8,19,34,.48)" stroke="#b8914a" stroke-width="3"/>
+        <circle cx="160" cy="160" r="91" fill="none" stroke="rgba(220,187,121,.38)" stroke-width="1.5"/>
+        <path d="M160 28 L183 137 L252 68 L183 160 L292 160 L183 183 L252 252 L160 183 L160 292 L137 183 L68 252 L137 160 L28 160 L137 137 L68 68 L160 137 Z" fill="#b8914a" stroke="#ead9b3" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M160 70 L174 146 L250 160 L174 174 L160 250 L146 174 L70 160 L146 146 Z" fill="#e9e5db" stroke="#b8914a" stroke-width="1.5" stroke-linejoin="round"/>
+        <circle cx="160" cy="160" r="19" fill="#0e2038" stroke="#dcbb79" stroke-width="3"/>
+        <g fill="#f1dfb4" font-family="Georgia,serif" font-size="19" font-weight="bold" text-anchor="middle">
+          <text x="160" y="19">N</text>
+          <text x="302" y="166">L</text>
+          <text x="160" y="316">S</text>
+          <text x="18" y="166">O</text>
+        </g>
+        <g fill="#b7c0cc" font-family="Arial,sans-serif" font-size="11" text-anchor="middle">
+          <text x="226" y="91">NE</text><text x="229" y="236">SE</text>
+          <text x="91" y="236">SO</text><text x="91" y="91">NO</text>
+        </g>
+      </svg>
+      <figcaption>Norte aponta para o fundo do átrio; Sul indica o caminho de volta à Galeria Artística. Leste fica à direita e Oeste à esquerda quando se olha para o Norte.</figcaption>
+    </figure>` : "";
   return `
     <article class="mobile-sala">
       <div class="mobile-sala-numero" aria-hidden="true">0${indice + 1}</div>
@@ -83,6 +105,7 @@ function montarSalaMobile(sala, indice) {
         <p class="mobile-sala-setor">${escapar(sala.setor)}</p>
         <h3>${escapar(sala.titulo)}</h3>
         <p>${escapar(sala.descricao)}</p>
+        ${rosaDosVentos}
         <details>
           <summary>Ver temas e proposta de exploração</summary>
           <ul>${temas}</ul>
