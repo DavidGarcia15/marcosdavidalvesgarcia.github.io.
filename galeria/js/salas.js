@@ -25,14 +25,14 @@ export const SALAS_MUSEU = [
     titulo: "Sala de Geografia",
     setor: "Biblioteca do Conhecimento",
     descricao: "Um ambiente dedicado à leitura do espaço geográfico e às relações entre natureza, sociedade, território e poder. Mapas, paisagens e fenômenos ajudam a compreender como o mundo é organizado e transformado.",
-    temas: ["Cartografia e orientação", "Território e geopolítica", "Paisagens e natureza", "População e espaço"],
-    convite: "Observe um mapa: o que foi escolhido para aparecer nele? A escala, a legenda e a projeção mudam a maneira como interpretamos o mundo?",
+    temas: ["Cartografia e orientação", "Rosa dos ventos e pontos cardeais", "Território e geopolítica", "Paisagens e natureza", "População e espaço"],
+    convite: "Observe a rosa dos ventos e identifique Norte, Sul, Leste e Oeste. Depois compare essas direções com a legenda, a escala e a orientação de um mapa: como cada recurso ajuda a localizar um lugar?",
     atividade: {
       titulo: "Leitura crítica de mapas",
       enunciado: "Dois mapas representam a mesma região, mas usam escalas, cores e projeções diferentes. Eles parecem contar histórias diferentes sobre o lugar.",
       desenvolvimento: "Confira o título, a legenda, a escala, a data e a projeção de cada mapa. Pergunte qual informação está em destaque e para que finalidade o mapa pode ter sido produzido. Compare apenas dados que usam critérios compatíveis."
     },
-    orientacao: "Leia mapas como representações: toda escolha cartográfica destaca algumas informações e deixa outras em segundo plano."
+    orientacao: "Use a rosa dos ventos para reconhecer pontos cardeais e colaterais. Leia mapas como representações: toda escolha cartográfica destaca algumas informações e deixa outras em segundo plano."
   },
   {
     id: "raciocinio",
