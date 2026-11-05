@@ -67,9 +67,10 @@ ao espaço.
 - **Biblioteca do Conhecimento:** ala oeste, com História e Geografia.
 - **Centro de Aprendizagem:** ala leste, com Raciocínio e Investigação.
 
-A versão 3D é usada em telas maiores. Em celulares, a página oferece uma
-experiência editorial leve, com as quatro exposições, o diretório das salas,
-o player de música e Atena. O diretório móvel não simula a caminhada 3D.
+A versão 3D é usada em telas maiores. Em dispositivos com toque e largura
+de até 760 px, a página oferece uma experiência editorial leve, com as quatro
+exposições, o diretório das salas, o player de música e Atena. O diretório
+móvel não simula a caminhada 3D.
 
 ## Qualidade gráfica adaptativa
 
@@ -77,11 +78,16 @@ o player de música e Atena. O diretório móvel não simula a caminhada 3D.
 `navigator.hardwareConcurrency`, `navigator.deviceMemory` (quando o
 navegador expõe) e do tamanho da tela. **Isso só ajusta quanto custa
 renderizar** (sombra do lustre, resolução do céu estrelado, quantidade de
-partículas, pixel ratio, antialiasing) — nunca decide se o 3D roda. A
+partículas, pixel ratio e antialiasing) — nunca decide se o 3D roda. A
+resolução de tela fica limitada a 1×, 1,2× ou 1,5× conforme o nível, e
+sombras/antialiasing ficam reservados ao nível alto. A
 decisão de rodar ou não depende só de `detectarSuporteWebGL()`
 conseguir criar um contexto WebGL de verdade. Se precisar de mais um
 parâmetro adaptativo no futuro, ele entra em `criarCena(THREE, nivel)` do
 mesmo jeito que `qtdEstrelas`/`qtdParticulasAlvo`/`sombraLustre`.
+O loop de renderização também pausa quando a aba fica em segundo plano,
+retoma ao voltar e apresenta uma alternativa textual se o navegador perder
+o contexto WebGL.
 
 ### Lição aprendida: `hidden` pode ser silenciosamente ignorado
 Um elemento com o atributo HTML `hidden` só fica de fato invisível por uma
@@ -118,6 +124,6 @@ museus ficam nos respectivos painéis.
 - A aproximação das pinturas utiliza uma vinheta escurecida, não um desfoque
   óptico real.
 - Atena usa um acervo curado com respostas determinísticas; não é uma IA
-  generativa.
+  generativa. O histórico de conversa mantém as oito perguntas mais recentes.
 - Em teclado sem mouse, a mira continua no centro da tela; a exploração foi
   desenhada principalmente para mouse ou controles de toque.
