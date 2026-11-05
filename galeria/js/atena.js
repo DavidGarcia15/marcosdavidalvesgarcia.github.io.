@@ -166,7 +166,7 @@ const respostas = [
   },
   {
     id: "rosa-dos-ventos",
-    termos: ["rosa dos ventos", "pontos cardeais", "norte sul leste oeste", "onde fica o norte", "como me orientar no atrio", "direcoes do museu"],
+    termos: ["rosa dos ventos", "pontos cardeais", "norte sul leste oeste", "onde fica o norte", "como me orientar no atrio", "direcoes do museu", "o que significam l e o", "letra l na rosa dos ventos", "letra o na rosa dos ventos", "leste oeste"],
     texto: "A rosa dos ventos fica no piso do Átrio Central. Ela usa N para Norte, L para Leste, S para Sul e O para Oeste, além das diagonais NE, SE, SO e NO. No mapa do museu, o Norte aponta para o fundo do átrio (eixo -Z), o Sul aponta de volta para a Galeria Artística (+Z), o Leste fica à direita (+X) e o Oeste à esquerda (-X) quando se olha em direção ao Norte.",
     fontes: [{ texto: "Explorar a Sala de Geografia", url: "../galeria/" }]
   },
