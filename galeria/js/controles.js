@@ -34,10 +34,25 @@ export function criarControles(THREE, { camera, domElement, colunas, aoInteragir
     KeyD: "d", ArrowRight: "d",
   };
 
+  function alvoEditavel(alvo) {
+    return alvo instanceof Element &&
+      (alvo.isContentEditable || alvo.matches("input, textarea, select"));
+  }
+
+  function limparTeclas() {
+    Object.keys(teclas).forEach((tecla) => { teclas[tecla] = false; });
+    vel.set(0, 0);
+  }
+
   function aoApertarTecla(e) {
+    if (alvoEditavel(e.target)) return;
     const t = MAPA_TECLAS[e.code];
-    if (t) teclas[t] = true;
-    if ((e.code === "KeyE" || e.code === "Enter" || e.code === "Space") && !bloqueado) {
+    if (t) {
+      teclas[t] = true;
+      e.preventDefault();
+    }
+    if (!e.repeat && (e.code === "KeyE" || e.code === "Enter" || e.code === "Space") && !bloqueado) {
+      if (e.code === "Space") e.preventDefault();
       aoInteragir();
     }
   }
@@ -47,6 +62,10 @@ export function criarControles(THREE, { camera, domElement, colunas, aoInteragir
   }
   window.addEventListener("keydown", aoApertarTecla);
   window.addEventListener("keyup", aoSoltarTecla);
+  window.addEventListener("blur", limparTeclas);
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) limparTeclas();
+  });
 
   // ---------- Mouse / Pointer Lock ----------
   function aoMoverMouse(e) {
@@ -123,7 +142,7 @@ export function criarControles(THREE, { camera, domElement, colunas, aoInteragir
       { passive: true }
     );
 
-    window.addEventListener("touchend", (e) => {
+    function aoTerminarToque(e) {
       for (const t of e.changedTouches) {
         if (t.identifier === joyId) {
           joyAtivo = false;
@@ -133,7 +152,9 @@ export function criarControles(THREE, { camera, domElement, colunas, aoInteragir
         }
         if (t.identifier === olharId) olharId = null;
       }
-    });
+    }
+    window.addEventListener("touchend", aoTerminarToque, { passive: true });
+    window.addEventListener("touchcancel", aoTerminarToque, { passive: true });
 
     areaOlhar.addEventListener("touchstart", (e) => {
       const t = e.changedTouches[0];
@@ -151,7 +172,9 @@ export function criarControles(THREE, { camera, domElement, colunas, aoInteragir
   }
 
   document.addEventListener("pointerlockchange", () => {
-    document.body.classList.toggle("ponteiro-travado", document.pointerLockElement === domElement);
+    const travado = document.pointerLockElement === domElement;
+    document.body.classList.toggle("ponteiro-travado", travado);
+    if (!travado) limparTeclas();
   });
 
   // ---------- Colisão do museu modular ----------
