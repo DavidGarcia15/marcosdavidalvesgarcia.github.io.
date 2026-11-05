@@ -25,7 +25,7 @@ import { criarGerenciadorPinturas } from "./pinturas.js";
 // "experimental-webgl"). Cria um canvas descartável só para o teste — não
 // interfere com o canvas real da galeria.
 function detectarSuporteWebGL() {
-  if (!window.WebGLRenderingContext) return false;
+  if (!window.WebGLRenderingContext && !window.WebGL2RenderingContext) return false;
   const c = document.createElement("canvas");
   for (const tipo of ["webgl2", "webgl", "experimental-webgl"]) {
     try {
@@ -101,16 +101,17 @@ async function iniciar() {
     const canvas = document.getElementById("canvas-galeria");
     const renderer = new THREE.WebGLRenderer({
       canvas,
-      antialias: nivel !== "baixo",
-      powerPreference: "high-performance",
+      antialias: nivel === "alto",
+      powerPreference: nivel === "baixo" ? "low-power" : "default",
     });
-    const tetoPixelRatio = nivel === "alto" ? 2 : nivel === "medio" ? 1.5 : 1;
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, tetoPixelRatio));
+    // Resolução limitada para evitar renderização excessiva em telas de alta densidade.
+    const tetoPixelRatio = nivel === "alto" ? 1.5 : nivel === "medio" ? 1.2 : 1;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, tetoPixelRatio));
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.05;
-    renderer.shadowMap.enabled = nivel !== "baixo";
+    renderer.shadowMap.enabled = nivel === "alto";
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     const camera = new THREE.PerspectiveCamera(68, window.innerWidth / window.innerHeight, 0.1, 100);
@@ -153,38 +154,84 @@ async function iniciar() {
 
     if (telaCarregamento) telaCarregamento.hidden = true;
 
-    // ---------- Loop de renderização ----------
+    // ---------- Loop de renderização com pausa e recuperação ----------
     const reduzMovimento =
       window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const relogio = new THREE.Clock();
+    const relogio = new THREE.Clock(false);
+    let tempoAcumulado = 0;
+    let identificadorQuadro = 0;
     let quadroComErro = false;
+    let contextoPerdido = false;
+
+    function agendarQuadro() {
+      if (!identificadorQuadro && !document.hidden && !contextoPerdido && !quadroComErro) {
+        identificadorQuadro = requestAnimationFrame(quadro);
+      }
+    }
+
+    function cancelarQuadro() {
+      if (identificadorQuadro) {
+        cancelAnimationFrame(identificadorQuadro);
+        identificadorQuadro = 0;
+      }
+    }
+
+    function aoMudarVisibilidade() {
+      if (document.hidden) {
+        cancelarQuadro();
+        relogio.stop();
+      } else if (!contextoPerdido && !quadroComErro) {
+        relogio.start();
+        agendarQuadro();
+      }
+    }
+
+    // Se o navegador perder o contexto gráfico (por pressão de memória ou
+    // troca de dispositivo), interrompe o loop e explica como continuar.
+    renderer.domElement.addEventListener("webglcontextlost", (evento) => {
+      evento.preventDefault();
+      contextoPerdido = true;
+      cancelarQuadro();
+      mostrarFallback(
+        "A sessão 3D foi interrompida pelo navegador para proteger os recursos do dispositivo. Recarregue a página para tentar novamente; o restante do portfólio continua disponível nas páginas abaixo."
+      );
+    });
 
     function quadro() {
+      identificadorQuadro = 0;
+      if (document.hidden || contextoPerdido || quadroComErro) return;
+
       try {
         const dt = Math.min(0.1, relogio.getDelta());
+        tempoAcumulado += dt;
         controles.atualizar(dt);
         gerenciadorPinturas.atualizar(dt);
-        atualizarParticulas(relogio.elapsedTime, reduzMovimento);
+        atualizarParticulas(tempoAcumulado, reduzMovimento);
         renderer.render(scene, camera);
       } catch (erro) {
-        if (!quadroComErro) {
-          quadroComErro = true;
-          console.error("Galeria 3D — erro durante a renderização:", erro);
-          mostrarFallback(
-            "A experiência 3D encontrou um problema durante a exibição e foi interrompida. Você ainda pode explorar todo o conteúdo do portfólio nas páginas abaixo."
-          );
-        }
+        quadroComErro = true;
+        cancelarQuadro();
+        console.error("Galeria 3D — erro durante a renderização:", erro);
+        mostrarFallback(
+          "A experiência 3D encontrou um problema durante a exibição e foi interrompida. Você ainda pode explorar todo o conteúdo do portfólio nas páginas abaixo."
+        );
         return;
       }
-      requestAnimationFrame(quadro);
-    }
-    requestAnimationFrame(quadro);
 
+      agendarQuadro();
+    }
+
+    document.addEventListener("visibilitychange", aoMudarVisibilidade);
     window.addEventListener("resize", () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, tetoPixelRatio));
       renderer.setSize(window.innerWidth, window.innerHeight);
-    });
+      agendarQuadro();
+    }, { passive: true });
+
+    relogio.start();
+    agendarQuadro();
   } catch (erro) {
     // Cobre: falha ao buscar o módulo do Three.js (ex.: sem rede), falha ao
     // criar o WebGLRenderer (contexto negado apesar do teste inicial) ou
