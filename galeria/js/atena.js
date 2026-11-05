@@ -27,21 +27,21 @@ const respostas = [
     fontes: [{ texto: "Conheça a trajetória", url: "../sobre/" }]
   },
   {
-    id: "conquistas",
-    termos: ["principais conquistas", "quais medalhas", "lista de medalhas", "resultados", "premios", "olimpiadas", "conquistas"],
-    texto: "Entre os resultados registrados estão ouro no TNBio 2026; prata na OBGP 2026; prata na OBGE e na OBMF 2025; bronze na OBGP em 2024 e 2025; e terceiro lugar/bronze na Olimpíada Mandacaru de Matemática 2023. Na OBMEP 2025, Marcos recebeu Menção Honrosa Nacional — uma distinção diferente de medalha.",
-    fontes: [
-      { texto: "Consultar a página de Conquistas", url: "../conquistas/" },
-      { texto: "Página oficial da OBMEP", url: "https://www.obmep.org.br/" }
-    ]
-  },
-  {
     id: "expressarte",
     termos: ["expressarte", "a luta do povo sertanejo", "concurso de desenho de petrolina", "notebook como premio em 2015"],
     texto: "Em 2015, Marcos relata ter conquistado o 1º lugar no ExpressArte com o desenho “A Luta do Povo Sertanejo” e recebido um notebook como prêmio. A matéria do Blog do Carlos Britto, publicada em 20/10/2015, confirma que o desenho apareceu na relação parcial de selecionados, mas não registra a classificação final nem o prêmio. Por isso, esses dois detalhes são apresentados como relato pessoal, não como algo comprovado pela matéria.",
     fontes: [
       { texto: "Matéria do Blog do Carlos Britto (20/10/2015)", url: "https://www.carlosbritto.com/secretaria-de-educacao-de-petrolina-divulga-resultado-do-concurso-expressarte-2015/" },
       { texto: "Registro no portfólio", url: "../conquistas/" }
+    ]
+  },
+  {
+    id: "conquistas",
+    termos: ["principais conquistas", "quais medalhas", "lista de medalhas", "resultados", "premios", "olimpiadas", "conquistas"],
+    texto: "Entre os resultados registrados estão ouro no TNBio 2026; prata na OBGP 2026; prata na OBGE e na OBMF 2025; bronze na OBGP em 2024 e 2025; e terceiro lugar/bronze na Olimpíada Mandacaru de Matemática 2023. Na OBMEP 2025, Marcos recebeu Menção Honrosa Nacional — uma distinção diferente de medalha.",
+    fontes: [
+      { texto: "Consultar a página de Conquistas", url: "../conquistas/" },
+      { texto: "Página oficial da OBMEP", url: "https://www.obmep.org.br/" }
     ]
   },
   {
