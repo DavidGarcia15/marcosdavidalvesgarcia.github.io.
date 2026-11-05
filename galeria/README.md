@@ -7,8 +7,10 @@ e "O Caminhante sobre o Mar de Névoa" — e se conecta ao novo núcleo do edif�
 
 O Átrio Central distribui o visitante entre a Biblioteca do Conhecimento
 (Sala de História e Sala de Geografia) e o Centro de Aprendizagem
-(Sala de Raciocínio e Laboratório de Investigação). Cada sala possui uma
-identidade arquitetônica, sinalização interativa e conteúdo curatorial próprio.
+(Sala de Raciocínio e Laboratório de Investigação). No piso do átrio, a rosa
+dos ventos indica N, NE, L, SE, S, SO, O e NO; o Norte aponta para o fundo do
+átrio (-Z), o Sul retorna à Galeria Artística (+Z), o Leste fica em +X e o
+Oeste em -X. Cada sala possui sinalização interativa e conteúdo curatorial próprio.
 
 A estrutura foi pensada para receber novas salas sem reconstruir o museu:
 dados, geometria, colisões, interações e apresentação móvel ficam separados
@@ -63,7 +65,8 @@ ao espaço.
 - **Galeria Artística:** salão original; preserva o ponto de entrada e as quatro
   exposições existentes. O novo portal fica no fundo da sala.
 - **Átrio Central:** distribui o visitante entre as alas e funciona como núcleo
-  de orientação do edifício.
+  de orientação do edifício. A rosa dos ventos no piso usa Norte em -Z, Sul em
+  +Z, Leste em +X e Oeste em -X.
 - **Biblioteca do Conhecimento:** ala oeste, com História e Geografia.
 - **Centro de Aprendizagem:** ala leste, com Raciocínio e Investigação.
 
