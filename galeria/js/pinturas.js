@@ -247,6 +247,23 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
   let registroAtivo = null;
   let timeoutAviso = null;
 
+  function mostrarPainel() {
+    if (!painel) return;
+    painel.removeAttribute("inert");
+    painel.removeAttribute("aria-hidden");
+    painel.classList.add("aberto");
+    painel.focus();
+  }
+
+  function ocultarPainel() {
+    if (!painel) return;
+    painel.classList.remove("aberto");
+    painel.setAttribute("aria-hidden", "true");
+    painel.setAttribute("inert", "");
+    const canvas = document.getElementById("canvas-galeria");
+    if (canvas) canvas.focus({ preventScroll: true });
+  }
+
   function mostrarAviso(texto) {
     if (!aviso) return;
     aviso.textContent = texto;
@@ -257,6 +274,23 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
 
   function responderGuia(pergunta) {
     return responderAtena(pergunta);
+  }
+
+  function limitarHistoricoGuia(mensagens) {
+    while (mensagens.querySelectorAll(".guia-mensagem.visitante").length > 8) {
+      let atual = mensagens.firstElementChild;
+      while (atual) {
+        const proximo = atual.nextElementSibling;
+        const eraResposta = atual.classList.contains("guia-mensagem") &&
+          !atual.classList.contains("visitante");
+        atual.remove();
+        if (eraResposta) {
+          if (proximo && proximo.classList.contains("guia-fontes")) proximo.remove();
+          break;
+        }
+        atual = proximo;
+      }
+    }
   }
 
   function adicionarRespostaAtena(mensagens, resultado) {
@@ -280,6 +314,7 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
       });
       mensagens.appendChild(fontes);
     }
+    limitarHistoricoGuia(mensagens);
     mensagens.scrollTop = mensagens.scrollHeight;
   }
 
@@ -288,18 +323,15 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
     painelConteudo.innerHTML = [
       '<div class="guia-chat">',
       '<div class="guia-chat-cabecalho"><span class="guia-avatar">A</span><div><strong>Atena</strong><small>Guia virtual · acervo curado</small></div></div>',
-      '<div class="guia-mensagens" id="guia-mensagens"><div class="guia-mensagem">Olá! Sou Atena, guia deste museu-biblioteca. Posso orientar você pelas salas de História, Geografia, Raciocínio e Investigação, além de conversar sobre a trajetória, os interesses e as obras. Também indico fontes quando disponíveis.</div></div>',
+      '<div class="guia-mensagens" id="guia-mensagens" role="log" aria-live="polite" aria-relevant="additions"><div class="guia-mensagem">Olá! Sou Atena, guia deste museu-biblioteca. Posso orientar você pelas salas de História, Geografia, Raciocínio e Investigação, além de conversar sobre a trajetória, os interesses e as obras. Também indico fontes quando disponíveis.</div></div>',
       '<div class="guia-sugestoes" aria-label="Sugestões de perguntas"><button type="button" data-pergunta="Onde ficam as novas salas?">Mapa do museu</button><button type="button" data-pergunta="O que posso explorar na Sala de Raciocínio?">Sala de Raciocínio</button><button type="button" data-pergunta="Quem pintou A Noite Estrelada?">As pinturas</button></div>',
-      '<form class="guia-form" id="guia-form"><input id="guia-pergunta" type="text" maxlength="240" placeholder="Escreva sua pergunta..." autocomplete="off" required><button type="submit">Enviar</button></form>',
+      '<form class="guia-form" id="guia-form"><input id="guia-pergunta" type="text" maxlength="240" aria-label="Sua pergunta para Atena" placeholder="Escreva sua pergunta..." autocomplete="off" required><button type="submit">Enviar</button></form>',
       '<p class="guia-aviso">Respostas baseadas em um acervo curado do próprio portfólio. Não sou uma IA generativa; quando possível, apresento fontes para consulta.</p>',
       '</div>'
     ].join("");
     estado = "painel-aberto";
     if (dica) dica.classList.remove("visivel");
-    if (painel) {
-      painel.classList.add("aberto");
-      painel.focus();
-    }
+    mostrarPainel();
     aoMudarBloqueio(true);
     const form = document.getElementById("guia-form");
     const input = document.getElementById("guia-pergunta");
@@ -333,7 +365,7 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
       painelConteudo.innerHTML = montarPainelSala(sala);
       estado = "painel-aberto";
       if (dica) dica.classList.remove("visivel");
-      if (painel) { painel.classList.add("aberto"); painel.focus(); }
+      mostrarPainel();
       aoMudarBloqueio(true);
       return;
     }
@@ -341,7 +373,7 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
       if (painelConteudo) tocaDiscos.abrir(painelConteudo);
       estado = "painel-aberto";
       if (dica) dica.classList.remove("visivel");
-      if (painel) { painel.classList.add("aberto"); painel.focus(); }
+      mostrarPainel();
       aoMudarBloqueio(true);
       return;
     }
@@ -382,10 +414,7 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
       if (painelConteudo) painelConteudo.innerHTML = montarPainelPersonagem(registro.perfil);
       estado = "painel-aberto";
       if (dica) dica.classList.remove("visivel");
-      if (painel) {
-        painel.classList.add("aberto");
-        painel.focus();
-      }
+      mostrarPainel();
       aoMudarBloqueio(true);
       return;
     }
@@ -406,7 +435,7 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
     // pintura, o visitante pode girar livremente e encontrar o artista ao lado.
     estado = "livre";
     registroAtivo = null;
-    if (painel) painel.classList.remove("aberto");
+    ocultarPainel();
     if (vinheta) vinheta.classList.remove("ativa");
     aoMudarBloqueio(false);
   }
@@ -414,7 +443,32 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
   if (botaoFechar) botaoFechar.addEventListener("click", fechar);
   if (painel) {
     painel.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") fechar();
+      if (e.key === "Escape") {
+        e.preventDefault();
+        fechar();
+        return;
+      }
+      if (e.key !== "Tab") return;
+
+      const focaveis = Array.from(painel.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), summary, audio[controls], [tabindex]:not([tabindex="-1"])'
+      )).filter((elemento) => elemento.getAttribute("aria-hidden") !== "true");
+
+      if (!focaveis.length) {
+        e.preventDefault();
+        painel.focus();
+        return;
+      }
+
+      const primeiro = focaveis[0];
+      const ultimo = focaveis[focaveis.length - 1];
+      if (e.shiftKey && (document.activeElement === primeiro || document.activeElement === painel)) {
+        e.preventDefault();
+        ultimo.focus();
+      } else if (!e.shiftKey && document.activeElement === ultimo) {
+        e.preventDefault();
+        primeiro.focus();
+      }
     });
   }
 
@@ -490,10 +544,7 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
               ? montarPainelPersonagem(registroAtivo.perfil)
               : montarPainelHTML(registroAtivo.config);
           }
-          if (painel) {
-            painel.classList.add("aberto");
-            painel.focus();
-          }
+          mostrarPainel();
         } else {
           estado = "livre";
           registroAtivo = null;
