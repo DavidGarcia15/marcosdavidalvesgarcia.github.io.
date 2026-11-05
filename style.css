@@ -965,6 +965,7 @@ dialog.medal-dialog::backdrop {
 .dot-bronze { border-color: var(--bronze); box-shadow: 0 0 9px 2px rgba(163, 103, 59, 0.5); }
 .dot-honra { border-color: var(--honor); box-shadow: 0 0 9px 2px rgba(91, 122, 153, 0.5); }
 .dot-pendente { border-color: var(--ink-soft); box-shadow: none; }
+.dot-primeiro-lugar { border-color: var(--gold-text); background: var(--gold-text); box-shadow: 0 0 9px 2px rgba(220, 187, 121, 0.5); }
 
 @media (max-width: 620px) {
   .achievement {
