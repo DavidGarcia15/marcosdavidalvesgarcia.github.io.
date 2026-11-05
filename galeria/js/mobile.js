@@ -13,6 +13,25 @@ function escapar(valor) {
   })[c]);
 }
 
+// Mantém apenas as oito perguntas mais recentes para evitar que uma
+// conversa longa transforme a versão móvel em uma lista interminável.
+function limitarHistorico(mensagens) {
+  while (mensagens.querySelectorAll(".mobile-atena-visitante").length > 8) {
+    let atual = mensagens.firstElementChild;
+    while (atual) {
+      const proximo = atual.nextElementSibling;
+      const eraResposta = atual.classList.contains("mobile-atena-resposta") &&
+        !atual.classList.contains("mobile-atena-visitante");
+      atual.remove();
+      if (eraResposta) {
+        if (proximo && proximo.classList.contains("mobile-atena-fontes")) proximo.remove();
+        break;
+      }
+      atual = proximo;
+    }
+  }
+}
+
 function imagemLeve(url) {
   return String(url || "").replace(/\/(?:960|1280)px_/, "/640px_");
 }
@@ -112,6 +131,7 @@ function responderNoCelular(pergunta, mensagens) {
     });
     mensagens.appendChild(fontes);
   }
+  limitarHistorico(mensagens);
   mensagens.scrollTop = mensagens.scrollHeight;
 }
 
@@ -144,7 +164,7 @@ export function iniciarGaleriaMobile() {
       <div class="mobile-atena-sugestoes" aria-label="Sugestões de perguntas">
         ${PERGUNTAS_ATENA.map((pergunta) => '<button type="button" data-atena-pergunta="' + escapar(pergunta) + '">' + escapar(pergunta) + '</button>').join("")}
       </div>
-      <div class="mobile-atena-mensagens" id="mobile-atena-mensagens" aria-live="polite">
+      <div class="mobile-atena-mensagens" id="mobile-atena-mensagens" role="log" aria-live="polite" aria-relevant="additions">
         <p class="mobile-atena-resposta">Olá! Sou Atena. O que gostaria de descobrir?</p>
       </div>
       <form class="mobile-atena-form" id="mobile-atena-form">
