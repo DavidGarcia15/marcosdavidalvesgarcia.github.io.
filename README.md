@@ -35,7 +35,7 @@ normalmente nele). Isso já está refletido em:
 
 Se um dia renomear o repositório ou trocar de usuário, procure e substitua
 `davidgarcia15.github.io/marcosdavidalvesgarcia.github.io.` nesses mesmos
-cinco arquivos.
+seis arquivos.
 
 ---
 
