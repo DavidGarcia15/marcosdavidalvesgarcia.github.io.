@@ -248,17 +248,131 @@ export function criarAlasMuseu(THREE, scene, nivel = "alto") {
   caixa(0.42, 0.18, 28.5, ouro, -13.85, 0.32, atrioZ);
   caixa(0.42, 0.18, 28.5, ouro, 13.85, 0.32, atrioZ);
 
-  // Rosa dos ventos em mármore e bronze no centro do átrio.
-  const aro = new THREE.Mesh(new THREE.TorusGeometry(3.05, 0.055, 8, 64), ouro);
-  aro.rotation.x = Math.PI / 2;
-  aro.position.set(0, 0.055, atrioZ);
-  scene.add(aro);
-  caixa(0.12, 0.045, 4.5, ouro, 0, 0.065, atrioZ);
-  caixa(4.5, 0.045, 0.12, ouro, 0, 0.065, atrioZ);
-  const losango = new THREE.Mesh(new THREE.OctahedronGeometry(0.72, 0), pedraClara);
-  losango.position.set(0, 0.42, atrioZ);
-  losango.scale.y = 1.35;
-  scene.add(losango);
+  // Rosa dos ventos: disco de contraste, oito pontas e abreviaturas
+  // cardeais em português. O eixo norte aponta para -Z, o mesmo sentido
+  // da passagem que liga o átrio à galeria artística.
+  const discoRosa = new THREE.Mesh(
+    new THREE.CircleGeometry(3.02, 80),
+    new THREE.MeshStandardMaterial({
+      color: 0x101f34,
+      roughness: 0.82,
+      metalness: 0.08,
+    })
+  );
+  discoRosa.rotation.x = -Math.PI / 2;
+  discoRosa.position.set(0, 0.035, atrioZ);
+  scene.add(discoRosa);
+
+  const aroExterno = new THREE.Mesh(new THREE.TorusGeometry(3.02, 0.055, 8, 80), ouro);
+  aroExterno.rotation.x = Math.PI / 2;
+  aroExterno.position.set(0, 0.105, atrioZ);
+  scene.add(aroExterno);
+
+  const aroInterno = new THREE.Mesh(new THREE.TorusGeometry(0.88, 0.025, 8, 48), pedraClara);
+  aroInterno.rotation.x = Math.PI / 2;
+  aroInterno.position.set(0, 0.125, atrioZ);
+  scene.add(aroInterno);
+
+  // Cada ponta é um triângulo no plano XZ. Ângulo zero corresponde ao
+  // Norte (-Z); 90° corresponde ao Leste (+X). Isso evita que o desenho
+  // dependa de rotações acumuladas ou de caixas com eixos ambíguos.
+  function criarPontaRosa(angulo, comprimento, meiaLargura, material) {
+    const ux = Math.sin(angulo);
+    const uz = -Math.cos(angulo);
+    const px = Math.cos(angulo);
+    const pz = Math.sin(angulo);
+    const base = 0.34;
+    const esquerda = [-px * meiaLargura + ux * base, 0, -pz * meiaLargura + uz * base];
+    const direita = [px * meiaLargura + ux * base, 0, pz * meiaLargura + uz * base];
+    const ponta = [ux * comprimento, 0, uz * comprimento];
+
+    const geometria = new THREE.BufferGeometry();
+    // Ordem dos vértices voltada para cima (+Y).
+    geometria.setAttribute("position", new THREE.Float32BufferAttribute([
+      ...esquerda, ...direita, ...ponta
+    ], 3));
+    geometria.computeVertexNormals();
+
+    const mesh = new THREE.Mesh(geometria, material);
+    mesh.position.set(0, 0.145, atrioZ);
+    mesh.castShadow = false;
+    scene.add(mesh);
+  }
+
+  const pontaPrincipal = new THREE.MeshStandardMaterial({
+    color: 0xd6b36c,
+    metalness: 0.62,
+    roughness: 0.32,
+    side: THREE.DoubleSide,
+  });
+  const pontaSecundaria = new THREE.MeshStandardMaterial({
+    color: 0xe9e5db,
+    metalness: 0.16,
+    roughness: 0.48,
+    side: THREE.DoubleSide,
+  });
+
+  for (let indice = 0; indice < 4; indice++) {
+    criarPontaRosa(indice * Math.PI / 2, 2.35, 0.34, pontaPrincipal);
+    criarPontaRosa(indice * Math.PI / 2 + Math.PI / 4, 1.62, 0.23, pontaSecundaria);
+  }
+
+  const medalhaoCentral = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.48, 0.48, 0.1, 12),
+    ouro
+  );
+  medalhaoCentral.position.set(0, 0.19, atrioZ);
+  scene.add(medalhaoCentral);
+
+  const centroRosa = new THREE.Mesh(new THREE.OctahedronGeometry(0.3, 0), pedraClara);
+  centroRosa.position.set(0, 0.34, atrioZ);
+  centroRosa.scale.y = 0.48;
+  scene.add(centroRosa);
+
+  function criarTexturaCardinal(letra) {
+    const canvas = document.createElement("canvas");
+    canvas.width = 256;
+    canvas.height = 256;
+    const contexto = canvas.getContext("2d");
+    contexto.clearRect(0, 0, 256, 256);
+    contexto.textAlign = "center";
+    contexto.textBaseline = "middle";
+    contexto.font = "bold 112px Georgia, serif";
+    contexto.fillStyle = "#f1dfb4";
+    contexto.shadowColor = "rgba(0, 0, 0, 0.65)";
+    contexto.shadowBlur = 12;
+    contexto.fillText(letra, 128, 132);
+    const textura = new THREE.CanvasTexture(canvas);
+    textura.colorSpace = THREE.SRGBColorSpace;
+    return textura;
+  }
+
+  // N, L, S e O são as referências principais; NE/SE/SO/NO completam
+  // a leitura da rosa e deixam claro que ela não é apenas uma cruz.
+  const direcoes = [
+    { letra: "N", x: 0, z: -2.68 },
+    { letra: "NE", x: 1.88, z: -1.88 },
+    { letra: "L", x: 2.68, z: 0 },
+    { letra: "SE", x: 1.88, z: 1.88 },
+    { letra: "S", x: 0, z: 2.68 },
+    { letra: "SO", x: -1.88, z: 1.88 },
+    { letra: "O", x: -2.68, z: 0 },
+    { letra: "NO", x: -1.88, z: -1.88 },
+  ];
+
+  direcoes.forEach(({ letra, x, z }) => {
+    const textura = criarTexturaCardinal(letra);
+    const material = new THREE.MeshBasicMaterial({
+      map: textura,
+      transparent: true,
+      depthWrite: false,
+      side: THREE.DoubleSide,
+    });
+    const rotulo = new THREE.Mesh(new THREE.PlaneGeometry(0.48, 0.48), material);
+    rotulo.rotation.x = -Math.PI / 2;
+    rotulo.position.set(x, 0.16, atrioZ + z);
+    scene.add(rotulo);
+  });
 
   // Luzes suaves e econômicas no átrio e nas entradas.
   scene.add(new THREE.AmbientLight(0x65718d, 0.58));
