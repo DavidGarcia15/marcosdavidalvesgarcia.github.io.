@@ -29,8 +29,9 @@ normalmente nele). Isso já está refletido em:
 - `index.html` (tag `<link rel="canonical">`, `og:url` e o JSON-LD)
 - `conquistas/index.html` (mesmos campos)
 - `sobre/index.html` (mesmos campos)
+- `galeria/index.html` (canonical e metadados sociais)
 - `robots.txt` (linha `Sitemap:`)
-- `sitemap.xml` (as três tags `<loc>`)
+- `sitemap.xml` (as quatro tags `<loc>`)
 
 Se um dia renomear o repositório ou trocar de usuário, procure e substitua
 `davidgarcia15.github.io/marcosdavidalvesgarcia.github.io.` nesses mesmos
@@ -90,6 +91,10 @@ caminhos relativos) continuam funcionando normalmente.
 - [ ] Testei a navegação por teclado (Tab) e o foco visível nos links.
 - [ ] Testei o site com "reduzir movimento" ativado no sistema — as
       animações devem ser praticamente eliminadas.
+- [ ] Testei a galeria 3D no computador, incluindo saída do Pointer Lock,
+      abertura e fechamento de painéis e circulação pelas quatro salas.
+- [ ] Testei a versão leve da galeria em celulares reais, incluindo rolagem,
+      player de música, perguntas à Atena e carregamento das imagens.
 - [ ] Abri a URL pública em uma aba anônima para confirmar que carrega.
 - [ ] Verifiquei, no celular e no computador, se nenhum texto está cortado
       ou sobreposto.
@@ -154,14 +159,15 @@ Referências oficiais usadas neste projeto:
 - [x] `sitemap.xml` com as três URLs públicas.
 - [x] Dados estruturados JSON-LD (`Person` dentro de `ProfilePage`) na
       página inicial, com apenas informações verificadas.
-- [x] Open Graph básico para compartilhamento em redes sociais.
+- [x] Open Graph e cartões Twitter básicos para compartilhamento em redes sociais.
 - [x] Favicon original (SVG embutido, sem dependência externa).
 - [x] HTML semântico (`header`, `nav`, `main`, `section`, `article`, `footer`).
 - [x] Responsivo (menu mobile, grades fluidas, texto legível em telas pequenas).
 - [x] Foco de teclado visível e link "Pular para o conteúdo".
 - [x] `prefers-reduced-motion` respeitado.
-- [x] Sem bibliotecas pesadas, vídeos automáticos ou dependências externas
-      além das fontes do Google Fonts.
+- [x] Páginas principais sem bibliotecas JavaScript pesadas; a galeria carrega
+      Three.js apenas na experiência 3D para telas maiores. Fontes e obras
+      externas são carregadas sob demanda conforme a página acessada.
 - [x] URL real configurada em todos os arquivos (seção 1).
 - [ ] **Pendente do seu lado:** depois que o site estiver no ar, validar o
       JSON-LD em [validator.schema.org](https://validator.schema.org)
