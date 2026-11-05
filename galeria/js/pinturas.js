@@ -452,7 +452,10 @@ export function criarGerenciadorPinturas(THREE, { scene, camera, aoMudarBloqueio
 
       const focaveis = Array.from(painel.querySelectorAll(
         'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), summary, audio[controls], [tabindex]:not([tabindex="-1"])'
-      )).filter((elemento) => elemento.getAttribute("aria-hidden") !== "true");
+      )).filter((elemento) =>
+        elemento.getAttribute("aria-hidden") !== "true" &&
+        elemento.getClientRects().length > 0
+      );
 
       if (!focaveis.length) {
         e.preventDefault();
