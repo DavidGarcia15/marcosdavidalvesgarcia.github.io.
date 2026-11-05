@@ -3,8 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
-<title>Museu-biblioteca Marcos David | Arte e Conhecimento 3D</title>
-<meta name="description" content="Museu-biblioteca virtual de Marcos David Alves Garcia: uma galeria artística conectada a um átrio central e quatro salas de História, Geografia, Raciocínio e Investigação.">
+<title>Museu-biblioteca virtual Marcos David | Arte e Conhecimento</title>
+<meta name="description" content="Museu-biblioteca virtual de Marcos David Alves Garcia: galeria 3D no computador e versão leve no celular, com arte, História, Geografia, Raciocínio e Investigação.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Museu-biblioteca virtual Marcos David | Arte e Conhecimento">
+<meta property="og:description" content="Galeria 3D no computador e versão leve no celular, conectando arte, História, Geografia, Raciocínio e Investigação.">
+<meta property="og:url" content="https://davidgarcia15.github.io/marcosdavidalvesgarcia.github.io./galeria/">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://davidgarcia15.github.io/marcosdavidalvesgarcia.github.io./galeria/">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='31' fill='%230e2038'/%3E%3Ccircle cx='32' cy='32' r='31' fill='none' stroke='%23b8914a' stroke-width='2'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' fill='%23dcbb79' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
@@ -37,7 +43,8 @@
 
 <a class="link-voltar" href="../">← Portfólio</a>
 
-<canvas id="canvas-galeria"></canvas>
+<p id="descricao-galeria" class="sr-only">Ambiente interativo em primeira pessoa. No computador, use W, A, S e D ou as setas para caminhar, o mouse para olhar e E ou clique para interagir com obras e placas. Em dispositivos móveis, há uma versão leve em formato de exposições.</p>
+<canvas id="canvas-galeria" tabindex="0" aria-label="Cena interativa do museu-biblioteca" aria-describedby="descricao-galeria"></canvas>
 
 <div id="mobile-gallery" class="mobile-gallery" hidden></div>
 
@@ -66,7 +73,7 @@
       <li><strong>Computador</strong> — WASD ou setas para andar, mouse para olhar ao redor, clique para interagir</li>
       <li><strong>Celular</strong> — joystick para andar, arraste a tela para olhar, toque no botão para interagir</li>
     </ul>
-    <p class="aviso-guia-entrada">✦ Atena continua no salão artístico como guia virtual. As novas salas são módulos independentes e poderão receber novos conteúdos nas próximas expansões.</p>
+    <p class="aviso-guia-entrada">✦ Atena é a guia virtual do museu. Ela responde com base em um acervo curado, apresenta fontes quando disponíveis e avisa quando não encontra uma informação. As quatro salas já contam com temas e atividades.</p>
     <button id="botao-entrar" type="button" class="btn-painel">Entrar no museu</button>
   </div>
 </div>
@@ -76,7 +83,7 @@
 <p id="dica-interacao" class="dica-interacao" aria-live="polite"></p>
 <p id="aviso-temp" class="aviso-temp" role="status"></p>
 
-<div id="painel-pintura" class="painel-pintura" tabindex="-1" aria-live="polite">
+<div id="painel-pintura" class="painel-pintura" tabindex="-1" role="dialog" aria-modal="true" aria-label="Painel de informações do museu" aria-live="polite" aria-hidden="true" inert>
   <div class="painel-caixa">
     <button id="fechar-painel" type="button" class="painel-fechar" aria-label="Fechar">×</button>
     <div class="painel-conteudo"></div>
