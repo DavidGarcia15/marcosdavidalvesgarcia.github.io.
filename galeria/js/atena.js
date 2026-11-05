@@ -165,6 +165,12 @@ const respostas = [
     fontes: []
   },
   {
+    id: "rosa-dos-ventos",
+    termos: ["rosa dos ventos", "pontos cardeais", "norte sul leste oeste", "onde fica o norte", "como me orientar no atrio", "direcoes do museu"],
+    texto: "A rosa dos ventos fica no piso do Átrio Central. Ela usa N para Norte, L para Leste, S para Sul e O para Oeste, além das diagonais NE, SE, SO e NO. No mapa do museu, o Norte aponta para o fundo do átrio (eixo -Z), o Sul aponta de volta para a Galeria Artística (+Z), o Leste fica à direita (+X) e o Oeste à esquerda (-X) quando se olha em direção ao Norte.",
+    fontes: [{ texto: "Explorar a Sala de Geografia", url: "../galeria/" }]
+  },
+  {
     id: "sala-geografia",
     termos: ["sala de geografia", "sala geografia", "o que tem na sala de geografia", "cartografia na sala"],
     texto: "A Sala de Geografia integra a Biblioteca do Conhecimento. O espaço aborda cartografia, território, geopolítica, paisagens e relações entre sociedade e natureza. Um dos convites é perceber que mapas são representações feitas a partir de escolhas de escala, projeção, legenda e informação.",
