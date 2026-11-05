@@ -36,6 +36,15 @@ const respostas = [
     ]
   },
   {
+    id: "expressarte",
+    termos: ["expressarte", "a luta do povo sertanejo", "concurso de desenho de petrolina", "notebook como premio em 2015"],
+    texto: "Em 2015, Marcos relata ter conquistado o 1º lugar no ExpressArte com o desenho “A Luta do Povo Sertanejo” e recebido um notebook como prêmio. A matéria do Blog do Carlos Britto, publicada em 20/10/2015, confirma que o desenho apareceu na relação parcial de selecionados, mas não registra a classificação final nem o prêmio. Por isso, esses dois detalhes são apresentados como relato pessoal, não como algo comprovado pela matéria.",
+    fontes: [
+      { texto: "Matéria do Blog do Carlos Britto (20/10/2015)", url: "https://www.carlosbritto.com/secretaria-de-educacao-de-petrolina-divulga-resultado-do-concurso-expressarte-2015/" },
+      { texto: "Registro no portfólio", url: "../conquistas/" }
+    ]
+  },
+  {
     id: "obgp",
     termos: ["obgp", "geopolitica", "medalhas de geopolitica"],
     texto: "Marcos participou da Olimpíada Brasileira de Geopolítica em três edições consecutivas: bronze em 2024, bronze em 2025 e prata em 2026. A competição combina conhecimentos geográficos, políticos, econômicos e históricos para compreender relações entre países e acontecimentos mundiais.",
