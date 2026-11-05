@@ -24,16 +24,19 @@
   // ---------- Filtros da página de conquistas ----------
   var filterButtons = document.querySelectorAll(".filter-btn");
   var achievements = document.querySelectorAll(".achievement");
+  var filterStatus = document.getElementById("filter-status");
 
   if (filterButtons.length && achievements.length) {
     var state = { ano: "todos", area: "todas" };
 
     function applyFilters() {
+      var visibleCount = 0;
       achievements.forEach(function (item) {
         var matchesAno = state.ano === "todos" || item.dataset.ano === state.ano;
         var matchesArea = state.area === "todas" || item.dataset.area === state.area;
 
         if (matchesAno && matchesArea) {
+          visibleCount += 1;
           item.removeAttribute("hidden");
         } else {
           item.setAttribute("hidden", "");
@@ -45,6 +48,16 @@
         var visible = group.querySelectorAll(".achievement:not([hidden])");
         group.style.display = visible.length ? "" : "none";
       });
+
+      if (filterStatus) {
+        if (visibleCount === 0) {
+          filterStatus.textContent = "Nenhum registro encontrado com essa combinação de filtros.";
+        } else if (visibleCount === achievements.length) {
+          filterStatus.textContent = "Mostrando todos os " + visibleCount + " registros.";
+        } else {
+          filterStatus.textContent = "Mostrando " + visibleCount + " de " + achievements.length + " registros.";
+        }
+      }
     }
 
     filterButtons.forEach(function (btn) {
@@ -63,6 +76,8 @@
         applyFilters();
       });
     });
+
+    applyFilters();
   }
 
   // ---------- Galeria "Um céu de conquistas" ----------
