@@ -5,7 +5,7 @@
  * As salas são módulos independentes: novas entradas podem ser acrescentadas
  * aqui sem alterar a estrutura das salas já existentes.
  */
-export const SALAS_MUSEU = [
+const SALAS_MUSEU_PT = [
   {
     id: "historia",
     titulo: "Sala de História",
