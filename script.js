@@ -155,7 +155,7 @@
   var prefersReduced =
     window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  if (prefersReduced || !inkPath || !("IntersectionObserver" in window)) {
+  if (document.documentElement.classList.contains("site-lite") || prefersReduced || !inkPath || !("IntersectionObserver" in window)) {
     return;
   }
 
@@ -250,7 +250,7 @@
   var track = document.querySelector(".journey-track");
   if (!track) return;
   var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduced || !("IntersectionObserver" in window)) return;
+  if (document.documentElement.classList.contains("site-lite") || reduced || !("IntersectionObserver" in window)) return;
   var observer = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
@@ -271,6 +271,7 @@
 
   var body = document.body;
   if (!body) return;
+  if (document.documentElement.classList.contains("site-lite")) return;
 
   var reducedMotion = window.matchMedia &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
