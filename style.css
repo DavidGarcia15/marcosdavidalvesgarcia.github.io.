@@ -1353,3 +1353,29 @@ dialog.medal-dialog::backdrop {
 }
 @media(max-width:390px){.journey-item{grid-template-columns:55px 21px minmax(0,1fr)}.journey-track-svg{left:calc(55px + 10.5px);width:21px}.journey-year>span{font-size:1.05rem}.journey-year small{font-size:.53rem}.journey-card.trajectory-card{padding-left:.78rem;padding-right:.78rem}.journey-card-title{font-size:1.07rem}}
 @media(prefers-reduced-motion:reduce){.journey-track-ink{stroke-dashoffset:0!important;animation:none!important}.journey-node>span,.journey-card.trajectory-card{transition:none}}
+
+
+/* Ajuste de continuidade visual entre a abertura e a trilha */
+.trajectory-page-hero {
+  padding-top: clamp(2.2rem, 4vw, 3rem);
+  padding-bottom: clamp(1.6rem, 3vw, 2.2rem);
+}
+.trajectory-page-hero h1 {
+  margin-bottom: .65rem;
+}
+.trajectory-page-hero p {
+  max-width: 48rem;
+  line-height: 1.7;
+}
+.trajectory-page-hero + .trajectory {
+  padding-top: clamp(3.2rem, 5.5vw, 4.8rem);
+}
+@media (max-width: 680px) {
+  .trajectory-page-hero {
+    padding-top: 2rem;
+    padding-bottom: 1.35rem;
+  }
+  .trajectory-page-hero + .trajectory {
+    padding-top: 3rem;
+  }
+}
