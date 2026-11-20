@@ -218,7 +218,7 @@
     "Projetos digitais": "Digital projects",
     "Além das olimpíadas": "Beyond olympiads",
     "Também desenvolvo projetos de tecnologia. O": "I also develop technology projects. The",
-    "protótipo 3D inspirado em Shotgun Farmers, é voltado para": "3D prototype inspired by Shotgun Farmers is designed for",
+    ", protótipo 3D inspirado em Shotgun Farmers, é voltado para": ", a 3D prototype inspired by Shotgun Farmers is designed for",
     "PC e notebook": "PC and laptops",
     "e usa teclado e mouse. Ainda não possui versão para celular.": "and uses a keyboard and mouse. There is no mobile version yet.",
     "Conhecer o projeto": "Explore the project",
