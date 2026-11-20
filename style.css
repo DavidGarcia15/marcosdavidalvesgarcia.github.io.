@@ -1946,3 +1946,52 @@ html.site-lite .achievement-card {
   font-size: 0.92rem;
 }
 .project-device-note strong { color: var(--gold-on-navy); }
+
+
+/* Modo Lite reforçado: remove camadas decorativas e simplifica a pintura da interface. */
+html.site-lite body {
+  background-image: linear-gradient(180deg, #0b192b 0%, #081322 100%) !important;
+  background-attachment: scroll !important;
+}
+html.site-lite .ambient-cosmos,
+html.site-lite .scroll-progress,
+html.site-lite .cosmic-star,
+html.site-lite .hero::before,
+html.site-lite .hero::after {
+  display: none !important;
+}
+html.site-lite .medal-tag::after,
+html.site-lite .medal-star-dot::before,
+html.site-lite .medal-star-dot::after {
+  animation: none !important;
+  display: none !important;
+}
+html.site-lite .sky-frame,
+html.site-lite .highlight-card,
+html.site-lite .achievement-card,
+html.site-lite .journey-card,
+html.site-lite .project-card,
+html.site-lite .project-note,
+html.site-lite .source-list li,
+html.site-lite .area-list li,
+html.site-lite .filters,
+html.site-lite .nav-preferences {
+  background-image: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+html.site-lite .reveal-item,
+html.site-lite .trajectory-card,
+html.site-lite .journey-heading,
+html.site-lite .journey-closing,
+html.site-lite .sky-gallery {
+  opacity: 1 !important;
+  transform: none !important;
+}
+html.site-lite .site-preference-btn[data-lite-toggle][aria-pressed="true"] {
+  border-color: var(--gold-on-navy);
+  background: rgba(184, 145, 74, 0.28);
+  color: var(--cream);
+}
