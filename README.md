@@ -178,10 +178,12 @@ Referências oficiais usadas neste projeto:
 ## 6. Informações já publicadas vs. pendentes de confirmação
 
 ### Publicadas (a partir do que foi informado)
-- OBGP 2026 — medalha de prata
 - TNBio 2026 — medalha de ouro
-- OBGP 2025 — medalha de bronze
+- OBGP 2026 — medalha de prata
+- 16ª Olimpíada de Literatura 2026 — medalha de bronze; categoria Júnior 29; obra *A Revolução dos Bichos*; 884/1.000 pontos; 299º lugar
+- OBGE 2025 — medalha de prata
 - OBMF 2025 — medalha de prata
+- OBGP 2025 — medalha de bronze
 - 20ª OBMEP 2025 — Menção Honrosa Nacional (não é medalha)
 - OBGP 2024 — medalha de bronze
 - Olimpíada Mandacaru de Matemática 2023 — 3º lugar / bronze
@@ -191,12 +193,12 @@ Referências oficiais usadas neste projeto:
   Sertanejo” e notebook como prêmio, conforme relato do estudante; a matéria
   do Carlos Britto confirma a seleção da produção na relação parcial, mas
   não registra a classificação final nem a premiação.
-- Classificação para a 2ª fase da OBMEP 2026 (se desejar incluir).
+- Classificação para a 2ª fase da OBMEP 2026 (resultado final ainda não informado).
 - Classificação no processo seletivo do IFSertãoPE (Técnico em
   Agropecuária, Campus Petrolina Zona Rural) — só deve ser publicada
   mediante confirmação e comprovante, sem afirmar matrícula ou frequência.
-- Cursos de Administração Inicial e Informática Avançado — estado exato
-  (inscrição, andamento ou conclusão) a confirmar.
+- Curso de Informática na Prepara IA — situação e previsão de conclusão podem
+  ser atualizadas quando houver confirmação dos dados finais.
 - Links públicos para projetos de programação e perfis profissionais.
 - Foto de perfil (opcional).
 
