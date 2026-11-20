@@ -47,7 +47,7 @@ function detectarSuporteWebGL() {
 // (sombras, partículas, resolução de textura, pixel ratio). Nunca usa isto
 // para decidir SE o 3D roda — só COMO ele roda.
 function detectarNivelGrafico() {
-  if (document.documentElement.classList.contains("site-lite")) return "baixo";
+  if (document.documentElement.classList.contains("site-lite")) return "lite";
   const nucleos = navigator.hardwareConcurrency || 4;
   const memoria = navigator.deviceMemory || 4; // GB — só existe em navegadores Chromium
   const telaPequena = Math.min(window.innerWidth, window.innerHeight) < 480;
@@ -102,25 +102,25 @@ async function iniciar() {
     const canvas = document.getElementById("canvas-galeria");
     const renderer = new THREE.WebGLRenderer({
       canvas,
-      antialias: nivel === "alto",
+      antialias: !liteAtivo && nivel === "alto",
       powerPreference: nivel === "baixo" ? "low-power" : "default",
     });
     // Resolução limitada para evitar renderização excessiva em telas de alta densidade.
-    const tetoPixelRatio = nivel === "alto" ? 1.5 : nivel === "medio" ? 1.2 : 1;
+    const tetoPixelRatio = liteAtivo ? 0.85 : nivel === "alto" ? 1.5 : nivel === "medio" ? 1.2 : 1;
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, tetoPixelRatio));
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.05;
-    renderer.shadowMap.enabled = nivel === "alto";
+    renderer.shadowMap.enabled = !liteAtivo && nivel === "alto";
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     const camera = new THREE.PerspectiveCamera(68, window.innerWidth / window.innerHeight, 0.1, 100);
     camera.position.set(0, 1.65, 6.4);
     camera.rotation.y = 0; // apresentação inicial voltada para dentro do salão
 
-    const { scene, atualizarParticulas, colunas } = criarCena(THREE, nivel);
-    const alasMuseu = criarAlasMuseu(THREE, scene, nivel);
+    const { scene, atualizarParticulas, colunas } = criarCena(THREE, nivelCena);
+    const alasMuseu = criarAlasMuseu(THREE, scene, nivelCena);
     colunas.push(...alasMuseu.colunas);
 
     // referência preenchida após a criação do gerenciador de pinturas —
