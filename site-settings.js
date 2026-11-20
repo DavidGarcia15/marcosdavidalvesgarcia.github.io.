@@ -362,11 +362,7 @@
     "Conquistei o primeiro lugar no ExpressArte 2015 com o desenho “A Luta do Povo Sertanejo”, e recebi um notebook como prêmio. O concurso de produção textual e desenho foi promovido pela Secretaria de Educação de Petrolina.": "I won first place in ExpressArte 2015 with the drawing “The Struggle of the Sertanejo People” and received a laptop as a prize. The writing and drawing contest was organized by the Petrolina Department of Education.",
     "Portfólio pessoal e independente. Projetos em desenvolvimento são identificados como tais.": "Independent personal portfolio. Projects under development are identified as such.",
     "Portfólio pessoal e independente, sem vínculo institucional com as organizações das olimpíadas citadas.": "Independent personal portfolio, not affiliated with the olympiad organizations mentioned.",
-    "Portfólio pessoal e independente. Os registros desta página acompanham experiências, participações e resultados informados pelo estudante e, quando disponíveis, fontes oficiais.": "Independent personal portfolio. This page records experiences, participation, and results reported by the student and, whenever available, official sources."
-
-  };
-
-
+    "Portfólio pessoal e independente. Os registros desta página acompanham experiências, participações e resultados informados pelo estudante e, quando disponíveis, fontes oficiais.": "Independent personal portfolio. This page records experiences, participation, and results reported by the student and, whenever available, official sources.",
     "← Portfólio": "← Portfolio",
     "Este navegador ou dispositivo não suporta a experiência 3D do museu virtual. Você ainda pode explorar todo o conteúdo do portfólio nas páginas abaixo.": "This browser or device cannot run the virtual museum's 3D experience. You can still explore the full portfolio on the pages below.",
     "Galeria Marcos David": "Marcos David Gallery",
