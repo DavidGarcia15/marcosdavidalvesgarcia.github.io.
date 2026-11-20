@@ -333,9 +333,29 @@
     "Portfólio": "Portfolio",
     "Ambiente interativo em primeira pessoa. No computador, use W, A, S e D ou as setas para caminhar, o mouse para olhar e E ou clique para interagir com obras e placas. Em dispositivos móveis, há uma versão leve em formato de exposições.": "First-person interactive environment. On a computer, use W, A, S, or D, or the arrow keys to move; use the mouse to look around; and press E or click to interact with artwork and signs. Mobile devices use a lightweight exhibition format.",
     "Esta página é uma experiência 3D interativa e precisa de JavaScript para funcionar. Enquanto isso, o portfólio completo continua disponível nas páginas abaixo.": "This is an interactive 3D experience and requires JavaScript. In the meantime, the full portfolio remains available on the pages below."
+,
+
+    "Medalha de ouro — Torneio Nacional de Biologia, 2026": "Gold medal — National Biology Tournament, 2026",
+    "Medalha de bronze — 16ª Olimpíada de Literatura, 2026 · 299º lugar · 884 pontos": "Bronze medal — 16th Literature Olympiad, 2026 · 299th place · 884 points",
+    "Medalha de prata — Olimpíada Brasileira de Geopolítica, 2026": "Silver medal — Brazilian Geopolitics Olympiad, 2026",
+    "Medalha de prata — Olimpíada Brasileira de Geoinformação, 2025": "Silver medal — Brazilian Geoinformation Olympiad, 2025",
+    "Menção Honrosa Nacional — OBMEP, 2025": "National Honorable Mention — OBMEP, 2025",
+    "Medalha de prata — Olimpíada Brasileira de Matemática Financeira, 2025": "Silver medal — Brazilian Financial Mathematics Olympiad, 2025",
+    "Medalha de bronze — Olimpíada Brasileira de Geopolítica, 2025": "Bronze medal — Brazilian Geopolitics Olympiad, 2025",
+    "Medalha de bronze — Olimpíada Brasileira de Geopolítica, 2024": "Bronze medal — Brazilian Geopolitics Olympiad, 2024",
+    "3º lugar, bronze — Olimpíada Mandacaru de Matemática, 2023": "3rd place, bronze — Mandacaru Mathematics Olympiad, 2023",
+    "Competição de matemática com forte identidade regional nordestina — seus níveis levam nomes como Cajuína, Luiz Gonzaga, Zumbi dos Palmares e Lampião, em referência à cultura do Sertão. Resultado: terceiro lugar, com reconhecimento em bronze — minha primeira medalha.": "A mathematics competition with a strong Northeastern Brazilian identity. Its levels are named after figures and symbols such as Cajuína, Luiz Gonzaga, Zumbi dos Palmares, and Lampião, reflecting the culture of the Sertão. I finished in third place and earned bronze — my first medal.",
+    "Minha primeira participação na OBGP — o ponto de partida de uma sequência de três edições consecutivas, com evolução de resultado a cada ano (bronze em 2024, bronze em 2025, prata em 2026).": "My first OBGP participation marked the beginning of three consecutive editions, with an improved result each year (bronze in 2024, bronze in 2025, and silver in 2026).",
+    "Medalha de bronze na 16ª edição da Olimpíada de Literatura, na categoria Júnior 29, com a obra": "Bronze medal in the 16th Literature Olympiad, in the Junior 29 category, for the book",
+    ", de George Orwell. A competição foi realizada em 12 de novembro de 2026.": ", by George Orwell. The competition took place on November 12, 2026.",
+    "Conquistei o primeiro lugar no ExpressArte 2015 com o desenho “A Luta do Povo Sertanejo”, e recebi um notebook como prêmio. O concurso de produção textual e desenho foi promovido pela Secretaria de Educação de Petrolina.": "I won first place in ExpressArte 2015 with the drawing “The Struggle of the Sertanejo People” and received a laptop as a prize. The writing and drawing contest was organized by the Petrolina Department of Education.",
+    "Portfólio pessoal e independente. Projetos em desenvolvimento são identificados como tais.": "Independent personal portfolio. Projects under development are identified as such.",
+    "Portfólio pessoal e independente, sem vínculo institucional com as organizações das olimpíadas citadas.": "Independent personal portfolio, not affiliated with the olympiad organizations mentioned.",
+    "Portfólio pessoal e independente. Os registros desta página acompanham experiências, participações e resultados informados pelo estudante e, quando disponíveis, fontes oficiais.": "Independent personal portfolio. This page records experiences, participation, and results reported by the student and, whenever available, official sources."
+
   };
 
-  var dynamicTranslations = {\n    "__dynamicStatus": true\n  };\n\n  var attributeTranslations = {
+  var attributeTranslations = {
     "Navegação principal": "Main navigation",
     "Pular para o conteúdo": "Skip to content",
     "Cena interativa do museu-biblioteca": "Interactive museum-library scene",
