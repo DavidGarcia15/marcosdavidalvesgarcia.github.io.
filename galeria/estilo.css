@@ -903,3 +903,30 @@ body.modo-mobile .link-voltar {
   white-space: nowrap !important;
   border: 0 !important;
 }
+
+
+/* Preferências globais disponíveis na experiência do museu */
+.site-preferences-gallery {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + 16px);
+  right: 16px;
+  z-index: 120;
+  display: flex;
+  gap: 7px;
+}
+.site-preferences-gallery button {
+  border: 1px solid rgba(220,187,121,.5);
+  border-radius: 3px;
+  padding: 8px 10px;
+  color: #f5edda;
+  background: rgba(8,19,34,.82);
+  font: 600 11px system-ui, sans-serif;
+  cursor: pointer;
+}
+.site-preferences-gallery button[aria-pressed="true"] {
+  border-color: #dcbb79;
+  background: rgba(184,145,74,.28);
+}
+@media (max-width: 560px) {
+  .site-preferences-gallery { top: auto; right: 12px; bottom: 14px; }
+}
