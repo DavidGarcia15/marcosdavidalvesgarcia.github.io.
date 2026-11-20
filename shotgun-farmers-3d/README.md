@@ -2,6 +2,10 @@
 
 Um jogo de exploração agrícola em primeira pessoa inspirado no mecanismo real de *Shotgun Farmers*: tiros que erram plantam a própria arma no chão — não existe recarga tradicional. Aqui a abordagem é não-violenta: em vez de eliminar NPCs, você os transforma em animais aliados com pólen.
 
+## Plataforma
+
+**Disponível para PC e notebook.** A versão atual foi desenvolvida para teclado e mouse e ainda não possui controles adaptados para celular.
+
 ## Mecânicas Principais
 
 - **Sem Recarga, Só Colheita:** fiel ao jogo original — não há botão de "recarregar". Um tiro que erra planta uma semente no chão; quanto mais tempo ela cresce, mais munição rende ao ser colhida com **E**.
