@@ -242,3 +242,22 @@
   );
   trajectoryObserver.observe(section);
 })();
+
+
+/* Animação da nova trilha vertical da Minha Trajetória */
+(function () {
+  "use strict";
+  var track = document.querySelector(".journey-track");
+  if (!track) return;
+  var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduced || !("IntersectionObserver" in window)) return;
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        track.classList.add("is-animating");
+        observer.disconnect();
+      }
+    });
+  }, { threshold: 0.12 });
+  observer.observe(track);
+})();
