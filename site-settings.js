@@ -335,12 +335,13 @@
     "Esta página é uma experiência 3D interativa e precisa de JavaScript para funcionar. Enquanto isso, o portfólio completo continua disponível nas páginas abaixo.": "This is an interactive 3D experience and requires JavaScript. In the meantime, the full portfolio remains available on the pages below."
   };
 
-  var attributeTranslations = {
+  var dynamicTranslations = {\n    "__dynamicStatus": true\n  };\n\n  var attributeTranslations = {
     "Navegação principal": "Main navigation",
     "Pular para o conteúdo": "Skip to content",
     "Cena interativa do museu-biblioteca": "Interactive museum-library scene",
     "Painel de informações do museu": "Museum information panel",
-    "Fechar": "Close"
+    "Fechar": "Close",
+    "Preferências do site": "Site preferences"
   };
 
   var metaTranslations = {
@@ -355,8 +356,20 @@
   var originalAttributes = new WeakMap();
   var originalTitle = document.title;
 
+  function translateDynamicText(value) {
+    var match = value.match(/^Mostrando todos os (\d+) registros\.$/);
+    if (match) return "Showing all " + match[1] + " entries.";
+    match = value.match(/^Mostrando (\d+) de (\d+) registros\.$/);
+    if (match) return "Showing " + match[1] + " of " + match[2] + " entries.";
+    if (value === "Nenhum registro encontrado com essa combinação de filtros.") {
+      return "No entries match this filter combination.";
+    }
+    return value;
+  }
+
   function translated(value, dictionary) {
-    return dictionary[value] || value;
+    if (dictionary[value]) return dictionary[value];
+    return dictionary === translations ? translateDynamicText(value) : value;
   }
 
   function translateTextNodes(container, toEnglish) {
