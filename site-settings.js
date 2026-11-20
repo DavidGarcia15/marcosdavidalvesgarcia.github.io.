@@ -42,6 +42,7 @@
     "Navegação principal": "Main navigation",
     "Portfólio acadêmico": "Academic portfolio",
     "Marcos David Alves Garcia | Portfólio Acadêmico e Medalhas de Olimpíadas": "Marcos David Alves Garcia | Academic Portfolio and Olympiad Awards",
+    "Museu-biblioteca virtual Marcos David | Arte e Conhecimento": "Marcos David Virtual Museum-Library | Art and Knowledge",
     "Conquistas de Marcos David Alves Garcia | Medalhas em Olimpíadas Acadêmicas": "Achievements of Marcos David Alves Garcia | Academic Olympiad Awards",
     "Projetos e Produções | Marcos David Alves Garcia": "Projects and Creative Work | Marcos David Alves Garcia",
     "Sobre Marcos David Alves Garcia | Portfólio Acadêmico": "About Marcos David Alves Garcia | Academic Portfolio",
@@ -214,6 +215,8 @@
     "Visitar a página inicial": "Visit the homepage",
     "Desenvolvimento de jogos · 3D": "Game development · 3D",
     "Farmers Field": "Farmers Field",
+    "Plataforma:": "Platform:",
+    "PC e notebook (teclado e mouse). Ainda não há versão para celular.": "PC and laptop (keyboard and mouse). There is no mobile version yet.",
     "Protótipo 3D em primeira pessoa inspirado em Shotgun Farmers, mas sem violência: as sete sementes disponíveis viram \"armas\" que lançam pólen, e cada NPC atingido se transforma em um animal aliado (capivara, coelho ou galinha). O cenário é uma fazenda explorável, com movimentação, corrida, salto, iluminação, sombras e nuvens.": "A non-violent first-person 3D prototype inspired by Shotgun Farmers: seven seeds act as pollen launchers, and each NPC reached by pollen becomes an animal companion (capybara, rabbit, or chicken). Explore a farm with movement, sprinting, jumping, lighting, shadows, and clouds.",
     "Jogável no navegador · Em desenvolvimento": "Playable in a web browser · In development",
     "Jogar agora": "Play now",
@@ -369,6 +372,7 @@
     "Medalhas e distinções em olimpíadas acadêmicas de Geopolítica, Biologia, Geoinformação, Matemática e outras áreas.": "Medals and distinctions in academic olympiads covering Geopolitics, Biology, Geoinformation, Mathematics, and other fields.",
     "Linha do tempo com todas as olimpíadas e desafios acadêmicos dos quais participei, da edição mais recente à mais antiga. Cada registro indica a competição, o ano, o resultado obtido e a instituição organizadora.": "A timeline of the academic olympiads and challenges I have taken part in, from newest to oldest. Each entry identifies the competition, year, result, and organizing institution.",
     "Conheça Marcos David Alves Garcia, seus interesses em História, Geografia, Geopolítica, Matemática e Biologia, além do museu-biblioteca virtual que integra seu portfólio.": "Meet Marcos David Alves Garcia and explore his interests in History, Geography, Geopolitics, Mathematics, and Biology, as well as the virtual museum-library featured in his portfolio.",
+    "Museu-biblioteca virtual de Marcos David Alves Garcia: galeria 3D no computador e versão leve no celular, com arte, História, Geografia, rosa dos ventos e atividades.": "Marcos David Alves Garcia’s virtual museum-library: a 3D gallery for computers and a lightweight mobile version, featuring art, History, Geography, a compass rose, and learning activities.",
     "Criação, pesquisa e tecnologia": "Creation, research, and technology"
   };
 
