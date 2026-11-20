@@ -376,6 +376,27 @@
     "Área:": "Field:",
     "Marcos David Alves Garcia": "Marcos David Alves Garcia",
     "Olimpíada Brasileira de Matemática das Escolas Públicas (OBMEP)": "Brazilian Public Schools Mathematics Olympiad (OBMEP)"
+,
+
+    "Arte, conhecimento e trajetória. Conheça a galeria artística e consulte o mapa das novas alas do museu-biblioteca.": "Art, knowledge, and personal journey. Explore the art gallery and the map of the museum-library's new wings.",
+    "Mapa do museu": "Museum map",
+    "Átrio e salas do conhecimento": "Atrium and knowledge rooms",
+    "A partir da galeria artística, uma passagem leva ao átrio central. De lá, quatro salas temáticas formam as primeiras alas da biblioteca.": "A passage from the art gallery leads to the central atrium. From there, four themed rooms make up the library's first wings.",
+    "Guia do museu": "Museum guide",
+    "Pergunte à Atena": "Ask Atena",
+    "Explore as obras, as quatro salas temáticas, a trajetória e os interesses de Marcos. As respostas vêm de um acervo curado e incluem fontes quando disponíveis.": "Explore the artworks, four themed rooms, Marcos's journey, and his interests. Answers come from a curated collection and include sources when available.",
+    "Olá! Sou Atena. O que gostaria de descobrir?": "Hello! I'm Atena. What would you like to discover?",
+    "Sua pergunta para Atena": "Your question for Atena",
+    "Digite sua pergunta...": "Type your question...",
+    "Perguntar": "Ask",
+    "Não sou uma IA generativa. Se uma informação não estiver no acervo, vou avisar em vez de inventar.": "I am not a generative AI. If information is not in the collection, I will say so instead of making it up.",
+    "Museu-biblioteca Marcos David": "Marcos David Museum-Library",
+    "Arte, conhecimento e investigação": "Art, knowledge, and research",
+    "Quais são as principais conquistas de Marcos?": "What are Marcos's main achievements?",
+    "Por que Marcos gosta de Geopolítica?": "Why is Marcos interested in geopolitics?",
+    "Quem pintou A Noite Estrelada?": "Who painted The Starry Night?",
+    "Onde ficam as novas salas?": "Where are the new rooms?",
+    "O que posso explorar na Sala de Raciocínio?": "What can I explore in the Reasoning Room?"
 
   };
 
@@ -385,7 +406,9 @@
     "Cena interativa do museu-biblioteca": "Interactive museum-library scene",
     "Painel de informações do museu": "Museum information panel",
     "Fechar": "Close",
-    "Preferências do site": "Site preferences"
+    "Preferências do site": "Site preferences",
+    "Sugestões de perguntas": "Suggested questions",
+    "Digite sua pergunta...": "Type your question..."
   };
 
   var metaTranslations = {
