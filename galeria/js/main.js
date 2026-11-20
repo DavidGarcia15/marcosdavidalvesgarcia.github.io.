@@ -47,6 +47,7 @@ function detectarSuporteWebGL() {
 // (sombras, partículas, resolução de textura, pixel ratio). Nunca usa isto
 // para decidir SE o 3D roda — só COMO ele roda.
 function detectarNivelGrafico() {
+  if (document.documentElement.classList.contains("site-lite")) return "baixo";
   const nucleos = navigator.hardwareConcurrency || 4;
   const memoria = navigator.deviceMemory || 4; // GB — só existe em navegadores Chromium
   const telaPequena = Math.min(window.innerWidth, window.innerHeight) < 480;
