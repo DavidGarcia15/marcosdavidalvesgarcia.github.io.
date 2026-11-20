@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#17231b">
+  <meta name="description" content="Farmers Field — protótipo 3D em primeira pessoa inspirado em Shotgun Farmers, desenvolvido por Marcos David Alves Garcia. Jogue direto no navegador.">
+  <title>Farmers Field — Shotgun Farmers 3D | Marcos David Alves Garcia</title>
+  <link rel="canonical" href="https://davidgarcia15.github.io/marcosdavidalvesgarcia.github.io./shotgun-farmers-3d/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Farmers Field — Shotgun Farmers 3D | Marcos David Alves Garcia">
+  <meta property="og:description" content="Protótipo 3D em primeira pessoa: explore a fazenda e use sementes para transformar NPCs em animais aliados.">
+  <meta property="og:url" content="https://davidgarcia15.github.io/marcosdavidalvesgarcia.github.io./shotgun-farmers-3d/">
+  <meta property="og:locale" content="pt_BR">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='31' fill='%230e2038'/%3E%3Ccircle cx='32' cy='32' r='31' fill='none' stroke='%23b8914a' stroke-width='2'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' fill='%23dcbb79' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./src/style.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+      }
+    }
+  </script>
+</head>
+<body>
+  <noscript>
+    <div class="noscript-aviso">
+      <h1>Farmers Field — protótipo 3D</h1>
+      <p>Este jogo é uma experiência 3D interativa e precisa de JavaScript para funcionar. Enquanto isso, o portfólio completo continua disponível.</p>
+      <p><a href="../">Início</a> · <a href="../projetos/">Projetos</a></p>
+    </div>
+  </noscript>
+
+  <main id="game">
+    <canvas id="game-canvas" aria-label="Ambiente 3D do jogo"></canvas>
+
+    <div class="scope-overlay" id="scope-overlay" aria-hidden="true">
+      <div class="scope-mask"></div>
+      <div class="scope-ring"></div>
+      <div class="scope-reticle-h"></div>
+      <div class="scope-reticle-v"></div>
+      <div class="scope-reticle-dot"></div>
+    </div>
+
+    <section class="hud" aria-hidden="true">
+      <div class="brand">
+        <span class="brand-mark">🌽</span>
+        <div>
+          <div class="brand-name">FARMERS <span>FIELD</span></div>
+          <div class="brand-sub">3D FIELD TEST <i></i> BUILD 011</div>
+        </div>
+      </div>
+
+      <div class="top-right">
+        <div class="status-pill"><span class="status-dot"></span> FARM EXPLORATION</div>
+        <div class="status-pill ally-pill">🐾 <strong id="ally-count">0</strong> FIELD HELPERS</div>
+        <div class="coordinate" id="coordinates">X 000 · Z 000</div>
+      </div>
+
+      <div class="crosshair"><span></span><i></i></div>
+      <div class="harvest-prompt" id="harvest-prompt"><kbd>E</kbd><span id="harvest-prompt-text">COLHER</span></div>
+
+      <div class="seed-panel">
+        <div class="seed-panel-head"><span>ARSENAL VEGETAL</span><small>1-7 · TROCAR</small></div>
+        <div class="seed-choices" id="seed-choices">
+          <div class="seed-choice selected" data-seed="corn"><kbd>1</kbd><span>🌽 ESPINGARDA DE MILHO</span></div>
+          <div class="seed-choice" data-seed="sunflower"><kbd>2</kbd><span>🌻 SNIPER DE GIRASSOL</span></div>
+          <div class="seed-choice" data-seed="pumpkin"><kbd>3</kbd><span>🎃 LANÇADOR DE ABÓBORA</span></div>
+          <div class="seed-choice" data-seed="peavolver"><kbd>4</kbd><span>🫛 PEAVOLVER</span></div>
+          <div class="seed-choice" data-seed="hayk47"><kbd>5</kbd><span>🌾 HAYK-47</span></div>
+          <div class="seed-choice" data-seed="watermelon"><kbd>6</kbd><span>🍉 WATERMELMG</span></div>
+          <div class="seed-choice" data-seed="pepper"><kbd>7</kbd><span>🌶️ BORRIFO DE PIMENTA</span></div>
+        </div>
+        <div class="seed-current"><strong id="seed-name">ESPINGARDA DE MILHO</strong><span id="seed-ability">PÓLEN LEVE</span></div>
+        <p id="seed-detail">Cano duplo. Dispara vários projéteis; recarrega rápido.</p>
+        <div class="seed-panel-stats">
+          <span>MUNIÇÃO <b id="ammo-count">6 / 6</b></span>
+          <span>PLANTAS <b id="plant-count">0</b></span>
+        </div>
+        <div class="seed-stock-line">MOCHILA <b id="seed-stock">🌽 6&nbsp; 🌻 2&nbsp; 🎃 1&nbsp; 🫛 3&nbsp; 🌾 4&nbsp; 🍉 2</b></div>
+        <div class="seed-panel-foot">SEM RECARGA: ERROU = PLANTA (COLHA COM E) · ACERTOU = PÓLEN DIRETO · DIREITO = MIRA (SNIPER) · SEGURE O CLIQUE NAS AUTOMÁTICAS</div>
+      </div>
+
+      <div class="bottom-left">
+        <div class="mini-label">FIELD STATUS</div>
+        <div class="status-line"><span class="status-dot"></span><strong>AREA SECURE</strong></div>
+        <div class="location-name">SUNFLOWER VALLEY</div>
+      </div>
+
+      <div class="interaction-panel" id="interaction-panel" aria-live="polite">
+        <div class="interaction-kicker">FIELD COMPANION</div>
+        <strong id="interaction-title">INVITE A HELPER</strong>
+        <div class="interaction-track"><span id="interaction-progress"></span></div>
+        <small id="interaction-hint">APPROXIME UMA NUVEM DE PÓLEN</small>
+      </div>
+
+      <div class="bottom-center">
+        <span class="keycap">W</span><span class="keycap">A</span><span class="keycap">S</span><span class="keycap">D</span>
+        <span class="control-caption">MOVE</span>
+        <span class="keycap keycap-wide">SHIFT</span><span class="control-caption">RUN</span>
+        <span class="keycap keycap-wide">SPACE</span><span class="control-caption">JUMP</span>
+        <span class="keycap">E</span><span class="control-caption">HARVEST</span>
+        <span class="keycap keycap-wide">RMB</span><span class="control-caption">AIM</span>
+      </div>
+
+      <div class="bottom-right">
+        <div class="mini-label">PROTOTYPE</div>
+        <div class="build-number">011 <span>/ 011</span></div>
+        <div class="build-caption">ORIGINAL WEAPON DESIGNS</div>
+      </div>
+    </section>
+
+    <section class="start-screen" id="start-screen">
+      <a class="back-link" href="../">← Portfólio</a>
+      <div class="start-card">
+        <div class="eyebrow"><span></span> A LITTLE CHAOS IS GROWING</div>
+        <div class="hero-title">WELCOME TO<br><em>THE FIELD.</em></div>
+        <p class="intro">Explore the farm. Grow your weapons.<br>This is only the beginning.</p>
+        <button class="start-button" id="start-button">
+          <span>ENTER THE FARM</span><b>→</b>
+        </button>
+        <div class="start-foot"><span>FIRST-PERSON FIELD TEST</span><span>WASD <i>·</i> MOUSE</span></div>
+      </div>
+      <div class="start-version">FARMERS FIELD <span>—</span> PROTOTYPE 009</div>
+    </section>
+
+    <div class="pause-hint" id="pause-hint">
+      <span>⏸</span> PAUSED — CLICK TO RETURN
+    </div>
+
+    <div class="toast" id="toast">Welcome to Sunflower Valley</div>
+  </main>
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
