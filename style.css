@@ -1841,3 +1841,108 @@ main,
     transition: none !important;
   }
 }
+
+
+/* ---------- Preferências do site: idioma e modo Lite ---------- */
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.05rem;
+}
+.nav-preferences {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex: 0 0 auto;
+}
+.site-preference-btn {
+  appearance: none;
+  border: 1px solid rgba(220, 187, 121, 0.42);
+  border-radius: 3px;
+  background: rgba(7, 16, 29, 0.62);
+  color: var(--gold-on-navy);
+  padding: 0.38rem 0.62rem;
+  font: 600 0.78rem var(--font-body);
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background var(--speed), border-color var(--speed), color var(--speed);
+  white-space: nowrap;
+}
+.site-preference-btn:hover,
+.site-preference-btn[aria-pressed="true"] {
+  background: rgba(184, 145, 74, 0.2);
+  border-color: var(--gold-on-navy);
+  color: var(--cream);
+}
+.site-preference-btn:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+@media (max-width: 900px) {
+  .nav-toggle { display: block; }
+  .site-header .wrap {
+    flex-wrap: wrap;
+    height: auto;
+    padding-top: 0.9rem;
+    padding-bottom: 0.9rem;
+  }
+  .main-nav {
+    display: none;
+    width: 100%;
+    padding: 0.7rem 0 0.25rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+  .main-nav.is-open { display: flex; }
+  .main-nav ul { flex-direction: column; gap: 0; }
+  .main-nav a { display: block; padding: 0.65rem 0; }
+  .nav-preferences {
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-on-navy);
+  }
+}
+html.site-lite {
+  scroll-behavior: auto !important;
+  --font-display: Georgia, "Times New Roman", serif;
+  --font-body: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+html.site-lite body {
+  background-image: linear-gradient(180deg, #0b192b 0%, #081322 100%) !important;
+  background-attachment: scroll !important;
+}
+html.site-lite .ambient-cosmos,
+html.site-lite .scroll-progress { display: none !important; }
+html.site-lite *,
+html.site-lite *::before,
+html.site-lite *::after {
+  animation: none !important;
+  transition: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  scroll-behavior: auto !important;
+  box-shadow: none !important;
+}
+html.site-lite .hero-inner,
+html.site-lite .reveal-item,
+html.site-lite .journey-card,
+html.site-lite .journey-heading,
+html.site-lite .journey-closing {
+  opacity: 1 !important;
+  transform: none !important;
+}
+html.site-lite .filters,
+html.site-lite .highlight-card,
+html.site-lite .achievement-card {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.project-device-note {
+  margin: 0.9rem 0;
+  padding: 0.7rem 0.85rem;
+  border-left: 2px solid var(--gold-on-navy);
+  background: rgba(220, 187, 121, 0.08);
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+.project-device-note strong { color: var(--gold-on-navy); }
