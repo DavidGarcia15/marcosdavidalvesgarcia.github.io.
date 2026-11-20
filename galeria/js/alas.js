@@ -54,6 +54,7 @@ function criarTexturaPlaca(THREE, titulo, subtitulo, pequeno = "") {
 }
 
 export function criarAlasMuseu(THREE, scene, nivel = "alto") {
+  const emIngles = document.documentElement.lang === "en";
   const colunas = [];
   const alvosSalas = [];
 
@@ -230,7 +231,7 @@ export function criarAlasMuseu(THREE, scene, nivel = "alto") {
     const painel = new THREE.Mesh(
       new THREE.PlaneGeometry(6.25, 1.55),
       new THREE.MeshStandardMaterial({
-        map: criarTexturaPlaca(THREE, titulo, subtitulo, "Orientação das alas"),
+        map: criarTexturaPlaca(THREE, titulo, subtitulo, emIngles ? "Wing orientation" : "Orientação das alas"),
         roughness: 0.5,
       })
     );
@@ -238,8 +239,12 @@ export function criarAlasMuseu(THREE, scene, nivel = "alto") {
     grupo.add(painel);
     scene.add(grupo);
   }
-  criarLetreiroAla(-13.66, -23.05, Math.PI / 2, "Biblioteca do Conhecimento", "História • Geografia");
-  criarLetreiroAla(13.66, -23.05, -Math.PI / 2, "Centro de Aprendizagem", "Raciocínio • Investigação");
+  criarLetreiroAla(-13.66, -23.05, Math.PI / 2,
+    emIngles ? "Knowledge Library" : "Biblioteca do Conhecimento",
+    emIngles ? "History • Geography" : "História • Geografia");
+  criarLetreiroAla(13.66, -23.05, -Math.PI / 2,
+    emIngles ? "Learning Center" : "Centro de Aprendizagem",
+    emIngles ? "Reasoning • Research" : "Raciocínio • Investigação");
 
   // Parede norte do átrio e molduras contínuas de piso e teto.
   paredeY(28, 10, 0.5, 0, 5, -38);
@@ -347,9 +352,18 @@ export function criarAlasMuseu(THREE, scene, nivel = "alto") {
     return textura;
   }
 
-  // N, L, S e O são as referências principais; NE/SE/SO/NO completam
-  // a leitura da rosa e deixam claro que ela não é apenas uma cruz.
-  const direcoes = [
+  // Cardinal labels follow the selected language: N/E/S/W in English,
+  // N/L/S/O in Portuguese. The geometry remains identical.
+  const direcoes = emIngles ? [
+    { letra: "N", x: 0, z: -2.68 },
+    { letra: "NE", x: 1.88, z: -1.88 },
+    { letra: "E", x: 2.68, z: 0 },
+    { letra: "SE", x: 1.88, z: 1.88 },
+    { letra: "S", x: 0, z: 2.68 },
+    { letra: "SW", x: -1.88, z: 1.88 },
+    { letra: "W", x: -2.68, z: 0 },
+    { letra: "NW", x: -1.88, z: -1.88 },
+  ] : [
     { letra: "N", x: 0, z: -2.68 },
     { letra: "NE", x: 1.88, z: -1.88 },
     { letra: "L", x: 2.68, z: 0 },
