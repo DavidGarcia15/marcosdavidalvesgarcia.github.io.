@@ -339,75 +339,95 @@
     sem JavaScript ou com animações reduzidas.
   -->
   <section class="trajectory" id="minha-trajetoria" aria-labelledby="trajectory-title">
-    <div class="wrap">
-      <p class="section-label">Minha Trajetória</p>
-      <h2 id="trajectory-title">Cada conquista deixa um traço</h2>
-      <p class="section-intro">Cada ano escreve uma nova parte da minha história. Selecione um marco na linha para ver os detalhes.</p>
-    </div>
-
-    <div class="wrap trajectory-rail-scroll">
-      <div class="trajectory-rail">
-        <svg class="trajectory-line" viewBox="0 0 1500 220" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-          <path class="trajectory-path-bg" d="M0.0,110.0 C25.0,110.0 100.0,117.7 150.0,110.0 C200.0,102.3 250.0,64.0 300.0,64.0 C350.0,64.0 400.0,94.7 450.0,110.0 C500.0,125.3 550.0,156.0 600.0,156.0 C650.0,156.0 700.0,125.3 750.0,110.0 C800.0,94.7 850.0,64.0 900.0,64.0 C950.0,64.0 1000.0,94.7 1050.0,110.0 C1100.0,125.3 1150.0,156.0 1200.0,156.0 C1250.0,156.0 1300.0,117.7 1350.0,110.0 C1400.0,102.3 1475.0,110.0 1500.0,110.0" />
-          <path class="trajectory-path-ink" d="M0.0,110.0 C25.0,110.0 100.0,117.7 150.0,110.0 C200.0,102.3 250.0,64.0 300.0,64.0 C350.0,64.0 400.0,94.7 450.0,110.0 C500.0,125.3 550.0,156.0 600.0,156.0 C650.0,156.0 700.0,125.3 750.0,110.0 C800.0,94.7 850.0,64.0 900.0,64.0 C950.0,64.0 1000.0,94.7 1050.0,110.0 C1100.0,125.3 1150.0,156.0 1200.0,156.0 C1250.0,156.0 1300.0,117.7 1350.0,110.0 C1400.0,102.3 1475.0,110.0 1500.0,110.0" />
-          <g class="trajectory-pen" aria-hidden="true">
-            <g transform="rotate(-50)">
-              <path class="trajectory-pen-body" d="M-6,-18 L-8,-30 L-8,-66 Q-8,-76 0,-78 Q8,-76 8,-66 L8,-30 Z" />
-              <line class="trajectory-pen-highlight" x1="-5" y1="-33" x2="-5" y2="-71" />
-              <rect class="trajectory-pen-band" x="-8.5" y="-37" width="17" height="6" rx="1" />
-              <path class="trajectory-pen-nib" d="M0,0 L-6,-18 Q0,-24 6,-18 Z" />
-              <line class="trajectory-pen-slit" x1="0" y1="-4" x2="0" y2="-19" />
-              <circle class="trajectory-spark trajectory-spark-1" cx="10" cy="-6" r="1.8" />
-              <circle class="trajectory-spark trajectory-spark-2" cx="-9" cy="3" r="1.2" />
-            </g>
-          </g>
-        </svg>
-
-        <ol class="trajectory-list">
-          <li class="trajectory-marker" data-ano="2015">
-            <span class="trajectory-dot" aria-hidden="true"></span>
-            <button type="button" class="trajectory-card" data-template="trajetoria-2015">
-              <span class="trajectory-year">2015</span>
-              <span class="trajectory-card-title">Primeiros passos</span>
-              <span class="sr-only">Ver detalhes do marco de 2015</span>
-            </button>
-          </li>
-          <li class="trajectory-marker" data-ano="2023">
-            <span class="trajectory-dot" aria-hidden="true"></span>
-            <button type="button" class="trajectory-card" data-template="trajetoria-2023">
-              <span class="trajectory-year">2023</span>
-              <span class="trajectory-card-title">Primeira medalha</span>
-              <span class="sr-only">Ver detalhes do marco de 2023</span>
-            </button>
-          </li>
-          <li class="trajectory-marker" data-ano="2024">
-            <span class="trajectory-dot" aria-hidden="true"></span>
-            <button type="button" class="trajectory-card" data-template="trajetoria-2024">
-              <span class="trajectory-year">2024</span>
-              <span class="trajectory-card-title">Entrada na OBGP</span>
-              <span class="sr-only">Ver detalhes do marco de 2024</span>
-            </button>
-          </li>
-          <li class="trajectory-marker" data-ano="2025">
-            <span class="trajectory-dot" aria-hidden="true"></span>
-            <button type="button" class="trajectory-card" data-template="trajetoria-2025">
-              <span class="trajectory-year">2025</span>
-              <span class="trajectory-card-title">Reconhecimento nacional</span>
-              <span class="sr-only">Ver detalhes do marco de 2025</span>
-            </button>
-          </li>
-          <li class="trajectory-marker" data-ano="2026">
-            <span class="trajectory-dot" aria-hidden="true"></span>
-            <button type="button" class="trajectory-card" data-template="trajetoria-2026">
-              <span class="trajectory-year">2026</span>
-              <span class="trajectory-card-title">Novos patamares</span>
-              <span class="sr-only">Ver detalhes do marco de 2026</span>
-            </button>
-          </li>
-        </ol>
+  <div class="wrap journey-layout">
+    <div class="journey-heading">
+      <div class="journey-heading-copy">
+        <p class="journey-eyebrow"><span class="journey-eyebrow-line"></span> Minha trajetória</p>
+        <h2 id="trajectory-title" class="journey-heading-title">Cada passo abre um novo caminho.</h2>
+        <p class="journey-intro">Nem toda conquista começa com uma medalha. Algumas começam com um desenho, uma curiosidade ou a vontade de aprender algo novo. Esta é a história de como esses passos foram se conectando.</p>
       </div>
+      <aside class="journey-summary" aria-label="Resumo da trajetória">
+        <span class="journey-summary-label">Uma caminhada em construção</span>
+        <strong class="journey-summary-years">2015 <span>—</span> 2026</strong>
+        <span class="journey-summary-caption">Arte, conhecimento e novas descobertas.</span>
+        <span class="journey-summary-decoration" aria-hidden="true">✳</span>
+      </aside>
     </div>
-  </section>
+
+    <div class="journey-timeline-heading">
+      <span>Capítulos da caminhada</span>
+      <span>Selecione um ano para conhecer os detalhes <span aria-hidden="true">↓</span></span>
+    </div>
+
+    <ol class="journey-list">
+      <li class="trajectory-marker journey-item" data-ano="2015">
+        <div class="journey-year"><span>2015</span><small>O começo</small></div>
+        <span class="journey-node" aria-hidden="true"><span></span></span>
+        <button type="button" class="trajectory-card journey-card" data-template="trajetoria-2015" aria-haspopup="dialog" aria-label="Ver detalhes do marco de 2015: primeiro lugar no ExpressArte">
+          <span class="journey-card-top"><span class="journey-card-kicker">Arte · Expressão</span><span class="journey-card-index">01</span></span>
+          <span class="journey-card-title">O primeiro reconhecimento</span>
+          <span class="journey-card-copy">Um desenho sobre a vida do povo sertanejo conquista o primeiro lugar no ExpressArte, em Petrolina.</span>
+          <span class="journey-tags"><span class="journey-tag">ExpressArte</span><span class="journey-tag journey-tag-gold">1º lugar</span></span>
+          <span class="journey-card-footer"><span>Explorar este capítulo</span><span aria-hidden="true">↗</span></span>
+        </button>
+      </li>
+
+      <li class="trajectory-marker journey-item" data-ano="2023">
+        <div class="journey-year"><span>2023</span><small>A primeira medalha</small></div>
+        <span class="journey-node" aria-hidden="true"><span></span></span>
+        <button type="button" class="trajectory-card journey-card" data-template="trajetoria-2023" aria-haspopup="dialog" aria-label="Ver detalhes do marco de 2023: primeira medalha na Olimpíada Mandacaru">
+          <span class="journey-card-top"><span class="journey-card-kicker">Matemática · Olimpíada</span><span class="journey-card-index">02</span></span>
+          <span class="journey-card-title">A chegada da primeira medalha</span>
+          <span class="journey-card-copy">A Olimpíada Mandacaru marca uma nova etapa: o terceiro lugar e a primeira medalha da coleção.</span>
+          <span class="journey-tags"><span class="journey-tag">Olimpíada Mandacaru</span><span class="journey-tag journey-tag-bronze">Bronze · 3º lugar</span></span>
+          <span class="journey-card-footer"><span>Explorar este capítulo</span><span aria-hidden="true">↗</span></span>
+        </button>
+      </li>
+
+      <li class="trajectory-marker journey-item" data-ano="2024">
+        <div class="journey-year"><span>2024</span><small>Novos horizontes</small></div>
+        <span class="journey-node" aria-hidden="true"><span></span></span>
+        <button type="button" class="trajectory-card journey-card" data-template="trajetoria-2024" aria-haspopup="dialog" aria-label="Ver detalhes do marco de 2024: primeira participação na OBGP">
+          <span class="journey-card-top"><span class="journey-card-kicker">Geopolítica · Conhecimento</span><span class="journey-card-index">03</span></span>
+          <span class="journey-card-title">Um novo interesse ganha espaço</span>
+          <span class="journey-card-copy">A primeira participação na OBGP aproxima a trajetória da Geopolítica — e termina com uma medalha de bronze.</span>
+          <span class="journey-tags"><span class="journey-tag">OBGP</span><span class="journey-tag journey-tag-bronze">Medalha de bronze</span></span>
+          <span class="journey-card-footer"><span>Explorar este capítulo</span><span aria-hidden="true">↗</span></span>
+        </button>
+      </li>
+
+      <li class="trajectory-marker journey-item" data-ano="2025">
+        <div class="journey-year"><span>2025</span><small>Reconhecimento nacional</small></div>
+        <span class="journey-node" aria-hidden="true"><span></span></span>
+        <button type="button" class="trajectory-card journey-card" data-template="trajetoria-2025" aria-haspopup="dialog" aria-label="Ver detalhes do marco de 2025: quatro resultados em olimpíadas acadêmicas">
+          <span class="journey-card-top"><span class="journey-card-kicker">Um ano · Quatro resultados</span><span class="journey-card-index">04</span></span>
+          <span class="journey-card-title">A trajetória se amplia</span>
+          <span class="journey-card-copy">Quatro reconhecimentos em diferentes áreas: Geopolítica, Geoinformação, Matemática Financeira e Matemática.</span>
+          <span class="journey-tags"><span class="journey-tag journey-tag-bronze">OBGP · Bronze</span><span class="journey-tag journey-tag-silver">OBGE · Prata</span><span class="journey-tag journey-tag-silver">OBMF · Prata</span><span class="journey-tag">OBMEP · Menção Honrosa</span></span>
+          <span class="journey-card-footer"><span>Explorar este capítulo</span><span aria-hidden="true">↗</span></span>
+        </button>
+      </li>
+
+      <li class="trajectory-marker journey-item journey-item-current" data-ano="2026">
+        <div class="journey-year"><span>2026</span><small>Novos patamares</small></div>
+        <span class="journey-node" aria-hidden="true"><span></span></span>
+        <button type="button" class="trajectory-card journey-card" data-template="trajetoria-2026" aria-haspopup="dialog" aria-label="Ver detalhes do marco de 2026: medalhas no TNBio, OBGP e Olimpíada de Literatura">
+          <span class="journey-card-top"><span class="journey-card-kicker">O ano atual · Três medalhas</span><span class="journey-card-index">05</span></span>
+          <span class="journey-card-title">Ciência, Geopolítica e Literatura</span>
+          <span class="journey-card-copy">Ouro no TNBio, prata na OBGP e bronze na Olimpíada de Literatura. A classificação para a segunda fase da OBMEP também faz parte deste capítulo.</span>
+          <span class="journey-tags"><span class="journey-tag journey-tag-gold">TNBio · Ouro</span><span class="journey-tag journey-tag-silver">OBGP · Prata</span><span class="journey-tag journey-tag-bronze">OL · Bronze</span><span class="journey-tag">OBMEP · 2ª fase</span></span>
+          <span class="journey-card-footer"><span>Explorar este capítulo</span><span aria-hidden="true">↗</span></span>
+        </button>
+      </li>
+    </ol>
+
+    <div class="journey-closing">
+      <span class="journey-closing-mark" aria-hidden="true">✦</span>
+      <p>O caminho continua. <span>Novos desafios ainda vão escrever os próximos capítulos.</span></p>
+      <a href="conquistas/">Ver todas as conquistas <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
 
   <section class="areas">
     <div class="wrap">
