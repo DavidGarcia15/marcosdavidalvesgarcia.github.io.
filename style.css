@@ -1379,3 +1379,471 @@ dialog.medal-dialog::backdrop {
     padding-top: 3rem;
   }
 }
+
+
+/* =====================================================================
+   Céu em movimento — camada visual global do portfólio
+   Parallax, partículas, reflexos, microinterações e scroll reveal.
+   ===================================================================== */
+
+body {
+  isolation: isolate;
+  animation: portfolio-page-arrive 900ms cubic-bezier(.2,.75,.25,1) both;
+}
+
+@keyframes portfolio-page-arrive {
+  from { opacity: 0; filter: blur(5px); transform: translateY(8px); }
+  to   { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+
+@keyframes portfolio-page-leave {
+  to { opacity: 0; filter: blur(5px); transform: translateY(7px); }
+}
+
+body.page-leaving {
+  animation: portfolio-page-leave 280ms cubic-bezier(.65,0,.8,.2) forwards;
+  pointer-events: none;
+}
+
+/* Camada cósmica independente do conteúdo e sem bloquear cliques. */
+.ambient-cosmos {
+  position: fixed;
+  inset: -2%;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: .92;
+  transform: translate3d(0,0,0);
+  will-change: transform;
+}
+
+.ambient-cosmos::before,
+.ambient-cosmos::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ambient-cosmos::before {
+  inset: -18%;
+  background:
+    radial-gradient(ellipse at 18% 24%, rgba(54,105,157,.14), transparent 38%),
+    radial-gradient(ellipse at 78% 18%, rgba(184,145,74,.10), transparent 34%),
+    radial-gradient(ellipse at 68% 78%, rgba(40,89,139,.13), transparent 42%);
+  animation: nebula-drift 34s ease-in-out infinite alternate;
+}
+
+.ambient-cosmos::after {
+  background: radial-gradient(
+    520px circle at var(--aura-x, 50%) var(--aura-y, 36%),
+    rgba(220,187,121,.105),
+    rgba(90,132,176,.035) 35%,
+    transparent 72%
+  );
+  opacity: .85;
+  transition: opacity 400ms ease;
+}
+
+@keyframes nebula-drift {
+  from { transform: translate3d(-1.5%, -1%, 0) scale(1); }
+  to   { transform: translate3d(1.5%, 1.2%, 0) scale(1.08); }
+}
+
+.cosmic-star {
+  position: absolute;
+  left: var(--star-x);
+  top: var(--star-y);
+  width: var(--star-size, 2px);
+  height: var(--star-size, 2px);
+  border-radius: 50%;
+  background: var(--star-color, #f7e6bd);
+  box-shadow: 0 0 5px 1px rgba(255,232,184,.42), 0 0 13px rgba(220,187,121,.19);
+  opacity: .48;
+  animation:
+    cosmic-float var(--star-duration, 12s) ease-in-out var(--star-delay, 0s) infinite alternate,
+    cosmic-glimmer var(--glimmer-duration, 4.8s) ease-in-out var(--star-delay, 0s) infinite;
+}
+
+.cosmic-star:nth-child(3n) {
+  --star-color: #b9d5f0;
+  box-shadow: 0 0 5px 1px rgba(185,213,240,.4), 0 0 13px rgba(95,147,201,.18);
+}
+
+.cosmic-star:nth-child(5n) {
+  --star-color: #ffe5a8;
+  box-shadow: 0 0 7px 2px rgba(255,229,168,.56), 0 0 18px rgba(220,187,121,.25);
+}
+
+@keyframes cosmic-float {
+  from { transform: translate3d(0,0,0) scale(.72); }
+  to   { transform: translate3d(var(--drift-x, 12px), var(--drift-y, -18px), 0) scale(1.35); }
+}
+
+@keyframes cosmic-glimmer {
+  0%, 100% { opacity: .22; }
+  50% { opacity: .95; }
+}
+
+/* O conteúdo fica acima das estrelas, mantendo header e links interativos. */
+main,
+.site-footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Barra dourada de progresso da leitura. */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1200;
+  width: 100%;
+  height: 3px;
+  pointer-events: none;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: linear-gradient(90deg, #8f6b34, #e8cb8d 48%, #fff0c6 70%, #b8914a);
+  box-shadow: 0 0 12px rgba(220,187,121,.65), 0 1px 4px rgba(0,0,0,.3);
+}
+
+/* Abertura de páginas, títulos e conteúdo que entra durante a rolagem. */
+.page-hero .wrap {
+  animation: page-heading-arrive 850ms cubic-bezier(.2,.75,.25,1) 120ms both;
+}
+
+@keyframes page-heading-arrive {
+  from { opacity: 0; transform: translateY(24px); filter: blur(3px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+.reveal-item {
+  opacity: 0;
+  transform: translateY(32px) scale(.985);
+  filter: blur(3px);
+  transition:
+    opacity 820ms cubic-bezier(.2,.75,.25,1),
+    transform 900ms cubic-bezier(.2,.75,.25,1),
+    filter 850ms ease;
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal-item.is-revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+/* Microinterações dos botões: elevação, luz e toque. */
+.btn,
+.filter-btn,
+.nav-toggle {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    transform 260ms cubic-bezier(.2,.8,.2,1),
+    box-shadow 260ms ease,
+    background 260ms ease,
+    color 260ms ease,
+    border-color 260ms ease;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px -8px rgba(220,187,121,.42);
+}
+
+.btn:active,
+.filter-btn:active {
+  transform: translateY(0) scale(.965);
+}
+
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  top: -35%;
+  left: -85%;
+  width: 48%;
+  height: 170%;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent, rgba(255,255,255,.48), transparent);
+  transform: skewX(-22deg);
+  transition: left 680ms cubic-bezier(.2,.65,.3,1);
+}
+
+.btn-primary:hover::after {
+  left: 145%;
+}
+
+.btn-ghost:hover,
+.btn-ghost-light:hover {
+  box-shadow: 0 0 22px rgba(220,187,121,.15), inset 0 0 18px rgba(220,187,121,.055);
+}
+
+.filter-btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold-on-navy);
+  box-shadow: 0 7px 18px -9px rgba(220,187,121,.65);
+}
+
+.filter-btn[aria-pressed="true"] {
+  box-shadow: 0 5px 18px -4px rgba(184,145,74,.62), inset 0 0 12px rgba(255,255,255,.13);
+}
+
+/* Ondulação luminosa que nasce no ponto do clique. */
+.interaction-ripple {
+  position: absolute;
+  z-index: 4;
+  display: block;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(255,248,224,.62), rgba(220,187,121,.28) 42%, transparent 72%);
+  transform: translate(-50%,-50%) scale(0);
+  animation: ripple-bloom 680ms cubic-bezier(.15,.65,.25,1) forwards;
+}
+
+@keyframes ripple-bloom {
+  70% { opacity: .78; }
+  to { opacity: 0; transform: translate(-50%,-50%) scale(1); }
+}
+
+/* Cartões com profundidade 3D, borda acesa e reflexo deslizante. */
+.highlight-card,
+.achievement-card,
+.journey-card.trajectory-card {
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition:
+    transform 420ms cubic-bezier(.2,.8,.2,1),
+    border-color 360ms ease,
+    box-shadow 420ms ease,
+    background 360ms ease;
+}
+
+.highlight-card::after,
+.achievement-card::after,
+.journey-card.trajectory-card::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: -30%;
+  left: -80%;
+  width: 42%;
+  height: 160%;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 8%, rgba(255,255,255,.045) 35%, rgba(255,231,183,.22) 50%, rgba(255,255,255,.045) 64%, transparent 90%);
+  transform: skewX(-19deg);
+  transition: left 850ms cubic-bezier(.2,.65,.25,1);
+}
+
+.highlight-card > *,
+.achievement-card > *,
+.journey-card.trajectory-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.highlight-card.interactive-tilt:hover,
+.achievement-card.interactive-tilt:hover,
+.journey-card.trajectory-card.interactive-tilt:hover {
+  transform:
+    perspective(1100px)
+    rotateX(var(--tilt-y, 0deg))
+    rotateY(var(--tilt-x, 0deg))
+    translateY(-6px)
+    translateZ(5px);
+  border-color: rgba(220,187,121,.68);
+  box-shadow:
+    0 24px 48px -17px rgba(0,0,0,.72),
+    0 0 25px -7px rgba(220,187,121,.25),
+    inset 0 1px 0 rgba(255,255,255,.12);
+}
+
+.highlight-card.interactive-tilt:hover::after,
+.achievement-card.interactive-tilt:hover::after,
+.journey-card.trajectory-card.interactive-tilt:hover::after {
+  left: 145%;
+}
+
+.highlight-card.interactive-tilt > *,
+.achievement-card.interactive-tilt > *,
+.journey-card.trajectory-card.interactive-tilt > * {
+  transform: translateZ(9px);
+}
+
+.area-list li {
+  transition:
+    transform 360ms cubic-bezier(.2,.8,.2,1),
+    border-color 300ms ease,
+    box-shadow 360ms ease,
+    background 300ms ease;
+}
+
+.area-list li:hover {
+  transform: translateY(-7px);
+  border-color: rgba(220,187,121,.62);
+  box-shadow: 0 20px 38px -18px rgba(0,0,0,.72), 0 0 20px rgba(220,187,121,.12);
+  background: rgba(10,22,39,.78);
+}
+
+.source-list li {
+  transition: transform 320ms cubic-bezier(.2,.8,.2,1);
+}
+
+.source-list li:hover {
+  transform: translateX(7px);
+}
+
+.project-note {
+  transition: transform 360ms ease, border-color 360ms ease, box-shadow 360ms ease;
+}
+
+.project-note:hover {
+  transform: translateY(-4px);
+  border-color: rgba(220,187,121,.45);
+  box-shadow: 0 18px 40px -22px rgba(0,0,0,.75), 0 0 22px rgba(220,187,121,.1);
+}
+
+/* Medalhas com acabamento metálico e reflexo animado. */
+.medal-tag {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.28), 0 3px 10px rgba(0,0,0,.16);
+}
+
+.medal-tag::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  top: -55%;
+  left: -75%;
+  width: 38%;
+  height: 210%;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 15%, rgba(255,255,255,.5) 48%, transparent 82%);
+  transform: skewX(-22deg);
+  animation: medal-sheen 6.4s ease-in-out infinite;
+}
+
+@keyframes medal-sheen {
+  0%, 58% { left: -75%; opacity: 0; }
+  68% { opacity: .9; }
+  88%, 100% { left: 145%; opacity: 0; }
+}
+
+.medal-ouro {
+  background: linear-gradient(125deg, #906a2c, #d7b46d 42%, #f0d89c 55%, #a27b39);
+  background-size: 210% 100%;
+  animation: medal-metallic 7s ease-in-out infinite;
+}
+
+.medal-prata {
+  background: linear-gradient(125deg, #647180, #b8c2ce 43%, #e5e9ed 55%, #788493);
+  background-size: 210% 100%;
+  animation: medal-metallic 7.8s ease-in-out infinite;
+}
+
+.medal-bronze {
+  background: linear-gradient(125deg, #744626, #bd8558 43%, #e0b18a 55%, #885431);
+  background-size: 210% 100%;
+  animation: medal-metallic 8.5s ease-in-out infinite;
+}
+
+.medal-honra {
+  background: linear-gradient(125deg, #344f6d, #6d8ba9 48%, #a9c1d8 58%, #405d7b);
+  background-size: 210% 100%;
+  animation: medal-metallic 8s ease-in-out infinite;
+}
+
+@keyframes medal-metallic {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+}
+
+/* Os pontos do céu respiram como estrelas distantes. */
+.medal-star-dot {
+  animation: medal-star-breathe 3.8s ease-in-out infinite;
+}
+
+@keyframes medal-star-breathe {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(255,255,255,.55) inset, 0 0 9px 2px rgba(220,187,121,.42); }
+  50% { box-shadow: 0 0 0 1px rgba(255,255,255,.75) inset, 0 0 19px 7px rgba(220,187,121,.78); }
+}
+
+.sky-frame {
+  transition: box-shadow 500ms ease, transform 500ms cubic-bezier(.2,.8,.2,1);
+}
+
+.sky-frame:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 36px 80px -22px rgba(0,0,0,.78), 0 0 30px rgba(220,187,121,.16), 0 0 0 1px rgba(220,187,121,.28);
+}
+
+/* Cabeçalhos e fechamento da trilha ganham entrada cinematográfica. */
+.journey-heading,
+.journey-closing {
+  transition: border-color 420ms ease, box-shadow 420ms ease;
+}
+
+.journey-closing:hover {
+  border-top-color: rgba(220,187,121,.55);
+  border-bottom-color: rgba(220,187,121,.3);
+  box-shadow: 0 0 30px rgba(220,187,121,.055);
+}
+
+/* Foco por teclado continua tão visível quanto os efeitos de mouse. */
+.highlight-card:focus-within,
+.achievement-card:focus-within,
+.journey-card.trajectory-card:focus-visible {
+  outline: 2px solid var(--gold-on-navy);
+  outline-offset: 4px;
+}
+
+/* Ajuste de movimento reduzido para todos os novos efeitos. */
+@media (prefers-reduced-motion: reduce) {
+  body,
+  body.page-leaving {
+    animation: none;
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+
+  .ambient-cosmos {
+    transform: none !important;
+  }
+
+  .ambient-cosmos::before,
+  .cosmic-star,
+  .medal-tag::after,
+  .medal-ouro,
+  .medal-prata,
+  .medal-bronze,
+  .medal-honra,
+  .medal-star-dot {
+    animation: none !important;
+  }
+
+  .reveal-item {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+
+  .highlight-card,
+  .achievement-card,
+  .journey-card.trajectory-card,
+  .area-list li,
+  .source-list li,
+  .project-note,
+  .sky-frame,
+  .btn,
+  .filter-btn {
+    transform: none !important;
+    transition: none !important;
+  }
+}
