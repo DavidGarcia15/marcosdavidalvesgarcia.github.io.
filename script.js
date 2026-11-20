@@ -341,7 +341,7 @@
     var revealTargets = document.querySelectorAll(
       ".highlight-card, .achievement-card, .area-list li, .source-list li, " +
       ".about-section h2, .about-section p, .about-section .callout, " +
-      ".project-note, .journey-heading, .journey-closing, .page-hero .wrap"
+      ".project-note, .journey-heading, .journey-closing"
     );
 
     revealTargets.forEach(function (element, index) {
