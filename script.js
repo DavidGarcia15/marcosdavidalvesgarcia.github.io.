@@ -261,3 +261,212 @@
   }, { threshold: 0.12 });
   observer.observe(track);
 })();
+
+
+/* =====================================================================
+   Camada de movimento global — céu, rolagem, cartões e navegação
+   ===================================================================== */
+(function () {
+  "use strict";
+
+  var body = document.body;
+  if (!body) return;
+
+  var reducedMotion = window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* Fundo estrelado: pontos independentes sobre a pintura original. */
+  var cosmos = document.createElement("div");
+  cosmos.className = "ambient-cosmos";
+  cosmos.setAttribute("aria-hidden", "true");
+
+  var starCount = reducedMotion ? 34 : 58;
+  for (var i = 0; i < starCount; i += 1) {
+    var star = document.createElement("span");
+    star.className = "cosmic-star";
+    star.style.setProperty("--star-x", (Math.random() * 100).toFixed(2) + "%");
+    star.style.setProperty("--star-y", (Math.random() * 100).toFixed(2) + "%");
+    star.style.setProperty("--star-size", (Math.random() * 2.2 + 1).toFixed(2) + "px");
+    star.style.setProperty("--star-delay", (-Math.random() * 12).toFixed(2) + "s");
+    star.style.setProperty("--star-duration", (8 + Math.random() * 13).toFixed(2) + "s");
+    star.style.setProperty("--glimmer-duration", (3.4 + Math.random() * 4.8).toFixed(2) + "s");
+    star.style.setProperty("--drift-x", ((Math.random() - .5) * 34).toFixed(1) + "px");
+    star.style.setProperty("--drift-y", ((Math.random() - .5) * 42).toFixed(1) + "px");
+    cosmos.appendChild(star);
+  }
+  body.insertBefore(cosmos, body.firstChild);
+
+  /* Indicador de leitura no topo da janela. */
+  var progress = document.createElement("div");
+  progress.className = "scroll-progress";
+  progress.setAttribute("aria-hidden", "true");
+  body.appendChild(progress);
+
+  var scrollFrame = 0;
+  function updateScrollDecorations() {
+    var maxScroll = Math.max(
+      document.documentElement.scrollHeight - window.innerHeight,
+      1
+    );
+    var ratio = Math.min(1, Math.max(0, window.scrollY / maxScroll));
+    progress.style.transform = "scaleX(" + ratio.toFixed(4) + ")";
+    if (!reducedMotion) {
+      cosmos.style.transform = "translate3d(0," + (-window.scrollY * .035).toFixed(1) + "px,0)";
+    }
+    scrollFrame = 0;
+  }
+
+  function requestScrollUpdate() {
+    if (!scrollFrame) {
+      scrollFrame = window.requestAnimationFrame(updateScrollDecorations);
+    }
+  }
+
+  window.addEventListener("scroll", requestScrollUpdate, { passive: true });
+  window.addEventListener("resize", requestScrollUpdate);
+  updateScrollDecorations();
+
+  /* Aura que acompanha o cursor sem interferir na interação. */
+  if (!reducedMotion) {
+    window.addEventListener("pointermove", function (event) {
+      if (event.pointerType === "touch") return;
+      cosmos.style.setProperty("--aura-x", event.clientX + "px");
+      cosmos.style.setProperty("--aura-y", event.clientY + "px");
+    }, { passive: true });
+  }
+
+  /* Scroll reveal com atraso em cascata: os seletores correspondem às
+     classes realmente usadas nas páginas do repositório. */
+  if (!reducedMotion && "IntersectionObserver" in window) {
+    var revealTargets = document.querySelectorAll(
+      ".highlight-card, .achievement-card, .area-list li, .source-list li, " +
+      ".about-section h2, .about-section p, .about-section .callout, " +
+      ".project-note, .journey-heading, .journey-closing, .page-hero .wrap"
+    );
+
+    revealTargets.forEach(function (element, index) {
+      element.classList.add("reveal-item");
+      element.style.setProperty("--reveal-delay", ((index % 5) * 85) + "ms");
+    });
+
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-revealed");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: "0px 0px -7% 0px"
+    });
+
+    revealTargets.forEach(function (element) {
+      revealObserver.observe(element);
+    });
+  }
+
+  /* Inclinação 3D dos cartões em mouse/trackpad. */
+  if (!reducedMotion) {
+    var tiltCards = document.querySelectorAll(
+      ".highlight-card, .achievement-card, .journey-card.trajectory-card"
+    );
+
+    tiltCards.forEach(function (card) {
+      card.classList.add("interactive-tilt");
+
+      card.addEventListener("pointermove", function (event) {
+        if (event.pointerType === "touch") return;
+        var rect = card.getBoundingClientRect();
+        if (!rect.width || !rect.height) return;
+
+        var x = (event.clientX - rect.left) / rect.width;
+        var y = (event.clientY - rect.top) / rect.height;
+        var rotateY = ((x - .5) * 10).toFixed(2);
+        var rotateX = ((.5 - y) * 8).toFixed(2);
+
+        card.style.setProperty("--tilt-x", rotateY + "deg");
+        card.style.setProperty("--tilt-y", rotateX + "deg");
+      });
+
+      card.addEventListener("pointerleave", function () {
+        card.style.removeProperty("--tilt-x");
+        card.style.removeProperty("--tilt-y");
+      });
+    });
+  }
+
+  /* Pequena onda de luz ao clicar em botões e filtros. */
+  document.querySelectorAll(".btn, .filter-btn, .nav-toggle, .medal-dialog-close")
+    .forEach(function (control) {
+      control.addEventListener("click", function (event) {
+        if (reducedMotion) return;
+
+        var rect = control.getBoundingClientRect();
+        var ripple = document.createElement("span");
+        var diameter = Math.max(rect.width, rect.height) * 1.55;
+        ripple.className = "interaction-ripple";
+        ripple.style.width = diameter + "px";
+        ripple.style.height = diameter + "px";
+        ripple.style.left = (
+          event.clientX ? event.clientX - rect.left : rect.width / 2
+        ) + "px";
+        ripple.style.top = (
+          event.clientY ? event.clientY - rect.top : rect.height / 2
+        ) + "px";
+
+        control.appendChild(ripple);
+        ripple.addEventListener("animationend", function () {
+          ripple.remove();
+        }, { once: true });
+      });
+    });
+
+  /* Transição de saída somente para páginas do próprio portfólio.
+     Links externos, downloads, âncoras e novas abas mantêm seu comportamento. */
+  if (!reducedMotion) {
+    var leaving = false;
+
+    document.querySelectorAll("a[href]").forEach(function (link) {
+      link.addEventListener("click", function (event) {
+        if (
+          leaving ||
+          event.defaultPrevented ||
+          event.button !== 0 ||
+          event.metaKey ||
+          event.ctrlKey ||
+          event.shiftKey ||
+          event.altKey ||
+          link.target === "_blank" ||
+          link.hasAttribute("download")
+        ) {
+          return;
+        }
+
+        var href = link.getAttribute("href");
+        if (!href || href.charAt(0) === "#") return;
+
+        var destination;
+        try {
+          destination = new URL(link.href, window.location.href);
+        } catch (error) {
+          return;
+        }
+
+        if (destination.origin !== window.location.origin) return;
+
+        var samePath = destination.pathname === window.location.pathname &&
+          destination.search === window.location.search;
+        if (samePath) return;
+
+        event.preventDefault();
+        leaving = true;
+        body.classList.add("page-leaving");
+
+        window.setTimeout(function () {
+          window.location.assign(destination.href);
+        }, 250);
+      });
+    });
+  }
+})();
