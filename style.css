@@ -1467,9 +1467,13 @@ dialog.medal-dialog::backdrop {
 }
 
 .journey-item {
+  position: relative;
   display: grid;
-  grid-template-columns: var(--journey-year-column) var(--journey-track-column) minmax(0, 1fr);
+  flex: 0 0 auto;
+  flex-direction: initial;
   align-items: stretch;
+  padding: 0;
+  grid-template-columns: var(--journey-year-column) var(--journey-track-column) minmax(0, 1fr);
   min-width: 0;
 }
 
