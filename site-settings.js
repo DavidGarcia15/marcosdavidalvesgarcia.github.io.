@@ -28,8 +28,9 @@
   var language = readPreference(LANG_KEY, "pt");
   var lite = readPreference(LITE_KEY, "0") === "1";
 
-  // Aplica o modo Lite antes de o CSS principal ser carregado.
+  // Aplica preferências estruturais antes do CSS e dos módulos da página.
   if (lite) root.classList.add("site-lite");
+  root.lang = language === "en" ? "en" : "pt-BR";
 
   var translations = {
     "Pular para o conteúdo": "Skip to content",
@@ -365,6 +366,23 @@
 
   };
 
+
+    "← Portfólio": "← Portfolio",
+    "Este navegador ou dispositivo não suporta a experiência 3D do museu virtual. Você ainda pode explorar todo o conteúdo do portfólio nas páginas abaixo.": "This browser or device cannot run the virtual museum's 3D experience. You can still explore the full portfolio on the pages below.",
+    "Galeria Marcos David": "Marcos David Gallery",
+    "— WASD ou setas para andar, mouse para olhar ao redor, clique para interagir": "— Use WASD or the arrow keys to move, the mouse to look around, and click to interact",
+    "— joystick para andar, arraste a tela para olhar, toque no botão para interagir": "— Use the joystick to move, drag the screen to look, and tap the button to interact",
+    "✦ Atena é a guia virtual do museu. Ela responde com base em um acervo curado, apresenta fontes quando disponíveis e avisa quando não encontra uma informação. As quatro salas já contam com temas e atividades.": "✦ Atena is the museum's virtual guide. She answers using a curated collection, provides sources when available, and says when she cannot find an answer. The four rooms already include topics and activities.",
+    "Mostrando todos os ": "Showing all ",
+    " registros.": " entries.",
+    "Nenhum registro encontrado com essa combinação de filtros.": "No entries match this filter combination.",
+    "Ano:": "Year:",
+    "Área:": "Field:",
+    "Marcos David Alves Garcia": "Marcos David Alves Garcia",
+    "Olimpíada Brasileira de Matemática das Escolas Públicas (OBMEP)": "Brazilian Public Schools Mathematics Olympiad (OBMEP)"
+
+  };
+
   var attributeTranslations = {
     "Navegação principal": "Main navigation",
     "Pular para o conteúdo": "Skip to content",
@@ -423,7 +441,7 @@
         continue;
       }
       var trimmed = original.replace(/\s+/g, " ").trim();
-      var result = translations[trimmed];
+      var result = translated(trimmed, translations);
       if (result) {
         var leading = (original.match(/^\s*/) || [""])[0];
         var trailing = (original.match(/\s*$/) || [""])[0];
@@ -523,7 +541,8 @@
               if (parent && !originalText.has(node)) {
                 originalText.set(node, node.nodeValue);
                 var trimmed = node.nodeValue.replace(/\s+/g, " ").trim();
-                if (translations[trimmed]) node.nodeValue = node.nodeValue.replace(trimmed, translations[trimmed]);
+                var result = translated(trimmed, translations);
+                if (result !== trimmed) node.nodeValue = node.nodeValue.replace(trimmed, result);
               }
             } else if (node.nodeType === Node.ELEMENT_NODE) {
               translateTextNodes(node, true);
