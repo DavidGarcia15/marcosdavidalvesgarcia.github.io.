@@ -38,7 +38,7 @@ const respostas = [
   {
     id: "conquistas",
     termos: ["principais conquistas", "quais medalhas", "lista de medalhas", "resultados", "premios", "olimpiadas", "conquistas"],
-    texto: "Entre os resultados registrados estão ouro no TNBio 2026; prata na OBGP 2026; prata na OBGE e na OBMF 2025; bronze na OBGP em 2024 e 2025; e terceiro lugar/bronze na Olimpíada Mandacaru de Matemática 2023. Na OBMEP 2025, Marcos recebeu Menção Honrosa Nacional — uma distinção diferente de medalha.",
+    texto: "Entre os resultados registrados estão ouro no TNBio 2026; prata na OBGP 2026; bronze na 16ª Olimpíada de Literatura 2026 (categoria Júnior 29, com 884/1.000 pontos e 299º lugar, pela obra A Revolução dos Bichos); prata na OBGE e na OBMF 2025; bronze na OBGP em 2024 e 2025; e terceiro lugar/bronze na Olimpíada Mandacaru de Matemática 2023. Na OBMEP 2025, Marcos recebeu Menção Honrosa Nacional — uma distinção diferente de medalha.",
     fontes: [
       { texto: "Consultar a página de Conquistas", url: "../conquistas/" },
       { texto: "Página oficial da OBMEP", url: "https://www.obmep.org.br/" }
