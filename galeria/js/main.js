@@ -94,6 +94,8 @@ async function iniciar() {
   }
 
   const nivel = detectarNivelGrafico();
+  const liteAtivo = nivel === "lite";
+  const nivelCena = liteAtivo ? "baixo" : nivel;
   const telaCarregamento = document.getElementById("tela-carregamento");
 
   try {
@@ -103,7 +105,7 @@ async function iniciar() {
     const renderer = new THREE.WebGLRenderer({
       canvas,
       antialias: !liteAtivo && nivel === "alto",
-      powerPreference: nivel === "baixo" ? "low-power" : "default",
+      powerPreference: (liteAtivo || nivel === "baixo") ? "low-power" : "default",
     });
     // Resolução limitada para evitar renderização excessiva em telas de alta densidade.
     const tetoPixelRatio = liteAtivo ? 0.85 : nivel === "alto" ? 1.5 : nivel === "medio" ? 1.2 : 1;
