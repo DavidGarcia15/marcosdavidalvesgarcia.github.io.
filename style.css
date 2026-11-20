@@ -818,19 +818,13 @@ dialog.medal-dialog::backdrop {
 }
 
 .filters {
-  background: rgba(6, 13, 24, 0.86);
-  backdrop-filter: blur(10px);
+  /* Os filtros ficam no fluxo normal da página: não acompanham a rolagem. */
+  position: relative;
+  top: auto;
+  z-index: 1;
+  background: rgba(6, 13, 24, 0.96);
   border-bottom: 1px solid var(--border-on-navy);
   padding: 1.4rem 0;
-  position: sticky;
-  top: 4.2rem;
-  z-index: 50;
-}
-
-@media (max-width: 680px) {
-  .filters {
-    top: 0;
-  }
 }
 
 .filter-group {
